@@ -1,0 +1,161 @@
+<form [formGroup]="gameDetailForm" (ngSubmit)="add()">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name" />
+    <mat-error *ngIf="gameDetailForm.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Select Website</mat-label>
+    <mat-select formControlName="website">
+      <mat-option *ngFor="let w of websites" [value]="w">
+        {{ w }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    (keyup.enter)="add()"
+    [disabled]="gameDetailForm.invalid"
+  >
+    Submit
+  </button>
+</form>
+
+@for(status of statuses; track status) {
+<button mat-raised-button color="primary" (click)="filterByStatus(status)">
+  {{ status }}
+</button>
+}
+
+<br />
+
+@for(website of websites; track website) {
+<button mat-raised-button color="primary" (click)="filterByWebsite(website)">
+  {{ website }}
+</button>
+}
+
+<br />
+
+<mat-form-field appearance="fill">
+  <mat-label>Search by Keyword:</mat-label>
+  <input matInput (keyup)="searchByKeyword($event.target.value)" />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="website">
+    <th mat-header-cell *matHeaderCellDef>Website</th>
+    <td mat-cell *matCellDef="let element">{{ element.website }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="start(element)"
+        [disabled]="element.status !== 'Added'"
+      >
+        Start
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="start(element)"
+        [disabled]="element.status !== 'Archived'"
+      >
+        Resume
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="archive(element)"
+        [disabled]="element.status !== 'Started'"
+      >
+        Archive
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="complete(element)"
+        [disabled]="element.status !== 'Started'"
+      >
+        Complete
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="delete(element.id)"
+        [disabled]="!enableDelete"
+      >
+        Delete
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<button mat-raised-button color="primary" (click)="getAll()">Reset</button>
+<button
+  mat-raised-button
+  color="primary"
+  type="submit"
+  (click)="enableDelete = !enableDelete"
+>
+  Toggle Delete
+</button>
+
+<mat-paginator
+  [length]="gameDetails().length"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25]"
+  showFirstLastButtons
+>
+</mat-paginator>
+
+<button mat-raised-button color="primary" (click)="getRandom()">
+  Get Random Game
+</button>
+<table *ngIf="gameDetail()?.id">
+  <tr>
+    <td>
+      <h3>Random Game Details</h3>
+      <p>Name: {{ gameDetail().name }}</p>
+      <p>Website: {{ gameDetail().website }}</p>
+      <p>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="start(gameDetail())"
+        >
+          Start
+        </button>
+      </p>
+    </td>
+  </tr>
+</table>
