@@ -1,6 +1,6 @@
 export abstract class Constants {
   //Common API Endpoints
-  public static authenticationBaseURL = 'http://localhost:58441';
+  public static authenticationBaseURL = 'https://localhost:44357';
   public static baseURL = 'http://localhost:58441';
 
   //Authentication API Endpoints

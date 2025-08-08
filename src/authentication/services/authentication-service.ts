@@ -6,11 +6,12 @@ import { Constants } from '../../constants';
 import { LoginResponse } from '../models/login-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
-#httpClient = inject(HttpClient);
+  #httpClient = inject(HttpClient);
   #token = signal<string | null>(null);
+  #loginResponse = signal<LoginResponse | null>(null);
 
   get token() {
     return this.#token();
@@ -18,6 +19,14 @@ export class AuthenticationService {
 
   set token(value: string | null) {
     this.#token.set(value);
+  }
+
+  get loginResponse() {
+    return this.#loginResponse();
+  }
+
+  set loginResponse(value: LoginResponse | null) {
+    this.#loginResponse.set(value);
   }
 
   clearToken() {
@@ -28,13 +37,19 @@ export class AuthenticationService {
     return this.#token() !== null;
   }
 
-  validateUser(loginRequest:LoginRequest){
-    return this.#httpClient.post<LoginResponse>(Constants.getUrl(Constants.validateUser, true), loginRequest).pipe(
-      tap((response) => {
-        if(response?.token) {
-          this.token = response.token;
-        }
-      })
-    );
+  validateUser(loginRequest: LoginRequest) {
+    return this.#httpClient
+      .post<LoginResponse>(
+        Constants.getUrl(Constants.validateUser, true),
+        loginRequest
+      )
+      .pipe(
+        tap((response) => {
+          if (response?.token) {
+            this.loginResponse = response;
+            this.token = response.token;
+          }
+        })
+      );
   }
 }
