@@ -16,13 +16,13 @@ export const routes: Routes = [
     canActivate: [NoAuthGuard],
   },
   {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];

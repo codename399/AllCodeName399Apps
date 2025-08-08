@@ -30,11 +30,11 @@ export class AuthenticationService {
   }
 
   clearToken() {
-    this.#token.set(null);
+    this.token = null;
   }
 
   isLoggedIn(): boolean {
-    return this.#token() !== null;
+    return this.token !== null;
   }
 
   validateUser(loginRequest: LoginRequest) {
