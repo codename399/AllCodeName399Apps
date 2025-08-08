@@ -30,10 +30,7 @@ export class LoginComponent {
       return;
     }
 
-    // Assuming loginRequest is an object with username and password
-    const {username, password} = this.loginForm.value;
-    
-    this.validateUser({username, password});
+    this.validateUser(this.loginForm.value);
   }
 
   // Method to validate user credentials
@@ -46,5 +43,9 @@ export class LoginComponent {
         console.error('Login failed', error);
       },
     });
+  }
+
+  gotoRegister() {
+    this.#router.navigate(['/register']);
   }
 }

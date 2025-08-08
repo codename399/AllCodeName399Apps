@@ -14,7 +14,7 @@ export abstract class Constants {
   public static getRoleById = '/getRoleById';
   public static addRoles = '/addRoles';
   public static updateRole = '/updateRole';
-  public static deleteRoles = '/deleteRoles';
+  public static deleteRole = '/deleteRole';
 
   public static getUrl = (endpoint: string, isAuth: boolean = false): string => {
     return isAuth ? this.authenticationBaseURL + endpoint : this.baseURL + endpoint;
