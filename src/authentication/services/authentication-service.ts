@@ -3,6 +3,7 @@ import { LoginRequest } from '../models/login-request';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { Constants } from '../../constants';
+import { LoginResponse } from '../models/login-response';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,11 @@ export class AuthenticationService {
   }
 
   validateUser(loginRequest:LoginRequest){
-    return this.#httpClient.post(Constants.getUrl(Constants.validateUser, true), loginRequest, { observe: 'response' }).pipe(
-      tap(response => {
-        debugger;
+    return this.#httpClient.post<LoginResponse>(Constants.getUrl(Constants.validateUser, true), loginRequest).pipe(
+      tap((response) => {
+        if(response?.token) {
+          this.token = response.token;
+        }
       })
     );
   }

@@ -1,8 +1,21 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    {
-        path: 'game-detail',
-        loadComponent: () => import('../components/game-stash/game-detail/game-detail.component').then(m => m.GameDetailComponent)
-    }
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('../authentication/components/login-component/login-module').then(
+        (m) => m.LoginModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
 ];

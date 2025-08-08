@@ -23,7 +23,7 @@ export abstract class Constants {
   public static update = this.baseURL + 'update';
   public static delete = this.baseURL + 'delete';
 
-  public static getUrl(endpoint: string, isAuth: boolean): string {
+  public static getUrl = (endpoint: string, isAuth: boolean = false): string => {
     return isAuth ? this.authenticationBaseURL + endpoint : this.baseURL + endpoint;
   }
 }
