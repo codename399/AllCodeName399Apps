@@ -16,13 +16,6 @@ export abstract class Constants {
   public static updateRole = '/updateRole';
   public static deleteRoles = '/deleteRoles';
 
-  //Game-Stash API Endpoints
-  public static getAll = this.baseURL + 'getAll';
-  public static getByStatus = this.baseURL + 'getByStatus';
-  public static add = this.baseURL + 'add';
-  public static update = this.baseURL + 'update';
-  public static delete = this.baseURL + 'delete';
-
   public static getUrl = (endpoint: string, isAuth: boolean = false): string => {
     return isAuth ? this.authenticationBaseURL + endpoint : this.baseURL + endpoint;
   }
