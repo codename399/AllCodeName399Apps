@@ -7,6 +7,10 @@ import { UserService } from '../services/user-service';
 import { Role } from '../models/role';
 import { LoaderService } from '../../app/services/loader.service';
 import { PasswordMatchValidator } from '../../app/validators/password-match-validator';
+import {
+  isInvalid,
+  getErrorMessage,
+} from '../../app/validators/field-validator';
 
 @Component({
   selector: 'app-register',
@@ -24,6 +28,14 @@ export class RegisterComponent implements OnInit {
 
   roles: Role[] = [];
 
+  get getErrorMessage() {
+    return getErrorMessage;
+  }
+
+  get isInvalid() {
+    return isInvalid;
+  }
+
   ngOnInit() {
     this.#roleService.getAll().subscribe((roles: Role[]) => {
       this.roles = roles;
@@ -38,20 +50,13 @@ export class RegisterComponent implements OnInit {
         password: [
           '',
           [
-            Validators.required,
-            Validators.pattern(
-              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$'
-            ),
+            Validators.required
           ],
         ], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
         confirmPassword: [
           '',
           [
-            Validators.required,
-            ,
-            Validators.pattern(
-              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$'
-            ),
+            Validators.required
           ],
         ],
         emailid: ['', [Validators.required, Validators.email]],

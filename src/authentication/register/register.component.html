@@ -6,6 +6,9 @@
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
           <input id="name" class="form-control" formControlName="name" />
+          @if(isInvalid(registrationForm,"name")){
+          <small>{{ getErrorMessage(registrationForm, "name") }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username:</label>
@@ -14,6 +17,9 @@
             class="form-control"
             formControlName="username"
           />
+          @if(isInvalid(registrationForm,"username")){
+          <small>{{ getErrorMessage(registrationForm, "username") }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
@@ -23,19 +29,32 @@
             class="form-control"
             formControlName="password"
           />
+          @if(isInvalid(registrationForm,"password")){
+          <small>{{ getErrorMessage(registrationForm, "password") }}</small>
+          }
         </div>
         <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirm Password:</label>
+          <label for="confirmPassword" class="form-label"
+            >Confirm Password:</label
+          >
           <input
             id="confirmPassword"
             type="password"
             class="form-control"
             formControlName="confirmPassword"
           />
+          @if(isInvalid(registrationForm,"confirmPassword")){
+          <small>{{
+            getErrorMessage(registrationForm, "confirmPassword")
+          }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="emailid" class="form-label">Email ID:</label>
           <input id="emailid" class="form-control" formControlName="emailid" />
+          @if(isInvalid(registrationForm,"emailid")){
+          <small>{{ getErrorMessage(registrationForm, "emailid") }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="contactNumber" class="form-label">Contact Number:</label>
@@ -44,6 +63,11 @@
             class="form-control"
             formControlName="contactNumber"
           />
+          @if(isInvalid(registrationForm,"contactNumber")){
+          <small>{{
+            getErrorMessage(registrationForm, "contactNumber")
+          }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="role" class="form-label">Select a role</label>
@@ -53,6 +77,9 @@
               {{ role.name }}
             </option>
           </select>
+          @if(isInvalid(registrationForm,"roleId")){
+          <small>{{ getErrorMessage(registrationForm, "roleId") }}</small>
+          }
         </div>
 
         <div class="d-flex justify-content-between">
@@ -63,7 +90,11 @@
           >
             Register
           </button>
-          <u><a href="#" routerLink="/login">Already have an account? Login</a></u>
+          <u
+            ><a href="#" routerLink="/login"
+              >Already have an account? Login</a
+            ></u
+          >
         </div>
       </form>
     </div>
