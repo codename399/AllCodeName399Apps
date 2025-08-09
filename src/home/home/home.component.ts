@@ -27,4 +27,8 @@ export class HomeComponent {
   changePassword() {
     this.#router.navigate(['/home/change-password']);
   }
+
+  editProfile() {
+    this.#router.navigate(['/home/register', this.user.id]);
+  }
 }

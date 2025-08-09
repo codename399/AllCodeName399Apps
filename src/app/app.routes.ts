@@ -26,6 +26,11 @@ export const routes: Routes = [
         path: 'change-password',
         component: ChangePasswordComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'register/:id',
+        component: RegisterComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },

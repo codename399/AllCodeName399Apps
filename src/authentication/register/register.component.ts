@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared-module';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../services/role-service';
 import { UserService } from '../services/user-service';
 import { Role } from '../models/role';
@@ -12,6 +12,7 @@ import {
   getErrorMessage,
 } from '../../app/validators/field-validator';
 import { ToastService } from '../../app/services/toast.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-register',
@@ -19,13 +20,16 @@ import { ToastService } from '../../app/services/toast.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   #userService = inject(UserService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
   #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
+  #route = inject(ActivatedRoute);
   form: FormGroup;
+
+  id!: string;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -46,12 +50,26 @@ export class RegisterComponent {
         contactNumber: [
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
-        ]
+        ],
       },
       {
         validators: PasswordMatchValidator,
       }
     );
+
+    this.#route.params.subscribe((param) => {
+      this.id = param['id'];
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.id) {
+      this.#userService.getById(this.id).subscribe((users: User[]) => {
+        if (!!users) {
+          this.form.patchValue(users[0]);
+        }
+      });
+    }
   }
 
   onRegister() {
