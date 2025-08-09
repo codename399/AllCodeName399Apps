@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RoleService } from '../services/role-service';
 import { UserService } from '../services/user-service';
 import { Role } from '../models/role';
+import { LoaderService } from '../../app/services/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -17,9 +18,10 @@ export class RegisterComponent implements OnInit {
   #userService = inject(UserService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
+  #loaderService = inject(LoaderService);
   registrationForm: FormGroup;
 
-  roles:Role[] = [];
+  roles: Role[] = [];
 
   ngOnInit() {
     this.#roleService.getAll().subscribe((roles: Role[]) => {
@@ -33,16 +35,20 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       emailid: ['', [Validators.required, Validators.email]],
-      contactNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      contactNumber: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      ],
       roleId: ['', Validators.required],
     });
   }
 
   onRegister() {
     if (this.registrationForm.valid) {
+      this.#loaderService.show();
       this.#userService.add(this.registrationForm.value).subscribe({
         next: (response) => {
-          console.log('User registered successfully', response);
+          this.#loaderService.hide();
           this.#router.navigate(['/login']);
         },
         error: (error) => {
