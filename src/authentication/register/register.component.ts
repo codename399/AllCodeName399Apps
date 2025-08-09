@@ -19,8 +19,7 @@ import { ToastService } from '../../app/services/toast.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent implements OnInit {
-  #roleService = inject(RoleService);
+export class RegisterComponent {
   #userService = inject(UserService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
@@ -28,20 +27,12 @@ export class RegisterComponent implements OnInit {
   #toastService = inject(ToastService);
   form: FormGroup;
 
-  roles: Role[] = [];
-
   get getErrorMessage() {
     return getErrorMessage;
   }
 
   get isInvalid() {
     return isInvalid;
-  }
-
-  ngOnInit() {
-    this.#roleService.getAll().subscribe((roles: Role[]) => {
-      this.roles = roles;
-    });
   }
 
   constructor() {
@@ -55,8 +46,7 @@ export class RegisterComponent implements OnInit {
         contactNumber: [
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
-        ],
-        roleId: ['', Validators.required],
+        ]
       },
       {
         validators: PasswordMatchValidator,

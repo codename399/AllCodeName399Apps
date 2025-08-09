@@ -5,7 +5,7 @@ export interface User {
     password: string;
     emailid: string;
     contactNumber: string;
-    roleId: string;
+    roleId: string | null;
     creationDate: string;
     updationDate: string;
 }
