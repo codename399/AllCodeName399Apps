@@ -6,6 +6,7 @@ import { RoleService } from '../services/role-service';
 import { UserService } from '../services/user-service';
 import { Role } from '../models/role';
 import { LoaderService } from '../../app/services/loader.service';
+import { PasswordMatchValidator } from '../../app/validators/password-match-validator';
 
 @Component({
   selector: 'app-register',
@@ -30,17 +31,40 @@ export class RegisterComponent implements OnInit {
   }
 
   constructor() {
-    this.registrationForm = this.#formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      emailid: ['', [Validators.required, Validators.email]],
-      contactNumber: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]{10}$')],
-      ],
-      roleId: ['', Validators.required],
-    });
+    this.registrationForm = this.#formBuilder.group(
+      {
+        name: ['', Validators.required],
+        username: ['', Validators.required],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$'
+            ),
+          ],
+        ], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        confirmPassword: [
+          '',
+          [
+            Validators.required,
+            ,
+            Validators.pattern(
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$'
+            ),
+          ],
+        ],
+        emailid: ['', [Validators.required, Validators.email]],
+        contactNumber: [
+          '',
+          [Validators.required, Validators.pattern('^[0-9]{10}$')],
+        ],
+        roleId: ['', Validators.required],
+      },
+      {
+        validators: PasswordMatchValidator,
+      }
+    );
   }
 
   onRegister() {
@@ -52,11 +76,11 @@ export class RegisterComponent implements OnInit {
           this.#router.navigate(['/login']);
         },
         error: (error) => {
+          this.#loaderService.hide();
           console.error('Registration failed', error);
         },
       });
     } else {
-      // Handle form validation errors
       console.error('Form is invalid');
     }
   }

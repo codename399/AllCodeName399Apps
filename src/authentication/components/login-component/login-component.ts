@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from '../../../shared-module';
 import { AuthenticationService } from '../../services/authentication-service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../../app/services/loader.service';
+import { ToastService } from '../../../app/services/toast.service';
 
 @Component({
   selector: 'app-login-component',
@@ -14,6 +16,8 @@ export class LoginComponent {
   #authenticationService = inject(AuthenticationService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
+  #loaderService = inject(LoaderService);
+  #toastService = inject(ToastService);
   loginForm: FormGroup;
 
   constructor() {
@@ -35,12 +39,17 @@ export class LoginComponent {
 
   // Method to validate user credentials
   validateUser(loginRequest: any) {
+    this.#loaderService.show();
+
     this.#authenticationService.validateUser(loginRequest).subscribe({
       next: (response) => {
+        this.#loaderService.hide();
         this.#router.navigate(['/home']);
+        this.#toastService.showToast('Login successful!');
       },
       error: (error) => {
-        console.error('Login failed', error);
+        this.#loaderService.hide();
+        this.#toastService.showToast('Login failed!');
       },
     });
   }

@@ -2,11 +2,13 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationService } from '../authentication/services/authentication-service';
 import { inject, Injectable } from '@angular/core';
+import { LoaderService } from '../app/services/loader.service';
 
 @Injectable()
 
 export class AuthInterceptor implements HttpInterceptor {
   #authenticationService: AuthenticationService = inject(AuthenticationService);
+  #loaderService = inject(LoaderService);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.#authenticationService.token;
@@ -21,9 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((err) => {
-        if (err.status === 401) {
-          // Handle unauthorized error (e.g., redirect to login)
-        }
+        this.#loaderService.hide();
         return throwError(() => err);
       })
     );
