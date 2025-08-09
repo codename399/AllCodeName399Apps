@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Constants } from '../../constants';
+import { ApiConstants } from '../../api-constants';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
+import { ChangePasswordRequest } from '../models/change-password-request';
 
 @Injectable({
   providedIn: 'root',
@@ -12,32 +13,39 @@ export class UserService {
 
   getAll(): Observable<User[]> {
     return this.#httpClient.get<User[]>(
-      Constants.getUrl(Constants.getAllUsers, true)
+      ApiConstants.getUrl(ApiConstants.getAllUsers, true)
     );
   }
 
   getById(userId: string): Observable<User[]> {
     return this.#httpClient.get<User[]>(
-      Constants.getUrl(Constants.getUserById, true) + '/' + userId
+      ApiConstants.getUrl(ApiConstants.getUserById, true) + '/' + userId
     );
   }
 
   add(user: User) {
-    return this.#httpClient.post(Constants.getUrl(Constants.addUsers, true), [
+    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addUsers, true), [
       user,
     ]);
   }
 
   update(user: User) {
     return this.#httpClient.put(
-      Constants.getUrl(Constants.updateUser, true),
+      ApiConstants.getUrl(ApiConstants.updateUser, true),
       user
     );
   }
 
   delete(userId: string) {
     return this.#httpClient.delete(
-      Constants.getUrl(Constants.deleteUser, true) + '/' + userId
+      ApiConstants.getUrl(ApiConstants.deleteUser, true) + '/' + userId
+    );
+  }
+
+  changePassword(changePasswordRequest: ChangePasswordRequest) {
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.changePassword, true),
+      changePasswordRequest
     );
   }
 }

@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { LoginRequest } from '../models/login-request';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
-import { Constants } from '../../constants';
+import { ApiConstants } from '../../api-constants';
 import { LoginResponse } from '../models/login-response';
 
 @Injectable({
@@ -40,7 +40,7 @@ export class AuthenticationService {
   validateUser(loginRequest: LoginRequest) {
     return this.#httpClient
       .post<LoginResponse>(
-        Constants.getUrl(Constants.validateUser, true),
+        ApiConstants.getUrl(ApiConstants.validateUser, true),
         loginRequest
       )
       .pipe(

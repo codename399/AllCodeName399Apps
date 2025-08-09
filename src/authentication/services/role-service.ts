@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Constants } from '../../constants';
+import { ApiConstants } from '../../api-constants';
 import { Role } from '../models/role';
 import { Observable } from 'rxjs';
 
@@ -12,26 +12,26 @@ export class RoleService {
 
   getAll(): Observable<Role[]> {
     return this.#httpClient.get<Role[]>(
-      Constants.getUrl(Constants.getAllRoles, true)
+      ApiConstants.getUrl(ApiConstants.getAllRoles, true)
     );
   }
 
   add(role: Role) {
-    return this.#httpClient.post(Constants.getUrl(Constants.addRoles, true), [
+    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addRoles, true), [
       role,
     ]);
   }
 
   update(role: Role) {
     return this.#httpClient.put(
-      Constants.getUrl(Constants.updateRole, true),
+      ApiConstants.getUrl(ApiConstants.updateRole, true),
       role
     );
   }
 
   delete(roleId: string) {
     return this.#httpClient.delete(
-      Constants.getUrl(Constants.deleteRole, true) + '/' + roleId
+      ApiConstants.getUrl(ApiConstants.deleteRole, true) + '/' + roleId
     );
   }
 }

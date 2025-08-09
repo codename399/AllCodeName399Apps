@@ -1,1 +1,31 @@
-<p>home works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-white fixed-top border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MyApp</a>
+
+    <div class="dropdown ms-auto">
+      <a class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <!-- <img src="https://via.placeholder.com/35" alt="avatar" class="profile-img me-2"> -->
+        {{ user.name }}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><button class="dropdown-item" (click)="changePassword()">Change Password</button></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><button class="dropdown-item text-danger" (click)="logout()">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- 🧱 Main Content -->
+<main class="container my-5">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- 🔻 Sticky Footer -->
+<footer class="bg-white text-dark text-center fixed-bottom py-2 border-top">
+  <small>Logged in as {{ user.name }}</small>
+</footer>
+

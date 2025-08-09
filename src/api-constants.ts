@@ -1,4 +1,4 @@
-export abstract class Constants {
+export abstract class ApiConstants {
   //Common API Endpoints
   public static authenticationBaseURL = 'https://localhost:44357';
   public static baseURL = 'http://localhost:58441';
@@ -10,6 +10,7 @@ export abstract class Constants {
   public static updateUser = '/updateUser';
   public static deleteUser = '/deleteUser';
   public static validateUser = '/validateUser';
+  public static changePassword = '/changePassword';
   public static getAllRoles = '/getAllRoles';
   public static getRoleById = '/getRoleById';
   public static addRoles = '/addRoles';

@@ -4,6 +4,7 @@ import { HomeComponent } from '../home/home/home.component';
 import { NoAuthGuard } from '../route-guards/no-auth-guard';
 import { AuthGuard } from '../route-guards/auth-guard';
 import { RegisterComponent } from '../authentication/register/register.component';
+import { ChangePasswordComponent } from '../home/change-password/change-password.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,13 @@ export const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
   },
   {
     path: 'register',
@@ -28,7 +36,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];
