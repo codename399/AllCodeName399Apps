@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
         username: ['', Validators.required],
         password: ['', [Validators.required]], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
         confirmPassword: ['', [Validators.required]],
-        emailid: ['', [Validators.required, Validators.email]],
+        emailId: ['', [Validators.required, Validators.email]],
         contactNumber: [
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
@@ -56,6 +56,11 @@ export class RegisterComponent implements OnInit {
         validators: PasswordMatchValidator,
       }
     );
+
+    if(!this.id){
+      this.form.controls['password'].clearValidators();
+      this.form.controls['confirmPassword'].clearValidators();
+    }
 
     this.#route.params.subscribe((param) => {
       this.id = param['id'];

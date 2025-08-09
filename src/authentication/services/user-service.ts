@@ -19,7 +19,7 @@ export class UserService {
 
   getById(userId: string): Observable<User[]> {
     return this.#httpClient.get<User[]>(
-      ApiConstants.getUrl(ApiConstants.getUserById, true) + '/' + userId
+      ApiConstants.getUrl(ApiConstants.getUserById, true) + '?id=' + userId
     );
   }
 

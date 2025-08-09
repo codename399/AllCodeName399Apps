@@ -25,6 +25,7 @@
           }}</small>
           }
         </div>
+        @if(!id){
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
           <input
@@ -55,12 +56,13 @@
           }}</small>
           }
         </div>
+        }
         <div class="mb-3">
-          <label for="emailid" class="form-label">Email ID:</label>
-          <input id="emailid" class="form-control" formControlName="emailid" />
-          @if(isInvalid(form,"emailid")){
+          <label for="emailId" class="form-label">Email ID:</label>
+          <input id="emailId" class="form-control" formControlName="emailId" />
+          @if(isInvalid(form,"emailId")){
           <small class="text-danger">{{
-            getErrorMessage(form, "emailid")
+            getErrorMessage(form, "emailId")
           }}</small>
           }
         </div>

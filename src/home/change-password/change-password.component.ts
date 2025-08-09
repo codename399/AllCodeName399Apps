@@ -55,7 +55,7 @@ export class ChangePasswordComponent {
       id: this.#authenticationService.loginResponse?.user.id ?? "",
       name: this.#authenticationService.loginResponse?.user.name ?? "",
       username: this.#authenticationService.loginResponse?.user.username ?? "",
-      emailid: this.#authenticationService.loginResponse?.user.emailid ?? "",
+      emailId: this.#authenticationService.loginResponse?.user.emailId ?? "",
       contactNumber: this.#authenticationService.loginResponse?.user.contactNumber ?? "",
       roleId: this.#authenticationService.loginResponse?.user.roleId ?? "",
       creationDate: this.#authenticationService.loginResponse?.user.creationDate ?? "",

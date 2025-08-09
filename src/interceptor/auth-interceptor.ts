@@ -1,31 +1,23 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AuthenticationService } from '../authentication/services/authentication-service';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LoaderService } from '../app/services/loader.service';
+import { catchError, throwError } from 'rxjs';
+import { AuthenticationService } from '../authentication/services/authentication-service';
 
-@Injectable()
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  let authenticationService = inject(AuthenticationService);
+  let token: string = authenticationService.token ?? '';
 
-export class AuthInterceptor implements HttpInterceptor {
-  #authenticationService: AuthenticationService = inject(AuthenticationService);
-  #loaderService = inject(LoaderService);
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.#authenticationService.token;
-
-    if (token) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
-
-    return next.handle(req).pipe(
-      catchError((err) => {
-        this.#loaderService.hide();
-        return throwError(() => err);
-      })
-    );
+  if (token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
-}
+
+  return next(req).pipe(
+    catchError((error) => {
+      return throwError(() => error);
+    })
+  );
+};
