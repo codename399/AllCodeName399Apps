@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../authentication/models/user';
 import { AuthenticationService } from '../../authentication/services/authentication-service';
 import { SharedModule } from '../../shared-module';
+import { UserService } from '../../authentication/services/user-service';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +11,21 @@ import { SharedModule } from '../../shared-module';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   #authenticationService = inject(AuthenticationService);
+  #userService = inject(UserService);
   #router = inject(Router);
   user!: User;
 
-  constructor() {
-    this.user = this.#authenticationService.loginResponse?.user!;
+  ngOnInit(): void {
+    this.#userService
+      .getById(this.#authenticationService.userId ?? '')
+      .subscribe((users: User[]) => {
+        if (!!users?.length) {
+          this.user = users[0];
+          this.#authenticationService.user = this.user;
+        }
+      });
   }
 
   logout() {

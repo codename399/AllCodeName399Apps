@@ -9,7 +9,7 @@ import { ChangePasswordComponent } from '../home/change-password/change-password
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {

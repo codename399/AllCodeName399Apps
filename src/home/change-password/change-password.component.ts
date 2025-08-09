@@ -52,7 +52,7 @@ export class ChangePasswordComponent {
 
   onSubmit() {
     let changePasswordRequest: ChangePasswordRequest = {
-      id: this.#authenticationService.loginResponse?.user.id ?? "",
+      id: this.#authenticationService?.user?.id ?? "",
       password: this.form.value.oldPassword ?? "",
       newPassword: this.form.value.password,
     };

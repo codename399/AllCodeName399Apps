@@ -4,37 +4,47 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { ApiConstants } from '../../api-constants';
 import { LoginResponse } from '../models/login-response';
+import { Constants } from '../../constants';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   #httpClient = inject(HttpClient);
-  #token = signal<string | null>(null);
-  #loginResponse = signal<LoginResponse | null>(null);
+  #user = signal<User | null>(null);
 
   get token() {
-    return this.#token();
+    return sessionStorage.getItem(Constants.token);
   }
 
   set token(value: string | null) {
-    this.#token.set(value);
+    sessionStorage.setItem(Constants.token, value ?? '');
   }
 
-  get loginResponse() {
-    return this.#loginResponse();
+  get userId() {
+    return sessionStorage.getItem(Constants.userId);
   }
 
-  set loginResponse(value: LoginResponse | null) {
-    this.#loginResponse.set(value);
+  set userId(value: string | null) {
+    sessionStorage.setItem(Constants.userId, value ?? '');
+  }
+
+  get user() {
+    return this.#user();
+  }
+
+  set user(value: User | null) {
+    this.#user.set(value);
   }
 
   clearToken() {
-    this.token = null;
+    sessionStorage.clear();
+    this.#user.set(null);
   }
 
   isLoggedIn(): boolean {
-    return this.token !== null;
+    return this.token !== '' && this.token !== null;
   }
 
   validateUser(loginRequest: LoginRequest) {
@@ -46,7 +56,7 @@ export class AuthenticationService {
       .pipe(
         tap((response) => {
           if (response?.token) {
-            this.loginResponse = response;
+            this.userId = response.userId;
             this.token = response.token;
           }
         })
