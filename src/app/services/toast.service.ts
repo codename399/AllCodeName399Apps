@@ -6,6 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class ToastService {
   #message = signal<string>('');
   #toastEl: any;
+  #delay=signal<number>(3000); // Default delay of 3 seconds
 
   show(message: string) {
     this.#message.set(message);
@@ -28,5 +29,9 @@ export class ToastService {
       this.show(message);
       this.#toastEl.show();
     }
+  }
+
+  get delay() {
+    return this.#delay();
   }
 }

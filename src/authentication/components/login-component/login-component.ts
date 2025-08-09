@@ -19,7 +19,7 @@ export class LoginComponent {
   #router = inject(Router);
   #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
-  loginForm: FormGroup;
+  form: FormGroup;
 
   get getErrorMessage() {
       return getErrorMessage;
@@ -31,7 +31,7 @@ export class LoginComponent {
 
   constructor() {
     // Initialization code can go here
-    this.loginForm = this.#formBuilder.group({
+    this.form = this.#formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
@@ -39,11 +39,11 @@ export class LoginComponent {
 
   // Example method to handle user login
   onLogin() {
-    if (this.loginForm.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
-    this.validateUser(this.loginForm.value);
+    this.validateUser(this.form.value);
   }
 
   // Method to validate user credentials

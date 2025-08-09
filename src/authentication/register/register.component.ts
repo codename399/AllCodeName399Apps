@@ -11,6 +11,7 @@ import {
   isInvalid,
   getErrorMessage,
 } from '../../app/validators/field-validator';
+import { ToastService } from '../../app/services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
   #loaderService = inject(LoaderService);
-  registrationForm: FormGroup;
+  #toastService = inject(ToastService);
+  form: FormGroup;
 
   roles: Role[] = [];
 
@@ -43,22 +45,12 @@ export class RegisterComponent implements OnInit {
   }
 
   constructor() {
-    this.registrationForm = this.#formBuilder.group(
+    this.form = this.#formBuilder.group(
       {
         name: ['', Validators.required],
         username: ['', Validators.required],
-        password: [
-          '',
-          [
-            Validators.required
-          ],
-        ], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
-        confirmPassword: [
-          '',
-          [
-            Validators.required
-          ],
-        ],
+        password: ['', [Validators.required]], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        confirmPassword: ['', [Validators.required]],
         emailid: ['', [Validators.required, Validators.email]],
         contactNumber: [
           '',
@@ -73,20 +65,21 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister() {
-    if (this.registrationForm.valid) {
+    if (this.form.valid) {
       this.#loaderService.show();
-      this.#userService.add(this.registrationForm.value).subscribe({
+      this.#userService.add(this.form.value).subscribe({
         next: (response) => {
           this.#loaderService.hide();
+          this.#toastService.showToast('Registration successful!');
           this.#router.navigate(['/login']);
         },
         error: (error) => {
           this.#loaderService.hide();
-          console.error('Registration failed', error);
+          this.#toastService.showToast('Registration failed!');
         },
       });
     } else {
-      console.error('Form is invalid');
+      this.#toastService.showToast('Form is invalid');
     }
   }
 }

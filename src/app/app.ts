@@ -38,7 +38,7 @@ export class App {
   ngAfterViewInit(): void {
     const toastDom = document.getElementById('myToast');
     if (toastDom) {
-      this.toastEl = new bootstrap.Toast(toastDom, { delay: 3000 });
+      this.toastEl = new bootstrap.Toast(toastDom, { delay: this.#toastService.delay });
     }
   }
 }

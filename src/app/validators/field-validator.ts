@@ -9,16 +9,16 @@ export const getErrorMessage = (form: FormGroup, field: string): string | null =
   const control = form.get(field);
   if (control && control.errors) {
     if (control.errors['required']) {
-      return `${field} is required`;
+      return `*Field is required`;
     }
     if (control.errors['minlength']) {
-      return `${field} must be at least ${control.errors['minlength'].requiredLength} characters long`;
+      return `*Field must be at least ${control.errors['minlength'].requiredLength} characters long`;
     }
     if (control.errors['maxlength']) {
-      return `${field} cannot exceed ${control.errors['maxlength'].requiredLength} characters`;
+      return `*Field cannot exceed ${control.errors['maxlength'].requiredLength} characters`;
     }
     if (control.errors['pattern']) {
-      return `Invalid format for ${field}`;
+      return `*Invalid format for field`;
     }
   }
   return null;
