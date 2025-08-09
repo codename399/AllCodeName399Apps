@@ -10,6 +10,11 @@
             class="form-control"
             formControlName="username"
           />
+          @if(isInvalid(loginForm,"username")){
+          <small>{{
+            getErrorMessage(loginForm, "username")
+          }}</small>
+          }
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
@@ -19,6 +24,11 @@
             class="form-control"
             formControlName="password"
           />
+          @if(isInvalid(loginForm,"password")){
+          <small>{{
+            getErrorMessage(loginForm, "password")
+          }}</small>
+          }
         </div>
         <div class="mb-3">
           <u><a href="#" routerLink="/forgot-password">Forgot Password?</a></u>

@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../services/authentication-service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../../../app/services/loader.service';
 import { ToastService } from '../../../app/services/toast.service';
+import { getErrorMessage, isInvalid } from '../../../app/validators/field-validator';
 
 @Component({
   selector: 'app-login-component',
@@ -19,6 +20,14 @@ export class LoginComponent {
   #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   loginForm: FormGroup;
+
+  get getErrorMessage() {
+      return getErrorMessage;
+    }
+  
+    get isInvalid() {
+      return isInvalid;
+    }
 
   constructor() {
     // Initialization code can go here
