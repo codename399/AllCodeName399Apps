@@ -53,13 +53,6 @@ export class ChangePasswordComponent {
   onSubmit() {
     let changePasswordRequest: ChangePasswordRequest = {
       id: this.#authenticationService.loginResponse?.user.id ?? "",
-      name: this.#authenticationService.loginResponse?.user.name ?? "",
-      username: this.#authenticationService.loginResponse?.user.username ?? "",
-      emailId: this.#authenticationService.loginResponse?.user.emailId ?? "",
-      contactNumber: this.#authenticationService.loginResponse?.user.contactNumber ?? "",
-      roleId: this.#authenticationService.loginResponse?.user.roleId ?? "",
-      creationDate: this.#authenticationService.loginResponse?.user.creationDate ?? "",
-      updationDate: this.#authenticationService.loginResponse?.user.updationDate ?? "",
       password: this.form.value.oldPassword ?? "",
       newPassword: this.form.value.password,
     };
@@ -70,6 +63,7 @@ export class ChangePasswordComponent {
       next: (response) => {
         this.#loaderService.hide();
         this.#toastService.showToast('Password changed successfully!');
+        this.#authenticationService.clearToken();
         this.#router.navigate(['/login']);
       },
       error: (error) => {

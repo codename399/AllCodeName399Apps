@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
   #toastService = inject(ToastService);
   #route = inject(ActivatedRoute);
   form: FormGroup;
+  user!:User;
 
   id!: string;
 
@@ -57,7 +58,8 @@ export class RegisterComponent implements OnInit {
       }
     );
 
-    if(!this.id){
+    if (!this.id) {
+      this.form.controls['username'].clearValidators();
       this.form.controls['password'].clearValidators();
       this.form.controls['confirmPassword'].clearValidators();
     }
@@ -71,13 +73,23 @@ export class RegisterComponent implements OnInit {
     if (this.id) {
       this.#userService.getById(this.id).subscribe((users: User[]) => {
         if (!!users) {
-          this.form.patchValue(users[0]);
+          this.user = users[0]; 
+          this.form.patchValue(this.user);
         }
       });
     }
   }
 
-  onRegister() {
+  onSubmit() {
+    if(!this.id){
+      this.add();
+    }
+    else{
+      this.update();
+    }
+  }
+
+  add() {
     if (this.form.valid) {
       this.#loaderService.show();
       this.#userService.add(this.form.value).subscribe({
@@ -89,6 +101,27 @@ export class RegisterComponent implements OnInit {
         error: (error) => {
           this.#loaderService.hide();
           this.#toastService.showToast('Registration failed!');
+        },
+      });
+    } else {
+      this.#toastService.showToast('Form is invalid');
+    }
+  }
+
+  update() {
+    if (this.form.valid) {
+      this.#loaderService.show();
+      this.user = this.form.value;
+      this.user.id = this.id;
+      this.#userService.update(this.user).subscribe({
+        next: (response) => {
+          this.#loaderService.hide();
+          this.#toastService.showToast('Updation successful!');
+          this.#router.navigate(['/home']);
+        },
+        error: (error) => {
+          this.#loaderService.hide();
+          this.#toastService.showToast('Updation failed!');
         },
       });
     } else {

@@ -1,5 +1,6 @@
-import { User } from './user';
 
-export interface ChangePasswordRequest extends User {
+export interface ChangePasswordRequest {
+  id: string;
+  password: string;
   newPassword: string;
 }

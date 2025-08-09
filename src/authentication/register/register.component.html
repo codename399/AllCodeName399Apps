@@ -4,7 +4,7 @@
       <h4 class="card-title text-center mb-4">
         {{ id ? "Update" : "Register" }}
       </h4>
-      <form [formGroup]="form" (ngSubmit)="onRegister()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name" class="form-label">Name:</label>
           <input id="name" class="form-control" formControlName="name" />
@@ -12,6 +12,7 @@
           <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
           }
         </div>
+        @if(!id){
         <div class="mb-3">
           <label for="username" class="form-label">Username:</label>
           <input
@@ -25,7 +26,6 @@
           }}</small>
           }
         </div>
-        @if(!id){
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
           <input
