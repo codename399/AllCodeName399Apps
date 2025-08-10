@@ -17,7 +17,6 @@ import {
 import { PasswordMatchValidator } from '../../../validators/password-match-validator';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service';
-import { Util } from '../../../common/util';
 
 @Component({
   selector: 'app-register',
@@ -140,7 +139,13 @@ export class RegisterComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.profilePictureUrl = Util.getBase64Url(file);
-    this.form.patchValue({ profilePicture: this.profilePictureUrl }); // set Base64 string
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profilePictureUrl = reader.result as string;
+        this.form.patchValue({ profilePicture: this.profilePictureUrl }); // set Base64 string
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }
