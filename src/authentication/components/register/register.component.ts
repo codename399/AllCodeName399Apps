@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
   user!: User;
   profilePictureUrl: string = Constants.defaultProfileUrl;
   id!: string;
+  roleId!: string | null;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -80,6 +81,7 @@ export class RegisterComponent implements OnInit {
         if (!!users) {
           this.user = users[0];
           this.form.patchValue(this.user);
+          this.roleId = this.user.roleId;
 
           if (this.user.profilePicture) {
             this.profilePictureUrl = this.user.profilePicture;
@@ -121,6 +123,7 @@ export class RegisterComponent implements OnInit {
       this.#loaderService.show();
       this.user = this.form.value;
       this.user.id = this.id;
+      this.user.roleId = this.roleId;
       this.#userService.update(this.user).subscribe({
         next: (response) => {
           this.#loaderService.hide();
