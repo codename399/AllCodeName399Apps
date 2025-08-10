@@ -7,7 +7,7 @@ import { ToastType } from '../models/toast-type-enum';
 export class ToastService {
   #message = signal<string>('');
   #toastEl: any;
-  #delay = signal<number>(300000);
+  #delay = signal<number>(3000);
   #toastType = signal<ToastType>(ToastType.Primary); // Default delay of 3 seconds
 
   get message() {
