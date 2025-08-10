@@ -1,5 +1,6 @@
-export interface User {
-  id: string | null;
+import { Audit } from "../../app/models/audit";
+
+export interface User extends Audit {
   name: string;
   username: string;
   password: string;
@@ -7,6 +8,4 @@ export interface User {
   contactNumber: string;
   roleId: string | null;
   profilePicture: string | null;
-  creationDate: string;
-  updationDate: string;
 }
