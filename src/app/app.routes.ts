@@ -6,6 +6,8 @@ import { AuthGuard } from '../route-guards/auth-guard';
 import { RegisterComponent } from '../authentication/components/register/register.component';
 import { ChangePasswordComponent } from '../home/change-password/change-password.component';
 import { RegisterResolver } from '../authentication/resolvers/register-resolver';
+import { DashboardComponent } from '../home/dashboard/dashboard.component';
+import { DashboardResolver } from '../home/resolvers/dashboard-resolver';
 
 export const routes: Routes = [
   {
@@ -24,6 +26,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch:'full'
+      },
+      {
         path: 'change-password',
         component: ChangePasswordComponent,
         canActivate: [AuthGuard],
@@ -33,8 +40,16 @@ export const routes: Routes = [
         component: RegisterComponent,
         canActivate: [AuthGuard],
         resolve: {
-          user: RegisterResolver,
+          users: RegisterResolver,
         },
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
+        resolve:{
+          projects:DashboardResolver
+        }
       },
     ],
   },

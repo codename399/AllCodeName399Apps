@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.users = this.#route.snapshot.data['user'];
+    this.users = this.#route.snapshot.data['users'];
 
     if (!!this.users?.length) {
       this.user = this.users[0];
