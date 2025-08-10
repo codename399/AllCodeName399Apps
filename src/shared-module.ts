@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     CommonModule,
@@ -21,7 +21,7 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [],
 })

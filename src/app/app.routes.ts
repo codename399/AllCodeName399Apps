@@ -5,6 +5,7 @@ import { NoAuthGuard } from '../route-guards/no-auth-guard';
 import { AuthGuard } from '../route-guards/auth-guard';
 import { RegisterComponent } from '../authentication/components/register/register.component';
 import { ChangePasswordComponent } from '../home/change-password/change-password.component';
+import { RegisterResolver } from '../authentication/resolvers/register-resolver';
 
 export const routes: Routes = [
   {
@@ -25,14 +26,17 @@ export const routes: Routes = [
       {
         path: 'change-password',
         component: ChangePasswordComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: 'register/:id',
         component: RegisterComponent,
-        canActivate: [AuthGuard]
-      }
-    ]
+        canActivate: [AuthGuard],
+        resolve: {
+          user: RegisterResolver,
+        },
+      },
+    ],
   },
   {
     path: 'register',

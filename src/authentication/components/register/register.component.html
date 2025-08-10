@@ -2,7 +2,7 @@
   <div class="card shadow" style="width: 100%; max-width: 400px">
     <div class="card-body">
       <h4 class="card-title text-center mb-4">
-        {{ id ? "Update" : "Register" }}
+        {{ user ? "Update" : "Register" }}
       </h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="profile-pic-container mb-3">
@@ -11,8 +11,7 @@
             class="profile-pic"
             alt="Profile Picture"
           />
-          <label for="fileUpload" class="add-icon">
-          </label>
+          <label for="fileUpload" class="add-icon"> </label>
           <input
             type="file"
             id="fileUpload"
@@ -27,7 +26,7 @@
           <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
           }
         </div>
-        @if(!id){
+        @if(!user){
         <div class="mb-3">
           <label for="username" class="form-label">Username:</label>
           <input
@@ -113,7 +112,7 @@
             class="btn btn-primary"
             [disabled]="form.invalid"
           >
-            {{ id ? "Update" : "Register" }}
+            {{ user ? "Update" : "Register" }}
           </button>
           <u
             ><a href="#" routerLink="/login"

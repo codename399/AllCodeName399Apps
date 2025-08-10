@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -31,10 +31,12 @@ export class RegisterComponent implements OnInit {
   #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   #route = inject(ActivatedRoute);
+  #changeDetectorRef = inject(ChangeDetectorRef);
   form: FormGroup;
   user!: User;
+  users: User[] = [];
   profilePictureUrl: string = Constants.defaultProfileUrl;
-  id!: string;
+  id!: string | null;
   roleId!: string | null;
 
   get getErrorMessage() {
@@ -63,36 +65,33 @@ export class RegisterComponent implements OnInit {
         validators: PasswordMatchValidator,
       }
     );
-
-    if (!this.id) {
-      this.form.controls['username'].clearValidators();
-      this.form.controls['password'].clearValidators();
-      this.form.controls['confirmPassword'].clearValidators();
-    }
-
-    this.#route.params.subscribe((param) => {
-      this.id = param['id'];
-    });
   }
 
-  ngOnInit(): void {
-    if (this.id) {
-      this.#userService.getById(this.id).subscribe((users: User[]) => {
-        if (!!users) {
-          this.user = users[0];
-          this.form.patchValue(this.user);
-          this.roleId = this.user.roleId;
+  ngOnInit() {
+    this.users = this.#route.snapshot.data['user'];
 
-          if (this.user.profilePicture) {
-            this.profilePictureUrl = this.user.profilePicture;
-          }
-        }
-      });
+    if (!!this.users?.length) {
+      this.user = this.users[0];
+      this.form.patchValue(this.user);
+      this.id = this.user.id;
+      this.roleId = this.user.roleId;
+
+      if (this.user.profilePicture) {
+        this.profilePictureUrl = this.user.profilePicture;
+      }
+
+      if (this.user) {
+        this.form.controls['username'].clearValidators();
+        this.form.controls['password'].clearValidators();
+        this.form.controls['confirmPassword'].clearValidators();
+      }
     }
+
+    this.#changeDetectorRef.detectChanges();
   }
 
   onSubmit() {
-    if (!this.id) {
+    if (!this.user) {
       this.add();
     } else {
       this.update();
