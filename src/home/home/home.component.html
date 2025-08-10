@@ -13,7 +13,7 @@
         aria-expanded="false"
       >
         <img [src]="profilePictureUrl" alt="avatar" class="profile-img me-2  rounded-circle" />
-        {{ user.name }}
+        {{ user?.name }}
       </a>
       <ul
         class="dropdown-menu dropdown-menu-end"
@@ -48,5 +48,5 @@
 
 <!-- 🔻 Sticky Footer -->
 <footer class="bg-white text-dark text-center fixed-bottom py-2 border-top">
-  <small>Logged in as {{ user.name }}</small>
+  <small>Logged in as {{ user?.name }}</small>
 </footer>
