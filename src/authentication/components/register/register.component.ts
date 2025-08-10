@@ -1,18 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { SharedModule } from '../../shared-module';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RoleService } from '../services/role-service';
-import { UserService } from '../services/user-service';
-import { Role } from '../models/role';
-import { LoaderService } from '../../app/services/loader.service';
-import { PasswordMatchValidator } from '../../app/validators/password-match-validator';
 import {
-  isInvalid,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoaderService } from '../../../app/services/loader.service';
+import { ToastService } from '../../../app/services/toast.service';
+import { Constants } from '../../../constants';
+import { SharedModule } from '../../../shared-module';
+import {
   getErrorMessage,
-} from '../../app/validators/field-validator';
-import { ToastService } from '../../app/services/toast.service';
-import { User } from '../models/user';
+  isInvalid,
+} from '../../../validators/field-validator';
+import { PasswordMatchValidator } from '../../../validators/password-match-validator';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user-service';
+import { Util } from '../../../common/util';
 
 @Component({
   selector: 'app-register',
@@ -28,8 +33,8 @@ export class RegisterComponent implements OnInit {
   #toastService = inject(ToastService);
   #route = inject(ActivatedRoute);
   form: FormGroup;
-  user!:User;
-
+  user!: User;
+  profilePictureUrl: string = Constants.defaultProfileUrl;
   id!: string;
 
   get getErrorMessage() {
@@ -52,6 +57,7 @@ export class RegisterComponent implements OnInit {
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
         ],
+        profilePicture: [Constants.defaultProfileUrl],
       },
       {
         validators: PasswordMatchValidator,
@@ -73,18 +79,21 @@ export class RegisterComponent implements OnInit {
     if (this.id) {
       this.#userService.getById(this.id).subscribe((users: User[]) => {
         if (!!users) {
-          this.user = users[0]; 
+          this.user = users[0];
           this.form.patchValue(this.user);
+
+          if (this.user.profilePicture) {
+            this.profilePictureUrl = this.user.profilePicture;
+          }
         }
       });
     }
   }
 
   onSubmit() {
-    if(!this.id){
+    if (!this.id) {
       this.add();
-    }
-    else{
+    } else {
       this.update();
     }
   }
@@ -127,5 +136,11 @@ export class RegisterComponent implements OnInit {
     } else {
       this.#toastService.showToast('Form is invalid');
     }
+  }
+
+  onFileSelected(event: any) {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    this.profilePictureUrl = Util.getBase64Url(file);
+    this.form.patchValue({ profilePicture: this.profilePictureUrl }); // set Base64 string
   }
 }

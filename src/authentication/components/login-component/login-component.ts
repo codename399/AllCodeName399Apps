@@ -8,7 +8,7 @@ import { ToastService } from '../../../app/services/toast.service';
 import {
   getErrorMessage,
   isInvalid,
-} from '../../../app/validators/field-validator';
+} from '../../../validators/field-validator';
 
 @Component({
   selector: 'app-login-component',

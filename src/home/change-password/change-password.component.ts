@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {
   getErrorMessage,
   isInvalid,
-} from '../../app/validators/field-validator';
+} from '../../validators/field-validator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoaderService } from '../../app/services/loader.service';
@@ -11,7 +11,7 @@ import { AuthenticationService } from '../../authentication/services/authenticat
 import { SharedModule } from '../../shared-module';
 import { UserService } from '../../authentication/services/user-service';
 import { ChangePasswordRequest } from '../../authentication/models/change-password-request';
-import { PasswordMatchValidator } from '../../app/validators/password-match-validator';
+import { PasswordMatchValidator } from '../../validators/password-match-validator';
 
 @Component({
   selector: 'app-change-password',

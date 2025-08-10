@@ -4,6 +4,7 @@ import { User } from '../../authentication/models/user';
 import { AuthenticationService } from '../../authentication/services/authentication-service';
 import { SharedModule } from '../../shared-module';
 import { UserService } from '../../authentication/services/user-service';
+import { Constants } from '../../constants';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   #userService = inject(UserService);
   #router = inject(Router);
   user!: User;
+  profilePictureUrl: string = Constants.defaultProfileUrl;
 
   ngOnInit(): void {
     this.#userService
@@ -24,6 +26,10 @@ export class HomeComponent implements OnInit {
         if (!!users?.length) {
           this.user = users[0];
           this.#authenticationService.user = this.user;
+
+          if (this.user.profilePicture) {
+            this.profilePictureUrl = this.user.profilePicture;
+          }
         }
       });
   }
