@@ -35,8 +35,6 @@ export class ToastComponent {
     effect(() => {
       this.message = this.#toastService.message;
       this.toastType = this.#toastService.toastType;
-
-      console.log(this.toastType)
     });
   }
 }
