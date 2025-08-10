@@ -1,4 +1,4 @@
-import { Audit } from "../../app/models/audit";
+import { Audit } from "../../../models/audit";
 
 export interface Role extends Audit {
     id: string | null;

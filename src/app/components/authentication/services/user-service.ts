@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ApiConstants } from '../../api-constants';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { ChangePasswordRequest } from '../models/change-password-request';
+import { ApiConstants } from '../../../../api-constants';
 
 @Injectable({
   providedIn: 'root',

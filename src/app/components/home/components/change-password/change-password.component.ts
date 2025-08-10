@@ -1,17 +1,14 @@
 import { Component, inject } from '@angular/core';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../validators/field-validator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoaderService } from '../../app/services/loader.service';
-import { ToastService } from '../../app/services/toast.service';
-import { AuthenticationService } from '../../authentication/services/authentication-service';
-import { SharedModule } from '../../shared-module';
-import { UserService } from '../../authentication/services/user-service';
-import { ChangePasswordRequest } from '../../authentication/models/change-password-request';
-import { PasswordMatchValidator } from '../../validators/password-match-validator';
+import { SharedModule } from '../../../../../shared-module';
+import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
+import { PasswordMatchValidator } from '../../../../../validators/password-match-validator';
+import { LoaderService } from '../../../../services/loader.service';
+import { ToastService } from '../../../../services/toast.service';
+import { ChangePasswordRequest } from '../../../authentication/models/change-password-request';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { UserService } from '../../../authentication/services/user-service';
 
 @Component({
   selector: 'app-change-password',

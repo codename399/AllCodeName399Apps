@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from '../models/project';
-import { ApiConstants } from '../../api-constants';
+import { ApiConstants } from '../../../../api-constants';
 
 @Injectable({
   providedIn: 'root',

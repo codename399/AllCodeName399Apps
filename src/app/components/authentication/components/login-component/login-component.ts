@@ -1,14 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SharedModule } from '../../../shared-module';
-import { AuthenticationService } from '../../services/authentication-service';
-import { Router } from '@angular/router';
-import { LoaderService } from '../../../app/services/loader.service';
-import { ToastService } from '../../../app/services/toast.service';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../validators/field-validator';
+import { Component, inject } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { SharedModule } from "../../../../../shared-module";
+import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
+import { LoaderService } from "../../../../services/loader.service";
+import { ToastService } from "../../../../services/toast.service";
+import { AuthenticationService } from "../../services/authentication-service";
 
 @Component({
   selector: 'app-login-component',

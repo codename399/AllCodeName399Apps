@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Project } from '../../authentication/models/project';
 import { ActivatedRoute } from '@angular/router';
+import { Project } from '../../../authentication/models/project';
+import { Constants } from '../../../../../constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   #route = inject(ActivatedRoute);
+  imageUrl = Constants.defaultProfileUrl;
 
   projects: Project[] = [];
 

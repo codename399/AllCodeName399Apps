@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from '../authentication/components/login-component/login-component';
-import { HomeComponent } from '../home/home/home.component';
-import { NoAuthGuard } from '../route-guards/no-auth-guard';
 import { AuthGuard } from '../route-guards/auth-guard';
-import { RegisterComponent } from '../authentication/components/register/register.component';
-import { ChangePasswordComponent } from '../home/change-password/change-password.component';
-import { RegisterResolver } from '../authentication/resolvers/register-resolver';
-import { DashboardComponent } from '../home/dashboard/dashboard.component';
-import { DashboardResolver } from '../home/resolvers/dashboard-resolver';
+import { NoAuthGuard } from '../route-guards/no-auth-guard';
+import { LoginComponent } from './components/authentication/components/login-component/login-component';
+import { RegisterComponent } from './components/authentication/components/register/register.component';
+import { RegisterResolver } from './components/authentication/resolvers/register-resolver';
+import { ChangePasswordComponent } from './components/home/components/change-password/change-password.component';
+import { DashboardComponent } from './components/home/components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/components/home/home.component';
+import { DashboardResolver } from './components/home/resolvers/dashboard-resolver';
 
 export const routes: Routes = [
   {

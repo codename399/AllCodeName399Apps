@@ -1,22 +1,14 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoaderService } from '../../../app/services/loader.service';
-import { ToastService } from '../../../app/services/toast.service';
-import { Constants } from '../../../constants';
-import { SharedModule } from '../../../shared-module';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../validators/field-validator';
-import { PasswordMatchValidator } from '../../../validators/password-match-validator';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user-service';
+import { Component, OnInit, inject, ChangeDetectorRef } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Constants } from "../../../../../constants";
+import { SharedModule } from "../../../../../shared-module";
+import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
+import { PasswordMatchValidator } from "../../../../../validators/password-match-validator";
+import { LoaderService } from "../../../../services/loader.service";
+import { ToastService } from "../../../../services/toast.service";
+import { User } from "../../models/user";
+import { UserService } from "../../services/user-service";
 
 @Component({
   selector: 'app-register',

@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SharedModule } from '../../../../../shared-module';
 import { Router } from '@angular/router';
-import { User } from '../../authentication/models/user';
-import { AuthenticationService } from '../../authentication/services/authentication-service';
-import { SharedModule } from '../../shared-module';
-import { UserService } from '../../authentication/services/user-service';
-import { Constants } from '../../constants';
+import { Constants } from '../../../../../constants';
+import { User } from '../../../authentication/models/user';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { UserService } from '../../../authentication/services/user-service';
 
 @Component({
   selector: 'app-home',
