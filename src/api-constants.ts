@@ -16,8 +16,18 @@ export abstract class ApiConstants {
   public static addRoles = '/addRoles';
   public static updateRole = '/updateRole';
   public static deleteRole = '/deleteRole';
+  public static getAllProjects = '/getAllProjects';
+  public static getProjectById = '/getProjectById';
+  public static addProjects = '/addProjects';
+  public static updateProject = '/updateProject';
+  public static deleteProject = '/deleteProject';
 
-  public static getUrl = (endpoint: string, isAuth: boolean = false): string => {
-    return isAuth ? this.authenticationBaseURL + endpoint : this.baseURL + endpoint;
-  }
+  public static getUrl = (
+    endpoint: string,
+    isAuth: boolean = false
+  ): string => {
+    return isAuth
+      ? this.authenticationBaseURL + endpoint
+      : this.baseURL + endpoint;
+  };
 }
