@@ -1,4 +1,4 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { LoaderService } from '../app/services/loader.service';
@@ -20,10 +20,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   return next(req).pipe(
-    catchError((error) => {
+    catchError((error: HttpErrorResponse) => {
       loaderService.hide();
-      toastService.error(error);
-      
+      toastService.error(error.message);
+
       return throwError(() => error);
     })
   );
