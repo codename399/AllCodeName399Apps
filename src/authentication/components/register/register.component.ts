@@ -104,16 +104,16 @@ export class RegisterComponent implements OnInit {
       this.#userService.add(this.form.value).subscribe({
         next: (response) => {
           this.#loaderService.hide();
-          this.#toastService.showToast('Registration successful!');
+          this.#toastService.success('Registration successful!');
           this.#router.navigate(['/login']);
         },
         error: (error) => {
           this.#loaderService.hide();
-          this.#toastService.showToast('Registration failed!');
+          this.#toastService.error('Registration failed!');
         },
       });
     } else {
-      this.#toastService.showToast('Form is invalid');
+      this.#toastService.error('Form is invalid');
     }
   }
 
@@ -126,16 +126,16 @@ export class RegisterComponent implements OnInit {
       this.#userService.update(this.user).subscribe({
         next: (response) => {
           this.#loaderService.hide();
-          this.#toastService.showToast('Updation successful!');
+          this.#toastService.success('Updation successful!');
           this.#router.navigate(['/home']);
         },
         error: (error) => {
           this.#loaderService.hide();
-          this.#toastService.showToast('Updation failed!');
+          this.#toastService.error('Updation failed!');
         },
       });
     } else {
-      this.#toastService.showToast('Form is invalid');
+      this.#toastService.error('Form is invalid');
     }
   }
 

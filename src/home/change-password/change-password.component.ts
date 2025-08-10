@@ -62,13 +62,13 @@ export class ChangePasswordComponent {
     this.#userService.changePassword(changePasswordRequest).subscribe({
       next: (response) => {
         this.#loaderService.hide();
-        this.#toastService.showToast('Password changed successfully!');
+        this.#toastService.success('Password changed successfully!');
         this.#authenticationService.clearToken();
         this.#router.navigate(['/login']);
       },
       error: (error) => {
         this.#loaderService.hide();
-        this.#toastService.showToast(
+        this.#toastService.error(
           'Failed to change password: ' + error.message
         );
       },

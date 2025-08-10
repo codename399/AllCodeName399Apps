@@ -1,6 +1,12 @@
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200;">
   <div
-    class="toast align-items-center text-white bg-success border-0"
+    class="toast align-items-center text-white border-0"
+    [ngClass] = "{
+      'bg-primary':toastType == 'Primary',
+      'bg-success':toastType == 'Success',
+      'bg-danger':toastType == 'Danger',
+      'bg-warning':toastType == 'Warning'
+    }"
     role="alert"
     aria-live="assertive"
     aria-atomic="true"

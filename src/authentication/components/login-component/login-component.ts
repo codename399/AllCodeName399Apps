@@ -57,11 +57,11 @@ export class LoginComponent {
       next: (response) => {
         this.#loaderService.hide();
         this.#router.navigate(['/home']);
-        this.#toastService.showToast('Login successful!');
+        this.#toastService.success('Login successful!');
       },
       error: (error) => {
         this.#loaderService.hide();
-        this.#toastService.showToast('Login failed!');
+        this.#toastService.error('Login failed!');
       },
     });
   }
