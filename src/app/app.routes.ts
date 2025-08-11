@@ -23,12 +23,12 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent:()=>import('../app/components/authentication/components/login-component/login-component').then(c=>c.LoginComponent),
     canActivate: [NoAuthGuard],
   },
   {
     path: 'home',
-    component: HomeComponent,
+    loadComponent:()=>import('../app/components/home/components/home/home.component').then(c=>c.HomeComponent),
     canActivate: [AuthGuard],
     children: [
       {
@@ -38,12 +38,12 @@ export const routes: Routes = [
       },
       {
         path: 'change-password',
-        component: ChangePasswordComponent,
+        loadComponent:()=>import('../app/components/home/components/change-password/change-password.component').then(c=>c.ChangePasswordComponent),
         canActivate: [AuthGuard],
       },
       {
         path: 'register/:id',
-        component: RegisterComponent,
+        loadComponent:()=>import('../app/components/authentication/components/register/register.component').then(c=>c.RegisterComponent),
         canActivate: [AuthGuard],
         resolve: {
           users: RegisterResolver,
@@ -51,7 +51,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadComponent:()=>import('../app/components/home/components/dashboard/dashboard.component').then(c=>c.DashboardComponent),
         canActivate: [AuthGuard],
         resolve: {
           projects: DashboardResolver,
@@ -59,7 +59,7 @@ export const routes: Routes = [
       },
       {
         path: 'manage-roles',
-        component: RoleComponent,
+        loadComponent:()=>import('../app/components/home/components/role/role.component').then(c=>c.RoleComponent),
         canActivate: [AuthGuard],
         resolve: {
           projects: RoleResolver,
@@ -67,7 +67,7 @@ export const routes: Routes = [
       },
       {
         path: 'manage-users',
-        component: UserComponent,
+        loadComponent:()=>import('../app/components/home/components/user/user.component').then(c=>c.UserComponent),
         canActivate: [AuthGuard],
         resolve: {
           projects: UserResolver,
@@ -75,7 +75,7 @@ export const routes: Routes = [
       },
       {
         path: 'manage-projects',
-        component: ProjectComponent,
+        loadComponent:()=>import('../app/components/home/components/project/project.component').then(c=>c.ProjectComponent),
         canActivate: [AuthGuard],
         resolve: {
           projects: ProjectResolver,
@@ -85,7 +85,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    loadComponent:()=>import('../app/components/authentication/components/register/register.component').then(c=>c.RegisterComponent),
     canActivate: [NoAuthGuard],
   },
   {
