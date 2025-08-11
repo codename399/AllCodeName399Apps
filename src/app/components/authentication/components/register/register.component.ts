@@ -1,14 +1,17 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Constants } from "../../../../../constants";
-import { SharedModule } from "../../../../../shared-module";
-import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
-import { PasswordMatchValidator } from "../../../../../validators/password-match-validator";
-import { LoaderService } from "../../../../services/loader.service";
-import { ToastService } from "../../../../services/toast.service";
-import { User } from "../../models/user";
-import { UserService } from "../../services/user-service";
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Constants } from '../../../../../constants';
+import { SharedModule } from '../../../../../shared-module';
+import {
+  getErrorMessage,
+  isInvalid,
+} from '../../../../../validators/field-validator';
+import { PasswordMatchValidator } from '../../../../../validators/password-match-validator';
+import { LoaderService } from '../../../../services/loader.service';
+import { ToastService } from '../../../../services/toast.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-register',
@@ -44,7 +47,13 @@ export class RegisterComponent implements OnInit {
       {
         name: ['', Validators.required],
         username: ['', Validators.required],
-        password: ['', [Validators.required]], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/)
+          ],
+        ], // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
         confirmPassword: ['', [Validators.required]],
         emailId: ['', [Validators.required, Validators.email]],
         contactNumber: [
