@@ -114,11 +114,13 @@
           >
             {{ user ? "Update" : "Register" }}
           </button>
+          @if(!user){
           <u
             ><a href="#" routerLink="/login"
               >Already have an account? Login</a
             ></u
           >
+          }
         </div>
       </form>
     </div>
