@@ -8,6 +8,12 @@ import { ChangePasswordComponent } from './components/home/components/change-pas
 import { DashboardComponent } from './components/home/components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/components/home/home.component';
 import { DashboardResolver } from './components/home/resolvers/dashboard-resolver';
+import { RoleComponent } from './components/home/components/role/role.component';
+import { UserComponent } from './components/home/components/user/user.component';
+import { ProjectComponent } from './components/home/components/project/project.component';
+import { RoleResolver } from './components/home/resolvers/role-resolver';
+import { UserResolver } from './components/home/resolvers/user-resolver';
+import { ProjectResolver } from './components/home/resolvers/project-resolver';
 
 export const routes: Routes = [
   {
@@ -28,7 +34,7 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch:'full'
+        pathMatch: 'full',
       },
       {
         path: 'change-password',
@@ -47,9 +53,33 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard],
-        resolve:{
-          projects:DashboardResolver
-        }
+        resolve: {
+          projects: DashboardResolver,
+        },
+      },
+      {
+        path: 'manage-roles',
+        component: RoleComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+          projects: RoleResolver,
+        },
+      },
+      {
+        path: 'manage-users',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+          projects: UserResolver,
+        },
+      },
+      {
+        path: 'manage-projects',
+        component: ProjectComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+          projects: ProjectResolver,
+        },
       },
     ],
   },

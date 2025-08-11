@@ -27,7 +27,7 @@ export class ProjectService {
   add(project: Project) {
     return this.#httpClient.post(
       ApiConstants.getUrl(ApiConstants.addProjects, true),
-      [project]
+      project
     );
   }
 

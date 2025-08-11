@@ -17,9 +17,7 @@ export class RoleService {
   }
 
   add(role: Role) {
-    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addRoles, true), [
-      role,
-    ]);
+    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addRoles, true), role);
   }
 
   update(role: Role) {
