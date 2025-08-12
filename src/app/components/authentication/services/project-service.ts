@@ -38,9 +38,10 @@ export class ProjectService {
     );
   }
 
-  delete(projectId: string) {
-    return this.#httpClient.delete(
-      ApiConstants.getUrl(ApiConstants.deleteProject, true) + '/' + projectId
+  delete(projectIds: string[]) {
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.deleteProject, true),
+      projectIds
     );
   }
 }

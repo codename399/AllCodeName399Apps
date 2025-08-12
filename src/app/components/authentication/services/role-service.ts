@@ -17,7 +17,10 @@ export class RoleService {
   }
 
   add(role: Role) {
-    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addRoles, true), role);
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.addRoles, true),
+      role
+    );
   }
 
   update(role: Role) {
@@ -27,9 +30,10 @@ export class RoleService {
     );
   }
 
-  delete(roleId: string) {
-    return this.#httpClient.delete(
-      ApiConstants.getUrl(ApiConstants.deleteRole, true) + '/' + roleId
+  delete(roleIds: string[]) {
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.deleteRole, true),
+      roleIds
     );
   }
 }

@@ -24,7 +24,10 @@ export class UserService {
   }
 
   add(user: User) {
-    return this.#httpClient.post(ApiConstants.getUrl(ApiConstants.addUsers, true), user);
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.addUsers, true),
+      user
+    );
   }
 
   update(user: User) {
@@ -34,9 +37,10 @@ export class UserService {
     );
   }
 
-  delete(userId: string) {
-    return this.#httpClient.delete(
-      ApiConstants.getUrl(ApiConstants.deleteUser, true) + '/' + userId
+  delete(userIds: string[]) {
+    return this.#httpClient.post(
+      ApiConstants.getUrl(ApiConstants.deleteUser, true),
+      userIds
     );
   }
 
