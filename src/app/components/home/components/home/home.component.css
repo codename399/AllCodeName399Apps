@@ -1,4 +1,8 @@
-.profile-img{
-    height:50px;
-    width: 50px;
+.profile-img {
+  height: 50px;
+  width: 50px;
+}
+
+main {
+  margin-top: 5% !important;
 }

@@ -1,19 +1,31 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, LowerCasePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { GridComponent } from './app/components/grid/grid.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatTable,
+  MatTableDataSource,
+  MatTableModule,
+} from '@angular/material/table';
+import { CamelCasePipe } from './app/pipes/camelcase-pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [GridComponent],
   imports: [
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     RouterModule,
+    LowerCasePipe,
+    MatPaginatorModule,
+    MatTableModule,
+    CamelCasePipe
   ],
   exports: [
     CommonModule,
@@ -22,6 +34,10 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatFormFieldModule,
     RouterModule,
+    GridComponent,
+    MatPaginatorModule,
+    MatTableModule,
+    CamelCasePipe
   ],
   providers: [],
 })

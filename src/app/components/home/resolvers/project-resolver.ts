@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
+import { ProjectService } from '../../authentication/services/project-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectResolver implements Resolve<any> {
+  #projectService = inject(ProjectService);
+
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return;
+    return this.#projectService.getAll();
   }
 }

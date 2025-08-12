@@ -1,12 +1,18 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
+import { inject, Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { UserService } from '../../authentication/services/user-service';
 
 @Injectable({
-    providedIn:"root"
+  providedIn: 'root',
 })
-export class UserResolver implements Resolve<any>{
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return;
-    }
+export class UserResolver implements Resolve<any> {
+  #userService = inject(UserService);
 
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.#userService.getAll();
+  }
 }

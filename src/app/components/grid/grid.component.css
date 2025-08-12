@@ -1,0 +1,13 @@
+table {
+  border: 1px solid;
+  border-collapse: collapse;
+  table-layout: auto; /* 👈 column size = content */
+  width: auto;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  white-space: nowrap;
+}

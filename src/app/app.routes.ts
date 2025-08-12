@@ -62,7 +62,7 @@ export const routes: Routes = [
         loadComponent:()=>import('../app/components/home/components/role/role.component').then(c=>c.RoleComponent),
         canActivate: [AuthGuard],
         resolve: {
-          projects: RoleResolver,
+          roles: RoleResolver,
         },
       },
       {
@@ -70,7 +70,7 @@ export const routes: Routes = [
         loadComponent:()=>import('../app/components/home/components/user/user.component').then(c=>c.UserComponent),
         canActivate: [AuthGuard],
         resolve: {
-          projects: UserResolver,
+          users: UserResolver,
         },
       },
       {
