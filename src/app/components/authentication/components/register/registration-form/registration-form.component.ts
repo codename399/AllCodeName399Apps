@@ -84,7 +84,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
     if (this.form.valid) {
       this.onFormSubmit.emit({
         id: this.id,
