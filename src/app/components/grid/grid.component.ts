@@ -25,8 +25,10 @@ export class GridComponent implements OnInit, AfterViewInit {
   tableName = input.required<string>();
   items = input.required<any[]>();
   displayedColumns = model.required<string[]>();
+
   add = output<void>();
   delete = output<any[]>();
+  edit = output<any>();
 
   currentPage = model<number>(1);
   pageSize = model<number>(5);
@@ -67,6 +69,10 @@ export class GridComponent implements OnInit, AfterViewInit {
 
   onDelete() {
     this.delete.emit(this.selection.selected);
+  }
+
+  onEdit() {
+    this.edit.emit(this.selection.selected[0]);
   }
 
   goToDashboard() {

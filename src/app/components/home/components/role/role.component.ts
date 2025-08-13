@@ -26,7 +26,7 @@ export class RoleComponent {
   #loaderService = inject(LoaderService);
   #roleService = inject(RoleService);
 
-  role!: Role;
+  role!: Role | null;
   form: FormGroup;
   roles: Role[] = [];
   columns: string[] = ['Name'];
@@ -50,23 +50,38 @@ export class RoleComponent {
 
   onSubmit() {
     let role: Role = this.form.value;
-
+    
     if (this.form.valid) {
       this.#loaderService.show();
-      this.#roleService.add(role).subscribe({
-        next: () => {
-          this.getAll();
 
-          if (this.role) {
-            this.#toastService.success('Updated successfully');
-          } else {
-            this.#toastService.success('Added successfully');
-          }
-        },
-      });
+      if (this.role) {
+        role.id = this.role.id;
+        this.update(role);
+      } else {
+        this.add(role);
+      }
     } else {
       this.#toastService.error('Invalid form.');
     }
+  }
+
+  add(role: Role) {
+    this.#roleService.add(role).subscribe({
+      next: () => {
+        this.getAll();
+        this.#toastService.success('Added successfully');
+      },
+    });
+  }
+
+  update(role: Role) {
+    this.#roleService.update(role).subscribe({
+      next: () => {
+        this.role = null;
+        this.getAll();
+        this.#toastService.success('Updated successfully');
+      },
+    });
   }
 
   delete(event: Role[]) {
@@ -78,6 +93,12 @@ export class RoleComponent {
         this.#toastService.success('Deleted successfully');
       },
     });
+  }
+
+  edit(event: Role) {
+    this.role = event;
+    this.showForm = true;
+    this.form.patchValue(this.role);
   }
 
   getAll() {
