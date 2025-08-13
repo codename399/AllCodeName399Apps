@@ -50,7 +50,7 @@ export class RoleComponent {
 
   onSubmit() {
     let role: Role = this.form.value;
-    
+
     if (this.form.valid) {
       this.#loaderService.show();
 
@@ -106,6 +106,7 @@ export class RoleComponent {
       next: (roles: Role[]) => {
         this.roles = roles;
         this.#loaderService.hide();
+        window.location.reload();
       },
     });
   }
