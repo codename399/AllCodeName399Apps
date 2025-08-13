@@ -1,4 +1,4 @@
-import { Component, input, model, ViewChild } from '@angular/core';
+import { Component, input, model, output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Audit } from '../../models/audit';
@@ -10,10 +10,11 @@ import { Audit } from '../../models/audit';
   styleUrl: './grid.component.css',
 })
 export class GridComponent {
-  tableName=input.required<string>();
+  tableName = input.required<string>();
   items = input.required<any[]>();
   displayedColumns = input.required<string[]>();
-  
+  add = output<void>();
+
   currentPage = model<number>(1);
   pageSize = model<number>(5);
 
@@ -26,5 +27,9 @@ export class GridComponent {
   ngAfterViewInit() {
     this.dataSource.data = this.items();
     this.dataSource.paginator = this.paginator;
+  }
+
+  goToAdd() {
+    this.add.emit();
   }
 }

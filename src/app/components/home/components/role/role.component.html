@@ -1,5 +1,33 @@
+@if(showForm){
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="card shadow" style="width: 100%; max-width: 400px">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">
+        {{ role ? "Update" : "Add" }}
+      </h4>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input id="name" class="form-control" formControlName="name" />
+          @if(isInvalid(form,"name")){
+          <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
+          }
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">
+            {{ role ? "Update" : "Add" }}
+          </button>
+          <button class="btn" (click)="showForm = !showForm">Back</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+} @else {
 <app-grid
   [tableName]="'Roles'"
   [items]="roles"
   [displayedColumns]="columns"
+  (add)="showForm = !showForm"
 ></app-grid>
+}
