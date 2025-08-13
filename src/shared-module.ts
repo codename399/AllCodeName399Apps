@@ -13,6 +13,7 @@ import {
   MatTableModule,
 } from '@angular/material/table';
 import { CamelCasePipe } from './app/pipes/camelcase-pipe';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [GridComponent],
@@ -25,7 +26,8 @@ import { CamelCasePipe } from './app/pipes/camelcase-pipe';
     LowerCasePipe,
     MatPaginatorModule,
     MatTableModule,
-    CamelCasePipe
+    CamelCasePipe,
+    MatCheckboxModule,
   ],
   exports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { CamelCasePipe } from './app/pipes/camelcase-pipe';
     GridComponent,
     MatPaginatorModule,
     MatTableModule,
-    CamelCasePipe
+    CamelCasePipe,
+    MatCheckboxModule,
   ],
   providers: [],
 })

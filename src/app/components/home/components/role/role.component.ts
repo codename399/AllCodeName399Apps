@@ -1,4 +1,4 @@
-import { Component, inject, input, model } from '@angular/core';
+import { Component, inject, input, model, ViewChild } from '@angular/core';
 import { SharedModule } from '../../../../../shared-module';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from '../../../authentication/models/role';
@@ -10,6 +10,7 @@ import {
 } from '../../../../../validators/field-validator';
 import { RoleService } from '../../../authentication/services/role-service';
 import { LoaderService } from '../../../../services/loader.service';
+import { GridComponent } from '../../../grid/grid.component';
 
 @Component({
   selector: 'app-role',
@@ -54,12 +55,7 @@ export class RoleComponent {
       this.#loaderService.show();
       this.#roleService.add(role).subscribe({
         next: () => {
-          this.#roleService.getAll().subscribe({
-            next: (roles: Role[]) => {
-              this.roles = roles;
-              this.#loaderService.hide();
-            },
-          });
+          this.getAll();
 
           if (this.role) {
             this.#toastService.success('Updated successfully');
@@ -71,5 +67,25 @@ export class RoleComponent {
     } else {
       this.#toastService.error('Invalid form.');
     }
+  }
+
+  delete(event: Role[]) {
+    this.#loaderService.show();
+
+    this.#roleService.delete(event.map((m) => m.id ?? '')).subscribe({
+      next: () => {
+        this.getAll();
+        this.#toastService.success('Deleted successfully');
+      },
+    });
+  }
+
+  getAll() {
+    this.#roleService.getAll().subscribe({
+      next: (roles: Role[]) => {
+        this.roles = roles;
+        this.#loaderService.hide();
+      },
+    });
   }
 }

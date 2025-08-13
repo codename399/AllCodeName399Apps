@@ -29,5 +29,6 @@
   [items]="roles"
   [displayedColumns]="columns"
   (add)="showForm = !showForm"
+  (delete) = "delete($event)"
 ></app-grid>
 }
