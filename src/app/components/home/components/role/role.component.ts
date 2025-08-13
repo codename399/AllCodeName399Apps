@@ -106,8 +106,12 @@ export class RoleComponent {
       next: (roles: Role[]) => {
         this.roles = roles;
         this.#loaderService.hide();
-        window.location.reload();
+        this.refresh();
       },
     });
+  }
+
+  refresh(){
+    window.location.reload();
   }
 }
