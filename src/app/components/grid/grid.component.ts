@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
   Component,
+  inject,
   input,
   model,
   OnInit,
@@ -10,6 +11,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grid',
@@ -18,6 +20,8 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
   styleUrl: './grid.component.css',
 })
 export class GridComponent implements OnInit, AfterViewInit {
+  #route = inject(Router);
+
   tableName = input.required<string>();
   items = input.required<any[]>();
   displayedColumns = model.required<string[]>();
@@ -63,5 +67,9 @@ export class GridComponent implements OnInit, AfterViewInit {
 
   onDelete() {
     this.delete.emit(this.selection.selected);
+  }
+
+  goToDashboard() {
+    this.#route.navigate(['/home']);
   }
 }

@@ -1,9 +1,13 @@
 <div class="mat-elevation-z8">
-  <div class="d-flex justify-content-end py-3">
-    <button class="btn btn-primary mx-3" (click)="onAdd()">Add</button>
-    @if(selection.hasValue()){
-    <button class="btn btn-danger" (click)="onDelete()">Delete</button>
-    }
+  <div class="d-flex justify-content-between">
+    <button class="btn mx-3" (click)="goToDashboard()">Back</button>
+
+    <div class="justify-content-end py-3">
+      <button class="btn btn-primary mx-3" (click)="onAdd()">Add</button>
+      @if(selection.hasValue()){
+      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      }
+    </div>
   </div>
   <table mat-table [dataSource]="dataSource">
     @for(column of displayedColumns();track column){
