@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { ApiConstants } from '../../../../api-constants';
 import { Constants } from '../../../../constants';
 import { LoginResponse } from '../models/login-response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ import { LoginResponse } from '../models/login-response';
 export class AuthenticationService {
   #httpClient = inject(HttpClient);
   #user = signal<User | null>(null);
+  #route = inject(Router);
 
   get token() {
     return sessionStorage.getItem(Constants.token);
@@ -45,6 +47,11 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     return this.token !== '' && this.token !== null;
+  }
+
+  logout() {
+    this.clearToken();
+    this.#route.navigate(['/login']);
   }
 
   validateUser(loginRequest: LoginRequest) {

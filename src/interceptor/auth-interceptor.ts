@@ -4,6 +4,7 @@ import { catchError, throwError } from 'rxjs';
 import { LoaderService } from '../app/services/loader.service';
 import { ToastService } from '../app/services/toast.service';
 import { AuthenticationService } from '../app/components/authentication/services/authentication-service';
+import jwtDecode from 'jwt-decode';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   let authenticationService = inject(AuthenticationService);
@@ -12,6 +13,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   let token: string = authenticationService.token ?? '';
 
   if (token) {
+    const decodedToken: any = jwtDecode(token);
+    const exp = decodedToken.exp * 1000;
+
+    if (Date.now() >= exp) {
+      authenticationService.logout();
+    }
+
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
