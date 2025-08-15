@@ -26,8 +26,9 @@
 } @else {
 <app-grid
   [tableName]="'Roles'"
-  [items]="roles"
+  [pagedResponse]="pagedResponse"
   [displayedColumns]="columns"
+  (get)="get($event)"
   (add)="showForm = true"
   (delete)="delete($event)"
   (edit)="edit($event)"

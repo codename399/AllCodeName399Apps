@@ -11,6 +11,8 @@ import { ToastService } from '../../../../services/toast.service';
 import { Role } from '../../../authentication/models/role';
 import { RoleService } from '../../../authentication/services/role-service';
 import { PaginationRequest } from '../../../../models/pagination-request';
+import { PagedResponse } from '../../../../models/paged-response';
+import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
 
 @Component({
   selector: 'app-role',
@@ -25,13 +27,15 @@ export class RoleComponent {
   #toastService = inject(ToastService);
   #loaderService = inject(LoaderService);
   #roleService = inject(RoleService);
+  #paginationRequest = inject(PAGINATION_REQUEST);
 
   role!: Role | null;
   form: FormGroup;
-  roles: Role[] = [];
+  pagedResponse!: PagedResponse<Role>;
   columns: string[] = ['Name'];
   showForm: boolean = false;
   request!: PaginationRequest;
+  count: number = 0;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -42,7 +46,8 @@ export class RoleComponent {
   }
 
   constructor() {
-    this.roles = this.#route.snapshot.data['roles'];
+    this.pagedResponse = this.#route.snapshot.data['pagedResponse'];
+    this.request = this.#paginationRequest;
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
@@ -66,10 +71,17 @@ export class RoleComponent {
     }
   }
 
+  get(event: any) {
+    debugger;
+    this.request.skip = event.previousPageIndex * event.pageSize;
+    this.request.limit = event.pageSize;
+    this.getAll();
+  }
+
   add(role: Role) {
     this.#roleService.add(role).subscribe({
       next: () => {
-        this.getAll(this.request);
+        this.getAll();
         this.#toastService.success('Added successfully');
       },
     });
@@ -79,7 +91,7 @@ export class RoleComponent {
     this.#roleService.update(role).subscribe({
       next: () => {
         this.role = null;
-        this.getAll(this.request);
+        this.getAll();
         this.#toastService.success('Updated successfully');
       },
     });
@@ -90,7 +102,7 @@ export class RoleComponent {
 
     this.#roleService.delete(event.map((m) => m.id ?? '')).subscribe({
       next: () => {
-        this.getAll(this.request);
+        this.getAll();
         this.#toastService.success('Deleted successfully');
       },
     });
@@ -102,11 +114,10 @@ export class RoleComponent {
     this.form.patchValue(this.role);
   }
 
-  getAll(request: PaginationRequest) {
-    this.request = request;
-    this.#roleService.getAll(request).subscribe({
-      next: (roles: Role[]) => {
-        this.roles = roles;
+  getAll() {
+    this.#roleService.getAll(this.request).subscribe({
+      next: (pagedResponse: PagedResponse<Role>) => {
+        this.pagedResponse = pagedResponse;
         this.#loaderService.hide();
         this.refresh();
       },

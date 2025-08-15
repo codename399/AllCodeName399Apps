@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../authentication/models/user';
 import { SharedModule } from '../../../../../shared-module';
+import { PagedResponse } from '../../../../models/paged-response';
 
 @Component({
   selector: 'app-user',
@@ -14,8 +15,9 @@ export class UserComponent {
   #route = inject(ActivatedRoute);
   users: User[] = [];
   columns: string[] = ['Name', 'Username', 'EmailId', 'ContactNumber'];
+  pagedResponse!: PagedResponse<User>;
 
   constructor() {
-    this.users = this.#route.snapshot.data['users'];
+    this.users = this.#route.snapshot.data['pagedResponse'];
   }
 }

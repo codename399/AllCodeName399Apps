@@ -4,6 +4,7 @@ import { Role } from '../models/role';
 import { Observable } from 'rxjs';
 import { ApiConstants } from '../../../../api-constants';
 import { PaginationRequest } from '../../../models/pagination-request';
+import { PagedResponse } from '../../../models/paged-response';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ import { PaginationRequest } from '../../../models/pagination-request';
 export class RoleService {
   #httpClient = inject(HttpClient);
 
-  getAll(request: PaginationRequest): Observable<Role[]> {
-    return this.#httpClient.post<Role[]>(
+  getAll(request: PaginationRequest): Observable<PagedResponse<Role>> {
+    return this.#httpClient.post<PagedResponse<Role>>(
       ApiConstants.getUrl(ApiConstants.getAllRoles, true),
       request
     );

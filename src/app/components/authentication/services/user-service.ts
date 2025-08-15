@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ChangePasswordRequest } from '../models/change-password-request';
 import { ApiConstants } from '../../../../api-constants';
+import { PagedResponse } from '../../../models/paged-response';
 
 @Injectable({
   providedIn: 'root',

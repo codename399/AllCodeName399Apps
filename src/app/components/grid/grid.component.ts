@@ -12,6 +12,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { PagedResponse } from '../../models/paged-response';
 
 @Component({
   selector: 'app-grid',
@@ -23,19 +24,20 @@ export class GridComponent implements OnInit, AfterViewInit {
   #route = inject(Router);
 
   tableName = input.required<string>();
-  items = input.required<any[]>();
-  
+  pagedResponse = input.required<PagedResponse<any>>();
+
   displayedColumns = model.required<string[]>();
 
   add = output<void>();
   delete = output<any[]>();
   edit = output<any>();
+  get = output<any>();
 
   currentPage = model<number>(1);
   pageSize = model<number>(5);
 
   pagedItems: any[] = [];
-  length:number = 0
+  length: number = 0;
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
@@ -46,15 +48,19 @@ export class GridComponent implements OnInit, AfterViewInit {
     if (!this.displayedColumns().includes('select')) {
       this.displayedColumns().unshift('select');
     }
-
-    this.paginator.page.subscribe((response)=>{
-      debugger;
-    })
   }
 
   ngAfterViewInit() {
-    this.dataSource.data = this.items();
+    this.dataSource.data = this.pagedResponse().items;
+    this.length = this.pagedResponse().count;
     this.dataSource.paginator = this.paginator;
+
+    this.paginator.page.subscribe((response: any) => {
+      this.length = response.length;
+      this.pageSize.set(response.pageSize);
+      this.currentPage.set(response.pageIndex);
+      this.get.emit(response);
+    });
   }
 
   onAdd() {

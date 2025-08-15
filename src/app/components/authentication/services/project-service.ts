@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from '../models/project';
 import { ApiConstants } from '../../../../api-constants';
+import { PaginationRequest } from '../../../models/pagination-request';
+import { PagedResponse } from '../../../models/paged-response';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +12,10 @@ import { ApiConstants } from '../../../../api-constants';
 export class ProjectService {
   #httpClient = inject(HttpClient);
 
-  getAll(): Observable<Project[]> {
-    return this.#httpClient.get<Project[]>(
-      ApiConstants.getUrl(ApiConstants.getAllProjects, true)
+  getAll(request: PaginationRequest): Observable<PagedResponse<Project>> {
+    return this.#httpClient.post<PagedResponse<Project>>(
+      ApiConstants.getUrl(ApiConstants.getAllProjects, true),
+      request
     );
   }
 
