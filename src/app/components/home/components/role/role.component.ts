@@ -16,13 +16,15 @@ import { Role } from '../../../authentication/models/role';
 import { GridService } from '../../../authentication/services/grid.service';
 import { RoleService } from '../../../authentication/services/role-service';
 import { GridComponent } from '../../../grid/grid.component';
+import { SharedModule } from '../../../../../shared-module';
 
 @Component({
   selector: 'app-role',
   standalone: true,
-  imports: [ReactiveFormsModule, GridComponent],
+  imports: [SharedModule, GridComponent],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
+  providers: [GridService],
 })
 export class RoleComponent {
   #formBuilder = inject(FormBuilder);
@@ -33,7 +35,7 @@ export class RoleComponent {
 
   form: FormGroup;
 
-  @ViewChild(GridComponent<Role>) gridComponent!: GridComponent<Role>;
+  @ViewChild(GridComponent) gridComponent!: GridComponent<Role>;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -78,7 +80,7 @@ export class RoleComponent {
 
   onSubmit() {
     let role: Role = this.form.value;
-
+    debugger;
     if (this.form.valid) {
       this.#loaderService.show();
 

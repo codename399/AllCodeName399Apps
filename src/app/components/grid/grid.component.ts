@@ -17,7 +17,7 @@ import { GridService } from '../authentication/services/grid.service';
   selector: 'app-grid',
   imports: [SharedModule],
   templateUrl: './grid.component.html',
-  styleUrl: './grid.component.css',
+  styleUrl: './grid.component.css'
 })
 export class GridComponent<I> implements AfterViewInit {
   #router = inject(Router);
