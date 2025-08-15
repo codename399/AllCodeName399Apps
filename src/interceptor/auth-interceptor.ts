@@ -4,7 +4,7 @@ import { catchError, throwError } from 'rxjs';
 import { LoaderService } from '../app/services/loader.service';
 import { ToastService } from '../app/services/toast.service';
 import { AuthenticationService } from '../app/components/authentication/services/authentication-service';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   let authenticationService = inject(AuthenticationService);
