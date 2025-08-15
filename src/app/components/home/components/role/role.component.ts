@@ -1,29 +1,69 @@
-import { Component, effect, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, effect, inject, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
+import {
+  getErrorMessage,
+  isInvalid,
+} from '../../../../../validators/field-validator';
+import { LoaderService } from '../../../../services/loader.service';
+import { ToastService } from '../../../../services/toast.service';
 import { Role } from '../../../authentication/models/role';
+import { GridService } from '../../../authentication/services/grid.service';
 import { RoleService } from '../../../authentication/services/role-service';
 import { GridComponent } from '../../../grid/grid.component';
 
 @Component({
   selector: 'app-role',
   standalone: true,
-  imports: [SharedModule],
+  imports: [ReactiveFormsModule, GridComponent],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
 })
-export class RoleComponent extends GridComponent<Role> {
+export class RoleComponent {
   #formBuilder = inject(FormBuilder);
   #route = inject(ActivatedRoute);
+  #toastService = inject(ToastService);
+  #loaderService = inject(LoaderService);
+  #gridService = inject(GridService<Role>);
 
   form: FormGroup;
 
+  @ViewChild(GridComponent<Role>) gridComponent!: GridComponent<Role>;
+
+  get getErrorMessage() {
+    return getErrorMessage;
+  }
+
+  get isInvalid() {
+    return isInvalid;
+  }
+
+  get item() {
+    return this.#gridService.item;
+  }
+
+  get showForm() {
+    return this.#gridService.showForm;
+  }
+
+  set item(value: Role) {
+    this.#gridService.item = value;
+  }
+
+  set showForm(value: boolean) {
+    this.#gridService.showForm = value;
+  }
+
   constructor() {
-    super();
-    this.gridService.service = RoleService;
-    this.gridService.pagedResponse = this.#route.snapshot.data['pagedResponse'];
-    this.gridService.displayedColumns = ['select', 'Name'];
+    this.#gridService.service = RoleService;
+    this.#gridService.pagedResponse =
+      this.#route.snapshot.data['pagedResponse'];
+    this.#gridService.displayedColumns = ['select', 'Name'];
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
@@ -40,19 +80,19 @@ export class RoleComponent extends GridComponent<Role> {
     let role: Role = this.form.value;
 
     if (this.form.valid) {
-      this.loaderService.show();
+      this.#loaderService.show();
 
       if (this.item) {
         role.id = this.item.id;
         this.item = role;
 
-        this.onEdit();
+        this.gridComponent.onEdit();
       } else {
         this.item = role;
-        this.onAdd();
+        this.gridComponent.onAdd();
       }
     } else {
-      this.toastService.error('Invalid form.');
+      this.#toastService.error('Invalid form.');
     }
   }
 }

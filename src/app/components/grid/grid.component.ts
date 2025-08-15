@@ -4,85 +4,80 @@ import {
   Component,
   effect,
   inject,
-  model,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { GridService } from '../authentication/services/grid.service';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../validators/field-validator';
 import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
-import { LoaderService } from '../../services/loader.service';
-import { ToastService } from '../../services/toast.service';
+import { SharedModule } from '../../../shared-module';
+import { GridService } from '../authentication/services/grid.service';
 
 @Component({
   selector: 'app-grid',
-  standalone: false,
+  imports: [SharedModule],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css',
 })
 export class GridComponent<I> implements AfterViewInit {
-  protected router = inject(Router);
-  protected gridService = inject(GridService<I>);
-
+  #router = inject(Router);
+  #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
-  protected toastService = inject(ToastService);
-  protected loaderService = inject(LoaderService);
 
   pagedItems: any[] = [];
-  item!: I | null;
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
-
   get length() {
-    return this.gridService.pagedResponse?.count;
+    return this.#gridService.pagedResponse?.count;
   }
 
   get pageSize() {
-    return this.gridService.paginationRequest.limit;
+    return this.#gridService.paginationRequest.limit;
   }
 
   get currentPage() {
-    return this.gridService.paginationRequest.skip / this.pageSize + 1;
+    return this.#gridService.paginationRequest.skip / this.pageSize + 1;
   }
 
   get showForm() {
-    return this.gridService.showForm;
+    return this.#gridService.showForm;
   }
 
   get displayedColumns() {
-    return this.gridService.displayedColumns;
+    return this.#gridService.displayedColumns;
+  }
+
+  get item() {
+    return this.#gridService.item;
+  }
+
+  get gridService() {
+    return this.#gridService;
   }
 
   set showForm(value: boolean) {
-    this.gridService.showForm = value;
+    this.#gridService.showForm = value;
   }
 
   set displayedColumns(value: string[]) {
-    this.gridService.displayedColumns = value;
+    this.#gridService.displayedColumns = value;
+  }
+
+  set item(value: I | null) {
+    this.#gridService.item = value;
   }
 
   constructor() {
-    this.gridService.paginationRequest = this.#paginationRequest;
+    if (!this.#gridService.service) {
+      this.#gridService.paginationRequest = this.#paginationRequest;
+    }
 
     effect(() => {
-      this.dataSource.data = this.gridService.pagedResponse?.items ?? [];
+      this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
     });
   }
 
@@ -90,9 +85,9 @@ export class GridComponent<I> implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
 
     if (this.paginator) {
-      this.paginator.page.subscribe((response: any) => {
-        this.gridService.paginationRequest = response;
-        this.gridService.getAll();
+      this.paginator.page.subscribe((event: any) => {
+        this.#gridService.paginationRequest = event;
+        this.#gridService.getAll();
       });
     }
   }
@@ -112,22 +107,32 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   onAdd() {
-    this.gridService.showForm = true;
-    this.gridService.add(this.item);
+    if (this.item) {
+      this.#gridService.add();
+    }
+  }
+
+  add() {
+    this.#gridService.showForm = true;
   }
 
   onDelete() {
-    this.gridService.delete(this.selection.selected);
+    this.#gridService.delete(this.selection.selected);
   }
 
   onEdit() {
-    this.item = this.selection.selected[0];
-    this.gridService.showForm = true;
-    this.gridService.update(this.item);
+    if (this.item) {
+      this.#gridService.update();
+    }
     this.item = null;
   }
 
+  edit() {
+    this.item = this.selection.selected[0];
+    this.#gridService.showForm = true;
+  }
+
   goToDashboard() {
-    this.router.navigate(['/home']);
+    this.#router.navigate(['/home']);
   }
 }

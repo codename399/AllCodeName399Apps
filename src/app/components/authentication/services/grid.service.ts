@@ -9,13 +9,14 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class GridService<I> {
   #injector = inject(Injector);
-  #service: any;
+  #service!: any;
   #paginationRequest = inject(PAGINATION_REQUEST);
   #pagedResponse = signal<PagedResponse<I> | null>(null);
   #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   #showForm = signal<boolean>(false);
   #displayedColumns = signal<string[]>([]);
+  #item!: I;
 
   get service() {
     return this.#service;
@@ -33,8 +34,12 @@ export class GridService<I> {
     return this.#showForm();
   }
 
-  get displayedColumns(){
+  get displayedColumns() {
     return this.#displayedColumns();
+  }
+
+  get item() {
+    return this.#item;
   }
 
   set service(value: any) {
@@ -54,8 +59,12 @@ export class GridService<I> {
     this.#showForm.set(value);
   }
 
-  set displayedColumns(value:string[]){
+  set displayedColumns(value: string[]) {
     this.#displayedColumns.set(value);
+  }
+
+  set item(value: I) {
+    this.#item = value;
   }
 
   getAll() {
@@ -69,21 +78,23 @@ export class GridService<I> {
     });
   }
 
-  add(item: I) {
+  add() {
     this.#loaderService.show();
-    this.#service.add(item).subscribe({
+    this.#service.add(this.#item).subscribe({
       next: () => {
+        this.showForm = false;
         this.getAll();
         this.#toastService.success('Added successfully');
       },
     });
   }
 
-  update(item: I) {
+  update() {
     this.#loaderService.show();
 
-    this.#service.update(item).subscribe({
+    this.#service.update(this.item).subscribe({
       next: () => {
+        this.showForm = false;
         this.getAll();
         this.#toastService.success('Updated successfully');
       },

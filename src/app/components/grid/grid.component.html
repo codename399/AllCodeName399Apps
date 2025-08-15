@@ -3,9 +3,9 @@
     <button class="btn mx-3" (click)="goToDashboard()">Back</button>
 
     <div class="justify-content-end py-3">
-      <button class="btn btn-primary mx-1" (click)="onAdd()">Add</button>
+      <button class="btn btn-primary mx-1" (click)="add()">Add</button>
       @if(selection.hasValue() && selection.selected.length == 1){
-      <button class="btn btn-primary mx-1" (click)="onEdit()">Edit</button>
+      <button class="btn btn-primary mx-1" (click)="edit()">Edit</button>
       } @if(selection.hasValue()){
       <button class="btn btn-danger" (click)="onDelete()">Delete</button>
       }

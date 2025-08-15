@@ -3,11 +3,12 @@ import { Project } from '../../../authentication/models/project';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
 import { PagedResponse } from '../../../../models/paged-response';
+import { GridComponent } from '../../../grid/grid.component';
 
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, GridComponent],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css',
 })
@@ -15,7 +16,7 @@ export class ProjectComponent {
   #route = inject(ActivatedRoute);
   projects: Project[] = [];
   columns: string[] = ['Name', 'Description'];
-  pagedResponse!:PagedResponse<Project>
+  pagedResponse!: PagedResponse<Project>;
 
   constructor() {
     this.pagedResponse = this.#route.snapshot.data['pagedResponse'];

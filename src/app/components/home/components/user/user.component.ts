@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../authentication/models/user';
 import { SharedModule } from '../../../../../shared-module';
 import { PagedResponse } from '../../../../models/paged-response';
+import { GridComponent } from '../../../grid/grid.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, GridComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })
