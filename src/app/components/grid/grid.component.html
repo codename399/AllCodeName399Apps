@@ -12,7 +12,7 @@
     </div>
   </div>
   <table mat-table [dataSource]="dataSource">
-    @for(column of displayedColumns();track column){
+    @for(column of displayedColumns;track column){
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>
         @if(column == "select"){
@@ -44,12 +44,12 @@
     }
 
     <!-- Table Header & Rows -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
   <mat-paginator
-    [pageSize]="pageSize()"
+    [pageSize]="pageSize"
     [length]="length"
     [pageSizeOptions]="[5, 10, 50, 100]"
     showFirstLastButtons

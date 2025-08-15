@@ -14,6 +14,7 @@ import {
 } from '@angular/material/table';
 import { CamelCasePipe } from './app/pipes/camelcase-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { GridService } from './app/components/authentication/services/grid.service';
 
 @NgModule({
   declarations: [GridComponent],
@@ -42,6 +43,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CamelCasePipe,
     MatCheckboxModule,
   ],
-  providers: [],
+  providers: [GridService],
 })
 export class SharedModule {}

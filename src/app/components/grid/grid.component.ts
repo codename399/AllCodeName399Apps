@@ -2,17 +2,23 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
   Component,
+  effect,
   inject,
-  input,
   model,
   OnInit,
-  output,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { PagedResponse } from '../../models/paged-response';
+import { GridService } from '../authentication/services/grid.service';
+import {
+  getErrorMessage,
+  isInvalid,
+} from '../../../validators/field-validator';
+import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
+import { LoaderService } from '../../services/loader.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-grid',
@@ -20,51 +26,75 @@ import { PagedResponse } from '../../models/paged-response';
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css',
 })
-export class GridComponent implements OnInit, AfterViewInit {
-  #route = inject(Router);
+export class GridComponent<I> implements AfterViewInit {
+  protected router = inject(Router);
+  protected gridService = inject(GridService<I>);
 
-  tableName = input.required<string>();
-  pagedResponse = input.required<PagedResponse<any>>();
-
-  displayedColumns = model.required<string[]>();
-
-  add = output<void>();
-  delete = output<any[]>();
-  edit = output<any>();
-  get = output<any>();
-
-  currentPage = model<number>(1);
-  pageSize = model<number>(5);
+  #paginationRequest = inject(PAGINATION_REQUEST);
+  protected toastService = inject(ToastService);
+  protected loaderService = inject(LoaderService);
 
   pagedItems: any[] = [];
-  length: number = 0;
+  item!: I | null;
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngOnInit(): void {
-    if (!this.displayedColumns().includes('select')) {
-      this.displayedColumns().unshift('select');
-    }
+  get getErrorMessage() {
+    return getErrorMessage;
   }
 
-  ngAfterViewInit() {
-    this.dataSource.data = this.pagedResponse().items;
-    this.length = this.pagedResponse().count;
-    this.dataSource.paginator = this.paginator;
+  get isInvalid() {
+    return isInvalid;
+  }
 
-    this.paginator.page.subscribe((response: any) => {
-      this.length = response.length;
-      this.pageSize.set(response.pageSize);
-      this.currentPage.set(response.pageIndex);
-      this.get.emit(response);
+  get length() {
+    return this.gridService.pagedResponse?.count;
+  }
+
+  get pageSize() {
+    return this.gridService.paginationRequest.limit;
+  }
+
+  get currentPage() {
+    return this.gridService.paginationRequest.skip / this.pageSize + 1;
+  }
+
+  get showForm() {
+    return this.gridService.showForm;
+  }
+
+  get displayedColumns() {
+    return this.gridService.displayedColumns;
+  }
+
+  set showForm(value: boolean) {
+    this.gridService.showForm = value;
+  }
+
+  set displayedColumns(value: string[]) {
+    this.gridService.displayedColumns = value;
+  }
+
+  constructor() {
+    this.gridService.paginationRequest = this.#paginationRequest;
+
+    effect(() => {
+      this.dataSource.data = this.gridService.pagedResponse?.items ?? [];
     });
   }
 
-  onAdd() {
-    this.add.emit();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+
+    if (this.paginator) {
+      this.paginator.page.subscribe((response: any) => {
+        this.gridService.paginationRequest = response;
+        this.gridService.getAll();
+      });
+    }
   }
 
   /** Whether all rows are selected. */
@@ -81,15 +111,23 @@ export class GridComponent implements OnInit, AfterViewInit {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
+  onAdd() {
+    this.gridService.showForm = true;
+    this.gridService.add(this.item);
+  }
+
   onDelete() {
-    this.delete.emit(this.selection.selected);
+    this.gridService.delete(this.selection.selected);
   }
 
   onEdit() {
-    this.edit.emit(this.selection.selected[0]);
+    this.item = this.selection.selected[0];
+    this.gridService.showForm = true;
+    this.gridService.update(this.item);
+    this.item = null;
   }
 
   goToDashboard() {
-    this.#route.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
 }

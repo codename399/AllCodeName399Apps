@@ -1,18 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../validators/field-validator';
-import { LoaderService } from '../../../../services/loader.service';
-import { ToastService } from '../../../../services/toast.service';
 import { Role } from '../../../authentication/models/role';
 import { RoleService } from '../../../authentication/services/role-service';
-import { PaginationRequest } from '../../../../models/pagination-request';
-import { PagedResponse } from '../../../../models/paged-response';
-import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
+import { GridComponent } from '../../../grid/grid.component';
 
 @Component({
   selector: 'app-role',
@@ -21,36 +13,26 @@ import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
 })
-export class RoleComponent {
-  #route = inject(ActivatedRoute);
+export class RoleComponent extends GridComponent<Role> {
   #formBuilder = inject(FormBuilder);
-  #toastService = inject(ToastService);
-  #loaderService = inject(LoaderService);
-  #roleService = inject(RoleService);
-  #paginationRequest = inject(PAGINATION_REQUEST);
+  #route = inject(ActivatedRoute);
 
-  role!: Role | null;
   form: FormGroup;
-  pagedResponse!: PagedResponse<Role>;
-  columns: string[] = ['Name'];
-  showForm: boolean = false;
-  request!: PaginationRequest;
-  count: number = 0;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   constructor() {
-    this.pagedResponse = this.#route.snapshot.data['pagedResponse'];
-    this.request = this.#paginationRequest;
+    super();
+    this.gridService.service = RoleService;
+    this.gridService.pagedResponse = this.#route.snapshot.data['pagedResponse'];
+    this.gridService.displayedColumns = ['select', 'Name'];
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
+    });
+
+    effect(() => {
+      if (this.showForm) {
+        this.form.patchValue(this.item ?? {});
+      }
     });
   }
 
@@ -58,73 +40,19 @@ export class RoleComponent {
     let role: Role = this.form.value;
 
     if (this.form.valid) {
-      this.#loaderService.show();
+      this.loaderService.show();
 
-      if (this.role) {
-        role.id = this.role.id;
-        this.update(role);
+      if (this.item) {
+        role.id = this.item.id;
+        this.item = role;
+
+        this.onEdit();
       } else {
-        this.add(role);
+        this.item = role;
+        this.onAdd();
       }
     } else {
-      this.#toastService.error('Invalid form.');
+      this.toastService.error('Invalid form.');
     }
-  }
-
-  get(event: any) {
-    debugger;
-    this.request.skip = event.previousPageIndex * event.pageSize;
-    this.request.limit = event.pageSize;
-    this.getAll();
-  }
-
-  add(role: Role) {
-    this.#roleService.add(role).subscribe({
-      next: () => {
-        this.getAll();
-        this.#toastService.success('Added successfully');
-      },
-    });
-  }
-
-  update(role: Role) {
-    this.#roleService.update(role).subscribe({
-      next: () => {
-        this.role = null;
-        this.getAll();
-        this.#toastService.success('Updated successfully');
-      },
-    });
-  }
-
-  delete(event: Role[]) {
-    this.#loaderService.show();
-
-    this.#roleService.delete(event.map((m) => m.id ?? '')).subscribe({
-      next: () => {
-        this.getAll();
-        this.#toastService.success('Deleted successfully');
-      },
-    });
-  }
-
-  edit(event: Role) {
-    this.role = event;
-    this.showForm = true;
-    this.form.patchValue(this.role);
-  }
-
-  getAll() {
-    this.#roleService.getAll(this.request).subscribe({
-      next: (pagedResponse: PagedResponse<Role>) => {
-        this.pagedResponse = pagedResponse;
-        this.#loaderService.hide();
-        this.refresh();
-      },
-    });
-  }
-
-  refresh() {
-    window.location.reload();
   }
 }
