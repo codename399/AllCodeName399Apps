@@ -2,7 +2,10 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
-import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
+import {
+  getErrorMessage,
+  isInvalid,
+} from '../../../../../validators/field-validator';
 import { PasswordMatchValidator } from '../../../../../validators/password-match-validator';
 import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
@@ -49,8 +52,8 @@ export class ChangePasswordComponent {
 
   onSubmit() {
     let changePasswordRequest: ChangePasswordRequest = {
-      id: this.#authenticationService?.user?.id ?? "",
-      password: this.form.value.oldPassword ?? "",
+      username: this.#authenticationService?.user?.username ?? '',
+      password: this.form.value.oldPassword ?? '',
       newPassword: this.form.value.password,
     };
 
@@ -65,9 +68,7 @@ export class ChangePasswordComponent {
       },
       error: (error) => {
         this.#loaderService.hide();
-        this.#toastService.error(
-          'Failed to change password: ' + error.message
-        );
+        this.#toastService.error('Failed to change password: ' + error.message);
       },
     });
   }
