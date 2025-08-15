@@ -1,6 +1,6 @@
 import { Constants } from '../../constants';
 
-export class Request {
+export class PaginationRequest {
   skip?: number = 0;
   limit?: number = 5;
   sortBy?: string = Constants.creationDate;

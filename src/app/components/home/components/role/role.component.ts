@@ -10,6 +10,7 @@ import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
 import { Role } from '../../../authentication/models/role';
 import { RoleService } from '../../../authentication/services/role-service';
+import { PaginationRequest } from '../../../../models/pagination-request';
 
 @Component({
   selector: 'app-role',
@@ -30,7 +31,7 @@ export class RoleComponent {
   roles: Role[] = [];
   columns: string[] = ['Name'];
   showForm: boolean = false;
-  request!:Request;
+  request!: PaginationRequest;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -101,7 +102,7 @@ export class RoleComponent {
     this.form.patchValue(this.role);
   }
 
-  getAll(request: Request) {
+  getAll(request: PaginationRequest) {
     this.request = request;
     this.#roleService.getAll(request).subscribe({
       next: (roles: Role[]) => {

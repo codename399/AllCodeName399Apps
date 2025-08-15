@@ -49,6 +49,8 @@
   </table>
 
   <mat-paginator
+    [pageSize]="pageSize()"
+    [length]="length"
     [pageSizeOptions]="[5, 10, 50, 100]"
     showFirstLastButtons
   ></mat-paginator>

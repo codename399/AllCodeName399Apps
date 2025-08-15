@@ -35,6 +35,7 @@ export class GridComponent implements OnInit, AfterViewInit {
   pageSize = model<number>(5);
 
   pagedItems: any[] = [];
+  length:number = 0
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
@@ -45,6 +46,10 @@ export class GridComponent implements OnInit, AfterViewInit {
     if (!this.displayedColumns().includes('select')) {
       this.displayedColumns().unshift('select');
     }
+
+    this.paginator.page.subscribe((response)=>{
+      debugger;
+    })
   }
 
   ngAfterViewInit() {
