@@ -24,6 +24,7 @@ export class GridComponent implements OnInit, AfterViewInit {
 
   tableName = input.required<string>();
   items = input.required<any[]>();
+  
   displayedColumns = model.required<string[]>();
 
   add = output<void>();
@@ -41,7 +42,9 @@ export class GridComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-    this.displayedColumns().unshift('select');
+    if (!this.displayedColumns().includes('select')) {
+      this.displayedColumns().unshift('select');
+    }
   }
 
   ngAfterViewInit() {

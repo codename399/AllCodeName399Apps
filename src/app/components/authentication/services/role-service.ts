@@ -10,9 +10,10 @@ import { ApiConstants } from '../../../../api-constants';
 export class RoleService {
   #httpClient = inject(HttpClient);
 
-  getAll(): Observable<Role[]> {
-    return this.#httpClient.get<Role[]>(
-      ApiConstants.getUrl(ApiConstants.getAllRoles, true)
+  getAll(request: Request): Observable<Role[]> {
+    return this.#httpClient.post<Role[]>(
+      ApiConstants.getUrl(ApiConstants.getAllRoles, true),
+      request
     );
   }
 

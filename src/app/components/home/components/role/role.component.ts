@@ -1,16 +1,15 @@
-import { Component, inject, input, model, ViewChild } from '@angular/core';
-import { SharedModule } from '../../../../../shared-module';
-import { ActivatedRoute } from '@angular/router';
-import { Role } from '../../../authentication/models/role';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastService } from '../../../../services/toast.service';
+import { ActivatedRoute } from '@angular/router';
+import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
-import { RoleService } from '../../../authentication/services/role-service';
 import { LoaderService } from '../../../../services/loader.service';
-import { GridComponent } from '../../../grid/grid.component';
+import { ToastService } from '../../../../services/toast.service';
+import { Role } from '../../../authentication/models/role';
+import { RoleService } from '../../../authentication/services/role-service';
 
 @Component({
   selector: 'app-role',
@@ -31,6 +30,7 @@ export class RoleComponent {
   roles: Role[] = [];
   columns: string[] = ['Name'];
   showForm: boolean = false;
+  request!:Request;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -68,7 +68,7 @@ export class RoleComponent {
   add(role: Role) {
     this.#roleService.add(role).subscribe({
       next: () => {
-        this.getAll();
+        this.getAll(this.request);
         this.#toastService.success('Added successfully');
       },
     });
@@ -78,7 +78,7 @@ export class RoleComponent {
     this.#roleService.update(role).subscribe({
       next: () => {
         this.role = null;
-        this.getAll();
+        this.getAll(this.request);
         this.#toastService.success('Updated successfully');
       },
     });
@@ -89,7 +89,7 @@ export class RoleComponent {
 
     this.#roleService.delete(event.map((m) => m.id ?? '')).subscribe({
       next: () => {
-        this.getAll();
+        this.getAll(this.request);
         this.#toastService.success('Deleted successfully');
       },
     });
@@ -101,8 +101,9 @@ export class RoleComponent {
     this.form.patchValue(this.role);
   }
 
-  getAll() {
-    this.#roleService.getAll().subscribe({
+  getAll(request: Request) {
+    this.request = request;
+    this.#roleService.getAll(request).subscribe({
       next: (roles: Role[]) => {
         this.roles = roles;
         this.#loaderService.hide();
@@ -111,7 +112,7 @@ export class RoleComponent {
     });
   }
 
-  refresh(){
+  refresh() {
     window.location.reload();
   }
 }

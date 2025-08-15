@@ -17,7 +17,7 @@
           <button type="submit" class="btn btn-primary">
             {{ role ? "Update" : "Add" }}
           </button>
-          <button class="btn" (click)="refresh()">Back</button>
+          <button class="btn" (click)="showForm = false">Back</button>
         </div>
       </form>
     </div>
@@ -29,7 +29,7 @@
   [items]="roles"
   [displayedColumns]="columns"
   (add)="showForm = true"
-  (delete) = "delete($event)"
+  (delete)="delete($event)"
   (edit)="edit($event)"
 ></app-grid>
 }
