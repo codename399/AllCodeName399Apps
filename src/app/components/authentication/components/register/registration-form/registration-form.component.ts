@@ -20,7 +20,7 @@ export class RegistrationFormComponent implements OnInit {
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
 
-  user = input<User>();
+  user = input<User | null>();
   onFormSubmit = output<User>();
 
   form: FormGroup;

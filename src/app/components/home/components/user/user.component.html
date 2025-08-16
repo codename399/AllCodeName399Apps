@@ -1,1 +1,17 @@
+@if(showForm){
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="card shadow" style="width: 100%; max-width: 400px">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">
+        {{ item ? "Update" : "Register" }}
+      </h4>
+      <app-registration-form
+        [user]="item"
+        (onFormSubmit)="onSubmit()"
+      ></app-registration-form>
+    </div>
+  </div>
+</div>
+} @else{
 <app-grid></app-grid>
+}

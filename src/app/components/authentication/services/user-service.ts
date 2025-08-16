@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { ChangePasswordRequest } from '../models/change-password-request';
 import { ApiConstants } from '../../../../api-constants';
 import { PagedResponse } from '../../../models/paged-response';
+import { PaginationRequest } from '../../../models/pagination-request';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,12 @@ import { PagedResponse } from '../../../models/paged-response';
 export class UserService {
   #httpClient = inject(HttpClient);
 
-  getAll(): Observable<User[]> {
-    return this.#httpClient.get<User[]>(
-      ApiConstants.getUrl(ApiConstants.getAllUsers, true)
+  getAll(
+    paginationRequest: PaginationRequest
+  ): Observable<PagedResponse<User>> {
+    return this.#httpClient.post<PagedResponse<User>>(
+      ApiConstants.getUrl(ApiConstants.getAllUsers, true),
+      paginationRequest
     );
   }
 
