@@ -16,7 +16,7 @@ export class GridService<I> {
   #toastService = inject(ToastService);
   #showForm = signal<boolean>(false);
   #displayedColumns = signal<string[]>([]);
-  #item!: I;
+  #item!: I | null;
 
   get service() {
     return this.#service;
@@ -63,7 +63,7 @@ export class GridService<I> {
     this.#displayedColumns.set(value);
   }
 
-  set item(value: I) {
+  set item(value: I | null) {
     this.#item = value;
   }
 
@@ -95,6 +95,7 @@ export class GridService<I> {
     this.#service.update(this.item).subscribe({
       next: () => {
         this.showForm = false;
+        this.item = null;
         this.getAll();
         this.#toastService.success('Updated successfully');
       },

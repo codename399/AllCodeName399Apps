@@ -53,7 +53,7 @@ export class RoleComponent {
     return this.#gridService.showForm;
   }
 
-  set item(value: Role) {
+  set item(value: Role | null) {
     this.#gridService.item = value;
   }
 
@@ -80,7 +80,7 @@ export class RoleComponent {
 
   onSubmit() {
     let role: Role = this.form.value;
-    debugger;
+    
     if (this.form.valid) {
       this.#loaderService.show();
 
@@ -88,10 +88,10 @@ export class RoleComponent {
         role.id = this.item.id;
         this.item = role;
 
-        this.gridComponent.onEdit();
+        this.#gridService.update();
       } else {
         this.item = role;
-        this.gridComponent.onAdd();
+        this.#gridService.add();
       }
     } else {
       this.#toastService.error('Invalid form.');

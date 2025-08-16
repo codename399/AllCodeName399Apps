@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
 import { SharedModule } from '../../../shared-module';
@@ -30,6 +30,7 @@ export class GridComponent<I> implements AfterViewInit {
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatTable) table!:MatTable<any>;
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -78,6 +79,10 @@ export class GridComponent<I> implements AfterViewInit {
 
     effect(() => {
       this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
+      
+      // if(this.table){
+      //   this.table.renderRows();
+      // }
     });
   }
 
@@ -106,25 +111,12 @@ export class GridComponent<I> implements AfterViewInit {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  onAdd() {
-    if (this.item) {
-      this.#gridService.add();
-    }
-  }
-
   add() {
     this.#gridService.showForm = true;
   }
 
   onDelete() {
     this.#gridService.delete(this.selection.selected);
-  }
-
-  onEdit() {
-    if (this.item) {
-      this.#gridService.update();
-    }
-    this.item = null;
   }
 
   edit() {
