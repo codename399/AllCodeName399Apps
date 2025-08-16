@@ -3,10 +3,13 @@
     <button class="btn mx-3" (click)="goToDashboard()">Back</button>
 
     <div class="justify-content-end py-3">
+      @if(showAdd()){
       <button class="btn btn-primary mx-1" (click)="add()">Add</button>
-      @if(selection.hasValue() && selection.selected.length == 1){
+      }
+
+      @if(selection.hasValue() && selection.selected.length == 1 && showEdit()){
       <button class="btn btn-primary mx-1" (click)="edit()">Edit</button>
-      } @if(selection.hasValue()){
+      } @if(selection.hasValue() && showDelete()){
       <button class="btn btn-danger" (click)="onDelete()">Delete</button>
       }
     </div>
@@ -16,12 +19,8 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>
         @if(column == "select"){
-        <mat-checkbox
-          color="primary"
-          (change)="$event ? masterToggle() : null"
-          [checked]="isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()"
-        >
+        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
         } @else{
         <b>{{ column }}</b>
@@ -29,12 +28,8 @@
       </th>
       <td mat-cell *matCellDef="let element">
         @if(column =="select"){
-        <mat-checkbox
-          color="primary"
-          (click)="$event.stopPropagation()"
-          (change)="$event ? selection.toggle(element) : null"
-          [checked]="selection.isSelected(element)"
-        >
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)">
         </mat-checkbox>
         } @else{
         {{ element[column | camelCase] }}
@@ -48,10 +43,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-paginator
-    [pageSize]="pageSize"
-    [length]="length"
-    [pageSizeOptions]="[5, 10, 50, 100]"
-    showFirstLastButtons
-  ></mat-paginator>
+  <mat-paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="[5, 10, 50, 100]"
+    showFirstLastButtons></mat-paginator>
 </div>

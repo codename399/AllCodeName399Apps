@@ -1,4 +1,4 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
@@ -13,6 +13,8 @@ import { User } from '../../../authentication/models/user';
 import { GridService } from '../../../authentication/services/grid.service';
 import { ProjectService } from '../../../authentication/services/project-service';
 import { GridComponent } from '../../../grid/grid.component';
+import { Constants } from '../../../../../constants';
+import { FileUploadService } from '../../../../services/file-upload.service';
 
 @Component({
   selector: 'app-project',
@@ -20,13 +22,15 @@ import { GridComponent } from '../../../grid/grid.component';
   imports: [SharedModule, GridComponent],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css',
+  providers: [FileUploadService]
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit {
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
   #loaderService = inject(LoaderService);
   #gridService = inject(GridService<User>);
+  #fileUploadService = inject(FileUploadService);
 
   form: FormGroup;
 
@@ -48,6 +52,14 @@ export class ProjectComponent {
     return this.#gridService.showForm;
   }
 
+  get url() {
+    return this.#fileUploadService.url;
+  }
+
+  set url(value: string) {
+    this.#fileUploadService.url = value;
+  }
+
   set item(value: Project | null) {
     this.#gridService.item = value;
   }
@@ -64,13 +76,29 @@ export class ProjectComponent {
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
+      description: [''],
+      imageUrl: [this.url],
+      route: [''],
+      navigationText: [''],
+      isAdmin: [false]
     });
 
     effect(() => {
       if (this.showForm) {
+        if (this.item) {
+          this.item.imageUrl = this.url ?? Constants.defaultProfileUrl;
+        }
+
         this.form.patchValue(this.item ?? {});
       }
     });
+  }
+
+  ngOnInit(): void {
+    if (this.item?.imageUrl) {
+      this.url =
+        this.item?.imageUrl ?? Constants.defaultProfileUrl;
+    }
   }
 
   onSubmit() {
@@ -91,5 +119,9 @@ export class ProjectComponent {
     } else {
       this.#toastService.error('Invalid form.');
     }
+  }
+
+  onFileSelected(event: any) {
+    this.#fileUploadService.onFileSelected(event);
   }
 }

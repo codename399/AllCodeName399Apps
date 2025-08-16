@@ -1,1 +1,55 @@
+@if(showForm){
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="profile-pic-container mb-3">
+        <img [src]="url" class="profile-pic" alt="Profile Picture" />
+        <label for="fileUpload" class="add-icon"> </label>
+        <input type="file" id="fileUpload" hidden (change)="onFileSelected($event)" />
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input id="name" class="form-control" formControlName="name" />
+        @if(isInvalid(form,"name")){
+        <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" class="form-control" formControlName="description">
+        </textarea>
+        @if(isInvalid(form,"description")){
+        <small class="text-danger">{{ getErrorMessage(form, "description") }}</small>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Route:</label>
+        <input id="route" class="form-control" formControlName="route" />
+        @if(isInvalid(form,"route")){
+        <small class="text-danger">{{ getErrorMessage(form, "route") }}</small>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="navigationText" class="form-label">Navigation Text:</label>
+        <input id="navigationText" class="form-control" formControlName="navigationText" />
+        @if(isInvalid(form,"navigationText")){
+        <small class="text-danger">{{ getErrorMessage(form, "navigationText") }}</small>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="isAdmin" class="form-label">Is Admin:</label>
+        <mat-checkbox id="isAdmin" color="primary" class="form-control" formControlName="isAdmin">
+        </mat-checkbox>
+        @if(isInvalid(form,"isAdmin")){
+        <small class="text-danger">{{ getErrorMessage(form, "isAdmin") }}</small>
+        }
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            {{ item ? "Update" : "Add" }}
+        </button>
+    </div>
+</form>
+}
+@else {
 <app-grid></app-grid>
+}

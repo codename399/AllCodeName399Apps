@@ -5,13 +5,10 @@
       <h4 class="card-title text-center mb-4">
         {{ item ? "Update" : "Register" }}
       </h4>
-      <app-registration-form
-        [user]="item"
-        (onFormSubmit)="onSubmit()"
-      ></app-registration-form>
+      <app-registration-form [user]="item" (onFormSubmit)="onSubmit()"></app-registration-form>
     </div>
   </div>
 </div>
 } @else{
-<app-grid></app-grid>
+<app-grid [showAdd]="false"></app-grid>
 }

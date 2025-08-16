@@ -6,4 +6,5 @@ export interface Project extends Audit{
   imageUrl: string | null;
   route: string | null;
   navigationText: string | null;
+  isAdmin: boolean;
 }

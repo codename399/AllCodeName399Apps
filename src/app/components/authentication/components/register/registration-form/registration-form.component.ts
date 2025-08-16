@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output } from '@angular/core';
 import {
   getErrorMessage,
   isInvalid,
@@ -9,22 +9,24 @@ import { PasswordMatchValidator } from '../../../../../../validators/password-ma
 import { User } from '../../../models/user';
 import { SharedModule } from '../../../../../../shared-module';
 import { ToastService } from '../../../../../services/toast.service';
+import { FileUploadService } from '../../../../../services/file-upload.service';
 
 @Component({
   selector: 'app-registration-form',
   imports: [SharedModule],
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.css',
+  providers: [FileUploadService]
 })
 export class RegistrationFormComponent implements OnInit {
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
+  #fileUploadService = inject(FileUploadService);
 
   user = input<User | null>();
   onFormSubmit = output<User>();
 
   form: FormGroup;
-  profilePictureUrl: string = Constants.defaultProfileUrl;
   id!: string | null;
   roleId!: string | null;
 
@@ -34,6 +36,14 @@ export class RegistrationFormComponent implements OnInit {
 
   get isInvalid() {
     return isInvalid;
+  }
+
+  get profilePictureUrl() {
+    return this.#fileUploadService.url;
+  }
+
+  set profilePictureUrl(value: string) {
+    this.#fileUploadService.url = value;
   }
 
   constructor() {
@@ -62,6 +72,10 @@ export class RegistrationFormComponent implements OnInit {
         validators: PasswordMatchValidator,
       }
     );
+
+    effect(() => {
+      this.form.patchValue({ profilePicture: this.profilePictureUrl }); // set Base64 string
+    });
   }
 
   ngOnInit(): void {
@@ -96,14 +110,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.profilePictureUrl = reader.result as string;
-        this.form.patchValue({ profilePicture: this.profilePictureUrl }); // set Base64 string
-      };
-      reader.readAsDataURL(file);
-    }
+    this.#fileUploadService.onFileSelected(event);
   }
 }

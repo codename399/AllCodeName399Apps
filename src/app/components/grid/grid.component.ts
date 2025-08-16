@@ -4,6 +4,7 @@ import {
   Component,
   effect,
   inject,
+  input,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,6 +24,11 @@ export class GridComponent<I> implements AfterViewInit {
   #router = inject(Router);
   #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
+
+  showAdd =input(true);
+  showEdit =input(true);
+  showDelete =input(true);
+  showSearch =input(true);
 
   pagedItems: any[] = [];
 
