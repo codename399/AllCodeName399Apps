@@ -56,8 +56,6 @@ export class UserComponent {
     this.#gridService.showForm = value;
   }
 
-  @ViewChild(UserComponent) userComponent!: UserComponent;
-
   constructor() {
     this.#gridService.service = UserService;
     this.#gridService.pagedResponse =
@@ -76,13 +74,15 @@ export class UserComponent {
 
     effect(() => {
       if (this.showForm) {
-        this.userComponent.form.patchValue(this.item ?? {});
+        this.form.patchValue(this.item ?? {});
       }
     });
   }
 
-  onSubmit() {
-    let user: User = this.userComponent.form.value;
+  onSubmit(user: User) {
+    if (user) {
+      this.item = user;
+    }
 
     if (this.form.valid) {
       this.#loaderService.show();

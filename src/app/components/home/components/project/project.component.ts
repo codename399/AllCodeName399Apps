@@ -24,7 +24,7 @@ import { FileUploadService } from '../../../../services/file-upload.service';
   styleUrl: './project.component.css',
   providers: [FileUploadService]
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent {
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
@@ -86,7 +86,8 @@ export class ProjectComponent implements OnInit {
     effect(() => {
       if (this.showForm) {
         if (this.item) {
-          this.item.imageUrl = this.url ?? Constants.defaultProfileUrl;
+          this.url =
+            this.item?.imageUrl ?? Constants.defaultProfileUrl;
         }
 
         this.form.patchValue(this.item ?? {});
@@ -94,26 +95,20 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.item?.imageUrl) {
-      this.url =
-        this.item?.imageUrl ?? Constants.defaultProfileUrl;
-    }
-  }
-
   onSubmit() {
-    let user: Project = this.form.value;
+    this.form.patchValue({ imageUrl: this.url });
+    let project: Project = this.form.value;
 
     if (this.form.valid) {
       this.#loaderService.show();
 
       if (this.item) {
-        user.id = this.item.id;
-        this.item = user;
+        project.id = this.item.id;
+        this.item = project;
 
         this.#gridService.update();
       } else {
-        this.item = user;
+        this.item = project;
         this.#gridService.add();
       }
     } else {

@@ -1,15 +1,15 @@
-import { Component, effect, inject, input, OnInit, output } from '@angular/core';
+import { Component, effect, inject, model, OnInit, output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Constants } from '../../../../../../constants';
+import { SharedModule } from '../../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../../validators/field-validator';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Constants } from '../../../../../../constants';
 import { PasswordMatchValidator } from '../../../../../../validators/password-match-validator';
-import { User } from '../../../models/user';
-import { SharedModule } from '../../../../../../shared-module';
-import { ToastService } from '../../../../../services/toast.service';
 import { FileUploadService } from '../../../../../services/file-upload.service';
+import { ToastService } from '../../../../../services/toast.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-registration-form',
@@ -23,7 +23,7 @@ export class RegistrationFormComponent implements OnInit {
   #toastService = inject(ToastService);
   #fileUploadService = inject(FileUploadService);
 
-  user = input<User | null>();
+  user = model<User | null>();
   onFormSubmit = output<User>();
 
   form: FormGroup;

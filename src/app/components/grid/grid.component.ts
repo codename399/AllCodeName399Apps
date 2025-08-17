@@ -25,10 +25,10 @@ export class GridComponent<I> implements AfterViewInit {
   #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
 
-  showAdd =input(true);
-  showEdit =input(true);
-  showDelete =input(true);
-  showSearch =input(true);
+  showAdd = input(true);
+  showEdit = input(true);
+  showDelete = input(true);
+  showSearch = input(true);
 
   pagedItems: any[] = [];
 
@@ -36,7 +36,7 @@ export class GridComponent<I> implements AfterViewInit {
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatTable) table!:MatTable<any>;
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -85,7 +85,7 @@ export class GridComponent<I> implements AfterViewInit {
 
     effect(() => {
       this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
-      
+
       // if(this.table){
       //   this.table.renderRows();
       // }
@@ -128,9 +128,5 @@ export class GridComponent<I> implements AfterViewInit {
   edit() {
     this.item = this.selection.selected[0];
     this.#gridService.showForm = true;
-  }
-
-  goToDashboard() {
-    this.#router.navigate(['/home']);
   }
 }

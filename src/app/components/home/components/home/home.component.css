@@ -5,6 +5,7 @@
 
 main {
   margin-top: 5% !important;
+  margin-bottom: 5% !important;
   height: 600px;
   overflow-y: scroll;
 }
