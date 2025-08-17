@@ -9,3 +9,8 @@ main {
   height: 600px;
   overflow-y: scroll;
 }
+
+.logo {
+  height: 50px;
+  width: 180px;
+}

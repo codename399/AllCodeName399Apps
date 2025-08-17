@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   #router = inject(Router);
   user!: User;
   profilePictureUrl: string = Constants.defaultProfileUrl;
+  logoUrl: string = Constants.logoUrl;
 
   ngOnInit(): void {
     this.#userService

@@ -1,42 +1,32 @@
-<nav
-  class="navbar navbar-expand-lg navbar-dark bg-white fixed-top border-bottom"
->
+<nav class="navbar navbar-expand-lg navbar-dark bg-white fixed-top border-bottom">
   <div class="container-fluid">
     <a class="navbar-brand cursor-pointer" href="#">
-      <img src="src\assets\images\logo.png" alt="CodeName399" />
+      <img [src]="logoUrl" alt="CodeName399" class="logo" />
     </a>
 
     <div class="dropdown ms-auto">
-      <a
-        class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
-        href="#"
-        id="profileDropdown"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <img
-          [src]="profilePictureUrl"
-          alt="avatar"
-          class="profile-img me-2 rounded-circle"
-        />
+      <a class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" href="#" id="profileDropdown"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <img [src]="profilePictureUrl" alt="avatar" class="profile-img me-2 rounded-circle" />
         {{ user ? user.name : "" }}
       </a>
-      <ul
-        class="dropdown-menu dropdown-menu-end"
-        aria-labelledby="profileDropdown"
-      >
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
         <li>
           <button class="dropdown-item" (click)="editProfile()">
             Edit Profile
           </button>
         </li>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li>
           <button class="dropdown-item" (click)="changePassword()">
             Change Password
           </button>
         </li>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li>
           <button class="dropdown-item text-danger" (click)="logout()">
             Logout
