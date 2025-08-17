@@ -12,7 +12,6 @@ import { SharedModule } from '../../../../../shared-module';
 })
 export class DashboardComponent implements OnInit {
   #route = inject(ActivatedRoute);
-  imageUrl = Constants.defaultProfileUrl;
 
   projects: Project[] = [];
 

@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row pt-4">
     @for(project of projects;let i = $index;track project.name){
-    <div class="col-md-3">
-      <div class="card" style="width: 18rem">
-        <img [src]="imageUrl" class="card-img-top" alt="{{ project.name }}" />
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <img [src]="project.imageUrl" class="card-img-top project-img" alt="{{ project.name }}" />
         <div class="card-body">
           <h5 class="card-title">{{ project.name }}</h5>
           <p class="card-text">
@@ -11,7 +11,7 @@
           </p>
           <a href="#" [routerLink]="project.route" class="btn btn-primary">{{
             project.navigationText
-          }}</a>
+            }}</a>
         </div>
       </div>
     </div>
