@@ -83,7 +83,7 @@ export class GridService<I> {
     this.#service.add(this.#item).subscribe({
       next: () => {
         this.showForm = false;
-        this.getAll();
+        window.location.reload();
         this.#toastService.success('Added successfully');
       },
     });
@@ -96,7 +96,7 @@ export class GridService<I> {
       next: () => {
         this.showForm = false;
         this.item = null;
-        this.getAll();
+        window.location.reload();
         this.#toastService.success('Updated successfully');
       },
     });

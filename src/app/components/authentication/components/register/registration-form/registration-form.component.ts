@@ -1,4 +1,4 @@
-import { Component, effect, inject, model, OnInit, output } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Constants } from '../../../../../../constants';
 import { SharedModule } from '../../../../../../shared-module';
@@ -23,7 +23,8 @@ export class RegistrationFormComponent implements OnInit {
   #toastService = inject(ToastService);
   #fileUploadService = inject(FileUploadService);
 
-  user = model<User | null>();
+  user = input<User | null>();
+  back = input<Function>();
   onFormSubmit = output<User>();
 
   form: FormGroup;

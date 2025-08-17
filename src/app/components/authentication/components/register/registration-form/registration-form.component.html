@@ -2,12 +2,7 @@
   <div class="profile-pic-container mb-3">
     <img [src]="profilePictureUrl" class="profile-pic" alt="Profile Picture" />
     <label for="fileUpload" class="add-icon"> </label>
-    <input
-      type="file"
-      id="fileUpload"
-      hidden
-      (change)="onFileSelected($event)"
-    />
+    <input type="file" id="fileUpload" hidden (change)="onFileSelected($event)" />
   </div>
   <div class="mb-3">
     <label for="name" class="form-label">Name:</label>
@@ -26,28 +21,18 @@
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Password:</label>
-    <input
-      id="password"
-      type="password"
-      class="form-control"
-      formControlName="password"
-    />
+    <input id="password" type="password" class="form-control" formControlName="password" />
     @if(isInvalid(form,"password")){
     <small class="text-danger">{{ getErrorMessage(form, "password") }}</small>
     }
   </div>
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm Password:</label>
-    <input
-      id="confirmPassword"
-      type="password"
-      class="form-control"
-      formControlName="confirmPassword"
-    />
+    <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword" />
     @if(isInvalid(form,"confirmPassword")){
     <small class="text-danger">{{
       getErrorMessage(form, "confirmPassword")
-    }}</small>
+      }}</small>
     }
   </div>
   }
@@ -60,15 +45,11 @@
   </div>
   <div class="mb-3">
     <label for="contactNumber" class="form-label">Contact Number:</label>
-    <input
-      id="contactNumber"
-      class="form-control"
-      formControlName="contactNumber"
-    />
+    <input id="contactNumber" class="form-control" formControlName="contactNumber" />
     @if(isInvalid(form,"contactNumber")){
     <small class="text-danger">{{
       getErrorMessage(form, "contactNumber")
-    }}</small>
+      }}</small>
     }
   </div>
   <!-- <div class="mb-3">
@@ -90,6 +71,11 @@
     </button>
     @if(!user()){
     <u><a href="#" routerLink="/login">Already have an account? Login</a></u>
+    }
+    @if(back()){
+    <button class="btn">
+      Back
+    </button>
     }
   </div>
 </form>

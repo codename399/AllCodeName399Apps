@@ -53,6 +53,9 @@
                     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
                         {{ item ? "Update" : "Add" }}
                     </button>
+                    <button (click)="showForm = false" class="btn">
+                        Back
+                    </button>
                 </div>
             </form>
         </div>

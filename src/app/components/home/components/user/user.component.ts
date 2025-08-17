@@ -100,4 +100,8 @@ export class UserComponent {
       this.#toastService.error('Invalid form.');
     }
   }
+
+  goToList(){
+    this.showForm = false;
+  }
 }
