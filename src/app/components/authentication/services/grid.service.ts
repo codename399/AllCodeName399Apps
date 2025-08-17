@@ -68,48 +68,18 @@ export class GridService<I> {
   }
 
   getAll() {
-    this.#loaderService.show();
-
-    this.#service.getAll(this.paginationRequest).subscribe({
-      next: (pagedResponse: PagedResponse<I>) => {
-        this.pagedResponse = pagedResponse;
-        this.#loaderService.hide();
-      },
-    });
+    return this.#service.getAll(this.paginationRequest);
   }
 
   add() {
-    this.#loaderService.show();
-    this.#service.add(this.#item).subscribe({
-      next: () => {
-        this.showForm = false;
-        window.location.reload();
-        this.#toastService.success('Added successfully');
-      },
-    });
+    return this.#service.add(this.#item);
   }
 
   update() {
-    this.#loaderService.show();
-
-    this.#service.update(this.item).subscribe({
-      next: () => {
-        this.showForm = false;
-        this.item = null;
-        window.location.reload();
-        this.#toastService.success('Updated successfully');
-      },
-    });
+    return this.#service.update(this.item);
   }
 
   delete(event: I[]) {
-    this.#loaderService.show();
-
-    this.#service.delete(event.map((m: any) => m.id ?? '')).subscribe({
-      next: () => {
-        this.getAll();
-        this.#toastService.success('Deleted successfully');
-      },
-    });
+    return this.#service.delete(event.map((m: any) => m.id ?? ''));
   }
 }

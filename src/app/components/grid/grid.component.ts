@@ -8,11 +8,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
 import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
 import { SharedModule } from '../../../shared-module';
 import { GridService } from '../authentication/services/grid.service';
+import { FormControl } from '@angular/forms';
+import { debounce, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Constants } from '../../../constants';
+import { LoaderService } from '../../services/loader.service';
+import { ToastService } from '../../services/toast.service';
+import { PagedResponse } from '../../models/paged-response';
 
 @Component({
   selector: 'app-grid',
@@ -21,9 +26,10 @@ import { GridService } from '../authentication/services/grid.service';
   styleUrl: './grid.component.css'
 })
 export class GridComponent<I> implements AfterViewInit {
-  #router = inject(Router);
   #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
+  #loaderService = inject(LoaderService);
+  #toastService = inject(ToastService);
 
   showAdd = input(true);
   showEdit = input(true);
@@ -31,12 +37,12 @@ export class GridComponent<I> implements AfterViewInit {
   showSearch = input(true);
 
   pagedItems: any[] = [];
+  searchInput: FormControl = new FormControl('');
 
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatTable) table!: MatTable<any>;
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -83,12 +89,24 @@ export class GridComponent<I> implements AfterViewInit {
       this.#gridService.paginationRequest = this.#paginationRequest;
     }
 
+    this.searchInput.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((term: string) => {
+        if (!term || term.length < 0) {
+          return of([]);
+        }
+
+        this.#gridService.paginationRequest.field = Constants.name;
+        this.#gridService.paginationRequest.value = term;
+        return this.#gridService.getAll();
+      })
+    ).subscribe((result => {
+      this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
+    }))
+
     effect(() => {
       this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
-
-      // if(this.table){
-      //   this.table.renderRows();
-      // }
     });
   }
 
@@ -117,16 +135,52 @@ export class GridComponent<I> implements AfterViewInit {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  add() {
-    this.#gridService.showForm = true;
+  getAll() {
+    this.#loaderService.show();
+
+    this.#gridService.getAll().subscribe({
+      next: (pagedResponse: PagedResponse<I>) => {
+        this.#gridService.pagedResponse = pagedResponse;
+        this.#loaderService.hide();
+      },
+    });
   }
 
-  onDelete() {
-    this.#gridService.delete(this.selection.selected);
+  add() {
+    this.#loaderService.show();
+    this.#gridService.showForm = true;
+    this.#gridService.add().subscribe({
+      next: () => {
+        this.showForm = false;
+        window.location.reload();
+        this.#toastService.success('Added successfully');
+      },
+    });
   }
 
   edit() {
+    this.#loaderService.show();
     this.item = this.selection.selected[0];
     this.#gridService.showForm = true;
+
+    this.#gridService.update().subscribe({
+      next: () => {
+        this.showForm = false;
+        this.item = null;
+        window.location.reload();
+        this.#toastService.success('Updated successfully');
+      },
+    });
+  }
+
+  delete(event: I[]) {
+    this.#loaderService.show();
+
+    this.#gridService.delete(this.selection.selected).subscribe({
+      next: () => {
+        this.getAll();
+        this.#toastService.success('Deleted successfully');
+      },
+    });
   }
 }

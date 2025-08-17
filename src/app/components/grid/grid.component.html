@@ -1,6 +1,7 @@
 <div class="mat-elevation-z8">
   <div class="d-flex justify-content-end">
-    <!-- <input id="search" type="text" /> -->
+    <label for="searchInput" class="form-label">Search:</label>
+    <input id="searchInput" class="form-control" formControlName="searchInput" />
     <div class="justify-content-end py-3">
       @if(showAdd()){
       <button class="btn btn-primary mx-1" (click)="add()">Add</button>
