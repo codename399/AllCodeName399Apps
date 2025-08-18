@@ -10,7 +10,7 @@
       @if(selection.hasValue() && selection.selected.length == 1 && showEdit()){
       <button class="btn btn-primary mx-1" (click)="edit()">Edit</button>
       } @if(selection.hasValue() && showDelete()){
-      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button class="btn btn-danger" (click)="delete()">Delete</button>
       }
     </div>
   </div>

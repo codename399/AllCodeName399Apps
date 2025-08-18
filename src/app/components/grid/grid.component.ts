@@ -173,7 +173,7 @@ export class GridComponent<I> implements AfterViewInit {
     });
   }
 
-  delete(event: I[]) {
+  delete() {
     this.#loaderService.show();
 
     this.#gridService.delete(this.selection.selected).subscribe({
