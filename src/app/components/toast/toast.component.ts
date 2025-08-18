@@ -1,6 +1,6 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
-import { ToastType } from '../../models/toast-type-enum';
+import { ToastType } from '../../models/enums/toast-type-enum';
 import { SharedModule } from '../../../shared-module';
 
 @Component({

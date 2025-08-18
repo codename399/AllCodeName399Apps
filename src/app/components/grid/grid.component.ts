@@ -18,6 +18,7 @@ import { Constants } from '../../../constants';
 import { LoaderService } from '../../services/loader.service';
 import { ToastService } from '../../services/toast.service';
 import { PagedResponse } from '../../models/paged-response';
+import { OperatorType } from '../../models/enums/operator-type.enum';
 
 @Component({
   selector: 'app-grid',
@@ -97,8 +98,14 @@ export class GridComponent<I> implements AfterViewInit {
           return of([]);
         }
 
-        this.#gridService.paginationRequest.field = Constants.name;
-        this.#gridService.paginationRequest.value = term;
+        this.#gridService.paginationRequest.filters = [
+          {
+            key: "Name",
+            value: term,
+            operator: OperatorType.Like
+          }
+        ]
+
         return this.#gridService.getAll();
       })
     ).subscribe((result => {
