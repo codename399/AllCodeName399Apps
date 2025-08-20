@@ -26,7 +26,7 @@ export class UserProjectMappingService {
     update(
         userProjectMapping: UserProjectMapping
     ) {
-        return this.#httpClient.post(
+        return this.#httpClient.put(
             ApiConstants.getUrl(ApiConstants.updateUserProjectMappings, true),
             userProjectMapping
         );

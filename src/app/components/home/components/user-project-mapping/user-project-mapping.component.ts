@@ -48,8 +48,10 @@ export class UserProjectMappingComponent {
     });
 
     this.userId.valueChanges.subscribe((userId: string) => {
-      this.projectIds.reset();
-      this.getAll(userId);
+      if (userId) {
+        this.projectIds.reset();
+        this.getAll(userId);
+      }
     })
   }
 
@@ -66,6 +68,7 @@ export class UserProjectMappingComponent {
       if (pagedResponse) {
         if (pagedResponse.count > 0) {
           this.userProjectMapping = pagedResponse.items[0];
+          this.projectIds.setValue(this.userProjectMapping.projectIds);
         }
       }
     });
@@ -75,7 +78,9 @@ export class UserProjectMappingComponent {
     let selections: string[] = this.projectIds.value ?? [];
 
     if (event.checked) {
-      this.projectIds.setValue([...selections, project.id]);
+      if (!selections.includes(project.id ?? "")) {
+        this.projectIds.setValue([...selections, project.id]);
+      }
     }
     else {
       let index = selections.findIndex((f: any) => f == project.id);
@@ -85,9 +90,12 @@ export class UserProjectMappingComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.form.valid) {
       let userProjectMapping: UserProjectMapping = this.form.value;
+
+      if (this.userProjectMapping != null) {
+        userProjectMapping.id = this.userProjectMapping.id;
+      }
 
       this.#userProjectMappingService.update(userProjectMapping).subscribe(() => {
         this.#toastService.success("Projects mapped successfully");
