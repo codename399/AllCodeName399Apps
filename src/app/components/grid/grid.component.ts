@@ -151,7 +151,8 @@ export class GridComponent<I> implements AfterViewInit {
 
   add() {
     this.#loaderService.show();
-    this.#gridService.showForm = true;
+    this.showForm = true;
+    
     this.#gridService.add().subscribe({
       next: () => {
         this.showForm = false;
@@ -164,7 +165,7 @@ export class GridComponent<I> implements AfterViewInit {
   edit() {
     this.#loaderService.show();
     this.item = this.selection.selected[0];
-    this.#gridService.showForm = true;
+    this.showForm = true;
 
     this.#gridService.update().subscribe({
       next: () => {
