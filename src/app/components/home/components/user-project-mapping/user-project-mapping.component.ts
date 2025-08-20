@@ -2,11 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
-import { User } from '../../../authentication/models/user';
-import { ProjectService } from '../../../authentication/services/project-service';
-import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
-import { PagedResponse } from '../../../../models/paged-response';
 import { Project } from '../../../authentication/models/project';
+import { User } from '../../../authentication/models/user';
 
 @Component({
   selector: 'app-user-project-mapping',
@@ -16,8 +13,6 @@ import { Project } from '../../../authentication/models/project';
 })
 export class UserProjectMappingComponent {
   #route = inject(ActivatedRoute);
-  #projectService = inject(ProjectService);
-  #paginationRequest = inject(PAGINATION_REQUEST);
 
   users: User[] = [];
   projects: Project[] = [];
