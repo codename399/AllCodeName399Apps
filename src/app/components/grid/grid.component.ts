@@ -7,18 +7,18 @@ import {
   input,
   ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Constants } from '../../../constants';
 import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
 import { SharedModule } from '../../../shared-module';
-import { GridService } from '../authentication/services/grid.service';
-import { FormControl } from '@angular/forms';
-import { debounce, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { Constants } from '../../../constants';
+import { OperatorType } from '../../models/enums/operator-type.enum';
+import { PagedResponse } from '../../models/paged-response';
 import { LoaderService } from '../../services/loader.service';
 import { ToastService } from '../../services/toast.service';
-import { PagedResponse } from '../../models/paged-response';
-import { OperatorType } from '../../models/enums/operator-type.enum';
+import { GridService } from '../authentication/services/grid.service';
 
 @Component({
   selector: 'app-grid',
@@ -100,7 +100,7 @@ export class GridComponent<I> implements AfterViewInit {
 
         this.#gridService.paginationRequest.filters = [
           {
-            key: "Name",
+            key: Constants.Name,
             value: term,
             operator: OperatorType.Like
           }
@@ -118,14 +118,10 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-
-    if (this.paginator) {
-      this.paginator.page.subscribe((event: any) => {
-        this.#gridService.paginationRequest = event;
-        this.#gridService.getAll();
-      });
-    }
+    this.paginator.page.subscribe((event: any) => {
+      this.#gridService.paginationRequest = event;
+      this.getAll();
+    });
   }
 
   /** Whether all rows are selected. */

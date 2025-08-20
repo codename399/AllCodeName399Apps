@@ -47,7 +47,7 @@ export class GridService<I> {
   }
 
   set paginationRequest(value: any) {
-    this.#paginationRequest.skip = value.previousPageIndex * value.pageSize;
+    this.#paginationRequest.skip = value.pageIndex * value.pageSize;
     this.#paginationRequest.limit = value.pageSize;
   }
 
