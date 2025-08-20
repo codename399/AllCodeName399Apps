@@ -5,7 +5,7 @@
                 Map Projects
             </h4>
             <div class="mb-3">
-                <label for="user" class="form-label">Select a user</label>
+                <label for="user" class="form-label">Select a user:</label>
                 <select id="user" class="form-select" [formControl]="user">
                     <option value="">Choose...</option>
                     @for(user of users; track user.id){
@@ -15,6 +15,16 @@
                     }
                 </select>
             </div>
+            @if(user.value){
+            <div class="mb-3">
+                <label for="user" class="form-label">Select projects:</label>
+                @for(project of projects;track project.id){
+                <mat-checkbox id="{{project.name}}" color="primary" class="form-control">
+                    <label for="{{project.name}}" class="form-label">{{project.name}}</label>
+                </mat-checkbox>
+                }
+            </div>
+            }
         </div>
     </div>
 </div>
