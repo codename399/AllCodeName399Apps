@@ -42,10 +42,7 @@ export class RegisterComponent implements OnInit {
         next: (response) => {
           this.#toastService.success('Registration successful!');
           this.#router.navigate(['/login']);
-        },
-        error: (error) => {
-          this.#toastService.error('Registration failed!');
-        },
+        }
       });
     } else {
       this.#toastService.error('Form is invalid');
@@ -58,10 +55,7 @@ export class RegisterComponent implements OnInit {
         next: (response) => {
           this.#toastService.success('Updation successful!');
           this.#router.navigate(['/home']);
-        },
-        error: (error) => {
-          this.#toastService.error('Updation failed!');
-        },
+        }
       });
     } else {
       this.#toastService.error('Form is invalid');

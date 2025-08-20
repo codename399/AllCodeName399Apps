@@ -51,10 +51,7 @@ export class LoginComponent {
       next: (response) => {
         this.#router.navigate(['/home']);
         this.#toastService.success('Login successful!');
-      },
-      error: (error) => {
-        this.#toastService.error('Login failed!');
-      },
+      }
     });
   }
 
