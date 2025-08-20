@@ -21,6 +21,8 @@ export abstract class ApiConstants {
   public static addProjects = '/addProjects';
   public static updateProject = '/updateProject';
   public static deleteProject = '/deleteProject';
+  public static getAllUserProjectMappings = "/getAllUserProjectMappings";
+  public static updateUserProjectMappings = "/updateUserProjectMappings";
 
   public static getUrl = (
     endpoint: string,

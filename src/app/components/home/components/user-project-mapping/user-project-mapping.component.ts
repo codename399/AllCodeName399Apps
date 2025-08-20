@@ -1,9 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
 import { Project } from '../../../authentication/models/project';
 import { User } from '../../../authentication/models/user';
+import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
+import { UserProjectMappingService } from '../../../authentication/services/user-project-mapping-service';
+import { Constants } from '../../../../../constants';
+import { OperatorType } from '../../../../models/enums/operator-type.enum';
+import { UserProjectMapping } from '../../../authentication/models/user-project-mapping';
+import { PagedResponse } from '../../../../models/paged-response';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-user-project-mapping',
@@ -13,17 +20,82 @@ import { User } from '../../../authentication/models/user';
 })
 export class UserProjectMappingComponent {
   #route = inject(ActivatedRoute);
+  #paginationRequest = inject(PAGINATION_REQUEST);
+  #userProjectMappingService = inject(UserProjectMappingService);
+  #formBuilder = inject(FormBuilder);
+  #toastService = inject(ToastService);
 
   users: User[] = [];
   projects: Project[] = [];
-  user: FormControl = new FormControl(null);
+  userProjectMapping!: UserProjectMapping | null;
+  form!: FormGroup;
+
+  get userId() {
+    return this.form.get("userId") as FormControl;
+  }
+
+  get projectIds() {
+    return this.form.get("projectIds") as FormControl;
+  }
 
   constructor() {
     this.users = this.#route.snapshot.data["usersandprojects"][0]?.items;
     this.projects = this.#route.snapshot.data["usersandprojects"][1]?.items;
 
-    this.user.valueChanges.subscribe((event) => {
-      console.log("event", event);
+    this.form = this.#formBuilder.group({
+      userId: [null, [Validators.required]],
+      projectIds: [[], [Validators.required]]
+    });
+
+    this.userId.valueChanges.subscribe((userId: string) => {
+      this.projectIds.reset();
+      this.getAll(userId);
     })
+  }
+
+  getAll(userId: string) {
+    this.#paginationRequest.filters = [
+      {
+        key: Constants.userId,
+        value: userId,
+        operator: OperatorType.Equal
+      }
+    ]
+
+    this.#userProjectMappingService.getAll(this.#paginationRequest).subscribe((pagedResponse: PagedResponse<UserProjectMapping>) => {
+      if (pagedResponse) {
+        if (pagedResponse.count > 0) {
+          this.userProjectMapping = pagedResponse.items[0];
+        }
+      }
+    });
+  }
+
+  onSelectionChange(event: any, project: Project) {
+    let selections: string[] = this.projectIds.value ?? [];
+
+    if (event.checked) {
+      this.projectIds.setValue([...selections, project.id]);
+    }
+    else {
+      let index = selections.findIndex((f: any) => f == project.id);
+      selections.splice(1, index);
+      this.projectIds.setValue(selections);
+    }
+  }
+
+  onSubmit() {
+    debugger;
+    if (this.form.valid) {
+      let userProjectMapping: UserProjectMapping = this.form.value;
+
+      this.#userProjectMappingService.update(userProjectMapping).subscribe(() => {
+        this.#toastService.success("Projects mapped successfully");
+        this.form.reset();
+      });
+    }
+    else {
+      this.#toastService.error("Please select projects to map");
+    }
   }
 }
