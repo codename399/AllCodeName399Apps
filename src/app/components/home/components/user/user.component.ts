@@ -1,4 +1,4 @@
-import { Component, effect, inject, viewChild, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, effect, inject, viewChild, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
@@ -29,8 +29,6 @@ export class UserComponent {
   #gridService = inject(GridService<User>);
 
   form: FormGroup;
-
-  @ViewChild(GridComponent) gridComponent!: GridComponent<User>;
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -101,7 +99,7 @@ export class UserComponent {
     }
   }
 
-  goToList(){
+  goToList() {
     this.showForm = false;
   }
 }
