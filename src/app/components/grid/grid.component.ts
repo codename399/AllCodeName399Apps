@@ -93,16 +93,17 @@ export class GridComponent<I> implements AfterViewInit {
       distinctUntilChanged(),
       switchMap((term: string) => {
         if (!term || term.length < 0) {
-          return of([]);
+          this.#gridService.paginationRequest.filters = null;
         }
-
-        this.#gridService.paginationRequest.filters = [
-          {
-            key: Constants.Name,
-            value: term,
-            operator: OperatorType.Like
-          }
-        ]
+        else {
+          this.#gridService.paginationRequest.filters = [
+            {
+              key: Constants.Name,
+              value: term,
+              operator: OperatorType.Like
+            }
+          ]
+        }
 
         return this.#gridService.getAll();
       })
