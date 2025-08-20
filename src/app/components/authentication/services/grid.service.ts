@@ -70,7 +70,7 @@ export class GridService<I> {
   }
 
   add() {
-    this.service.add().subscribe({
+    this.service.add(this.item).subscribe({
       next: () => {
         this.showForm = false;
         window.location.reload();
@@ -80,7 +80,7 @@ export class GridService<I> {
   }
 
   update() {
-    this.service.update().subscribe({
+    this.service.update(this.item).subscribe({
       next: () => {
         this.showForm = false;
         this.item = null;
