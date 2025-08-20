@@ -107,6 +107,7 @@ export class GridComponent<I> implements AfterViewInit {
         return this.#gridService.getAll();
       })
     ).subscribe((result => {
+      this.#gridService.pagedResponse = result as PagedResponse<I>;
       this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
     }))
 
@@ -146,7 +147,7 @@ export class GridComponent<I> implements AfterViewInit {
 
   add() {
     this.showForm = true;
-    
+
     this.#gridService.add().subscribe({
       next: () => {
         this.showForm = false;
