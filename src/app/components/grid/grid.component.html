@@ -1,7 +1,9 @@
 <div class="mat-elevation-z8">
-  <div class="d-flex justify-content-end">
-    <label for="searchInput" class="form-label">Search:</label>
-    <input id="searchInput" class="form-control" [formControl]="searchInput" />
+  <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-start py-3 align-items-center">
+      <label for="searchInput" class="form-label">Search:</label>
+      <input id="searchInput" class="form-control mx-3" [formControl]="searchInput" />
+    </div>
     <div class="justify-content-end py-3">
       @if(showAdd()){
       <button class="btn btn-primary mx-1" (click)="add()">Add</button>
