@@ -6,6 +6,7 @@ import { DashboardResolver } from './components/home/resolvers/dashboard-resolve
 import { ProjectResolver } from './components/home/resolvers/project-resolver';
 import { RoleResolver } from './components/home/resolvers/role-resolver';
 import { UserResolver } from './components/home/resolvers/user-resolver';
+import { UserProjectMappingResolver } from './components/home/resolvers/user-project-mapping-resolver';
 
 export const routes: Routes = [
   {
@@ -97,6 +98,17 @@ export const routes: Routes = [
           pagedResponse: ProjectResolver,
         },
       },
+      {
+        path: 'map-user-projects',
+        loadComponent: () =>
+          import(
+            '../app/components/home/components/user-project-mapping/user-project-mapping.component'
+          ).then((c) => c.UserProjectMappingComponent),
+        canActivate: [AuthGuard],
+        resolve: {
+          usersandprojects: UserProjectMappingResolver,
+        },
+      }
     ],
   },
   {
