@@ -4,7 +4,7 @@ import { FilterRequest } from './filter-request';
 export class PaginationRequest {
   skip?: number = 0;
   limit?: number = 5;
-  sortBy?: string = Constants.creationDate;
+  sortBy?: string = Constants.updationDate;
   filters?: FilterRequest[];
   ascending: boolean = false;
   isDeleted: boolean = false;

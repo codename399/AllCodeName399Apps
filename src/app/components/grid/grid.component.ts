@@ -151,28 +151,11 @@ export class GridComponent<I> implements AfterViewInit {
 
   add() {
     this.showForm = true;
-
-    this.#gridService.add().subscribe({
-      next: () => {
-        this.showForm = false;
-        window.location.reload();
-        this.#toastService.success('Added successfully');
-      },
-    });
   }
 
   edit() {
     this.item = this.selection.selected[0];
     this.showForm = true;
-
-    this.#gridService.update().subscribe({
-      next: () => {
-        this.showForm = false;
-        this.item = null;
-        window.location.reload();
-        this.#toastService.success('Updated successfully');
-      },
-    });
   }
 
   openDeleteConfirmation() {

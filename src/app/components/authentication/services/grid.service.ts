@@ -1,6 +1,7 @@
 import { inject, Injectable, Injector, signal } from '@angular/core';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
 import { PagedResponse } from '../../../models/paged-response';
+import { ToastService } from '../../../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class GridService<I> {
   #injector = inject(Injector);
   #service!: any;
   #paginationRequest = inject(PAGINATION_REQUEST);
+  #toastService = inject(ToastService);
   #pagedResponse = signal<PagedResponse<I> | null>(null);
   #showForm = signal<boolean>(false);
   #displayedColumns = signal<string[]>([]);
@@ -64,18 +66,31 @@ export class GridService<I> {
   }
 
   getAll() {
-    return this.#service.getAll(this.paginationRequest);
+    return this.service.getAll(this.paginationRequest);
   }
 
   add() {
-    return this.#service.add(this.#item);
+    this.service.add().subscribe({
+      next: () => {
+        this.showForm = false;
+        window.location.reload();
+        this.#toastService.success('Added successfully');
+      },
+    });
   }
 
   update() {
-    return this.#service.update(this.item);
+    this.service.update().subscribe({
+      next: () => {
+        this.showForm = false;
+        this.item = null;
+        window.location.reload();
+        this.#toastService.success('Updated successfully');
+      },
+    });
   }
 
   delete(event: I[]) {
-    return this.#service.delete(event.map((m: any) => m.id ?? ''));
+    return this.service.delete(event.map((m: any) => m.id ?? ''));
   }
 }
