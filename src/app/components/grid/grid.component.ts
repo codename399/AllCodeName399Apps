@@ -145,6 +145,7 @@ export class GridComponent<I> implements AfterViewInit {
     this.#gridService.getAll().subscribe({
       next: (pagedResponse: PagedResponse<I>) => {
         this.#gridService.pagedResponse = pagedResponse;
+        this.selection.clear();
       },
     });
   }
