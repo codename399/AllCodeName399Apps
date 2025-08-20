@@ -18,6 +18,8 @@ import { OperatorType } from '../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../models/paged-response';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-grid',
@@ -29,6 +31,7 @@ export class GridComponent<I> implements AfterViewInit {
   #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
   #toastService = inject(ToastService);
+  #dialog = inject(MatDialog);
 
   showAdd = input(true);
   showEdit = input(true);
@@ -169,6 +172,20 @@ export class GridComponent<I> implements AfterViewInit {
         window.location.reload();
         this.#toastService.success('Updated successfully');
       },
+    });
+  }
+
+  openDeleteConfirmation() {
+    const dialogRef = this.#dialog.open(DialogComponent, {
+      width: '350px',
+      data: { title: 'Confirm Delete', message: 'Are you sure you want to delete this user?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete();
+        ;
+      }
     });
   }
 

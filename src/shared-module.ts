@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule  } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {
   MatTableModule
@@ -25,6 +26,7 @@ import { CamelCasePipe } from './app/pipes/camelcase-pipe';
     MatTableModule,
     CamelCasePipe,
     MatCheckboxModule,
+    MatDialogModule 
   ],
   exports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { CamelCasePipe } from './app/pipes/camelcase-pipe';
     MatTableModule,
     CamelCasePipe,
     MatCheckboxModule,
+    MatDialogModule
   ],
   providers: []
 })
