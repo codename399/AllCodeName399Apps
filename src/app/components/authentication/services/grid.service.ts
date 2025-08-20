@@ -76,6 +76,9 @@ export class GridService<I> {
         window.location.reload();
         this.#toastService.success('Added successfully');
       },
+      error: () => {
+        this.item = null;
+      }
     });
   }
 
