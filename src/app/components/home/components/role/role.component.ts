@@ -2,21 +2,19 @@ import { Component, effect, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
-import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
 import { Role } from '../../../authentication/models/role';
 import { GridService } from '../../../authentication/services/grid.service';
 import { RoleService } from '../../../authentication/services/role-service';
 import { GridComponent } from '../../../grid/grid.component';
-import { SharedModule } from '../../../../../shared-module';
 
 @Component({
   selector: 'app-role',
@@ -30,7 +28,6 @@ export class RoleComponent {
   #formBuilder = inject(FormBuilder);
   #route = inject(ActivatedRoute);
   #toastService = inject(ToastService);
-  #loaderService = inject(LoaderService);
   #gridService = inject(GridService<Role>);
 
   form: FormGroup;
@@ -82,8 +79,6 @@ export class RoleComponent {
     let role: Role = this.form.value;
     
     if (this.form.valid) {
-      this.#loaderService.show();
-
       if (this.item) {
         role.id = this.item.id;
         this.item = role;

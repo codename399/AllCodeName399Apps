@@ -1,8 +1,6 @@
 import { inject, Injectable, Injector, signal } from '@angular/core';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
 import { PagedResponse } from '../../../models/paged-response';
-import { LoaderService } from '../../../services/loader.service';
-import { ToastService } from '../../../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +10,6 @@ export class GridService<I> {
   #service!: any;
   #paginationRequest = inject(PAGINATION_REQUEST);
   #pagedResponse = signal<PagedResponse<I> | null>(null);
-  #loaderService = inject(LoaderService);
-  #toastService = inject(ToastService);
   #showForm = signal<boolean>(false);
   #displayedColumns = signal<string[]>([]);
   #item!: I | null;

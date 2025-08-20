@@ -16,7 +16,6 @@ import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
 import { SharedModule } from '../../../shared-module';
 import { OperatorType } from '../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../models/paged-response';
-import { LoaderService } from '../../services/loader.service';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 
@@ -29,7 +28,6 @@ import { GridService } from '../authentication/services/grid.service';
 export class GridComponent<I> implements AfterViewInit {
   #gridService = inject(GridService<I>);
   #paginationRequest = inject(PAGINATION_REQUEST);
-  #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
 
   showAdd = input(true);
@@ -139,18 +137,14 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   getAll() {
-    this.#loaderService.show();
-
     this.#gridService.getAll().subscribe({
       next: (pagedResponse: PagedResponse<I>) => {
         this.#gridService.pagedResponse = pagedResponse;
-        this.#loaderService.hide();
       },
     });
   }
 
   add() {
-    this.#loaderService.show();
     this.showForm = true;
     
     this.#gridService.add().subscribe({
@@ -163,7 +157,6 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   edit() {
-    this.#loaderService.show();
     this.item = this.selection.selected[0];
     this.showForm = true;
 
@@ -178,8 +171,6 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   delete() {
-    this.#loaderService.show();
-
     this.#gridService.delete(this.selection.selected).subscribe({
       next: () => {
         this.getAll();

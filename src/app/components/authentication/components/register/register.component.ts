@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
-import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service';
@@ -16,7 +15,6 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 export class RegisterComponent implements OnInit {
   #userService = inject(UserService);
   #router = inject(Router);
-  #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   #route = inject(ActivatedRoute);
   user!: User;
@@ -40,15 +38,12 @@ export class RegisterComponent implements OnInit {
 
   add(user: User) {
     if (user) {
-      this.#loaderService.show();
       this.#userService.add(user).subscribe({
         next: (response) => {
-          this.#loaderService.hide();
           this.#toastService.success('Registration successful!');
           this.#router.navigate(['/login']);
         },
         error: (error) => {
-          this.#loaderService.hide();
           this.#toastService.error('Registration failed!');
         },
       });
@@ -59,15 +54,12 @@ export class RegisterComponent implements OnInit {
 
   update(user: User) {
     if (user) {
-      this.#loaderService.show();
       this.#userService.update(user).subscribe({
         next: (response) => {
-          this.#loaderService.hide();
           this.#toastService.success('Updation successful!');
           this.#router.navigate(['/home']);
         },
         error: (error) => {
-          this.#loaderService.hide();
           this.#toastService.error('Updation failed!');
         },
       });

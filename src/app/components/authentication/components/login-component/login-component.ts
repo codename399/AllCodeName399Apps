@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { SharedModule } from "../../../../../shared-module";
 import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
-import { LoaderService } from "../../../../services/loader.service";
 import { ToastService } from "../../../../services/toast.service";
 import { AuthenticationService } from "../../services/authentication-service";
 
@@ -17,7 +16,6 @@ export class LoginComponent {
   #authenticationService = inject(AuthenticationService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
-  #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   form: FormGroup;
 
@@ -48,16 +46,13 @@ export class LoginComponent {
 
   // Method to validate user credentials
   validateUser(loginRequest: any) {
-    this.#loaderService.show();
 
     this.#authenticationService.validateUser(loginRequest).subscribe({
       next: (response) => {
-        this.#loaderService.hide();
         this.#router.navigate(['/home']);
         this.#toastService.success('Login successful!');
       },
       error: (error) => {
-        this.#loaderService.hide();
         this.#toastService.error('Login failed!');
       },
     });

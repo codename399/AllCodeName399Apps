@@ -1,20 +1,19 @@
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Constants } from '../../../../../constants';
 import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
-import { LoaderService } from '../../../../services/loader.service';
+import { FileUploadService } from '../../../../services/file-upload.service';
 import { ToastService } from '../../../../services/toast.service';
 import { Project } from '../../../authentication/models/project';
 import { User } from '../../../authentication/models/user';
 import { GridService } from '../../../authentication/services/grid.service';
 import { ProjectService } from '../../../authentication/services/project-service';
 import { GridComponent } from '../../../grid/grid.component';
-import { Constants } from '../../../../../constants';
-import { FileUploadService } from '../../../../services/file-upload.service';
 
 @Component({
   selector: 'app-project',
@@ -28,7 +27,6 @@ export class ProjectComponent {
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
-  #loaderService = inject(LoaderService);
   #gridService = inject(GridService<User>);
   #fileUploadService = inject(FileUploadService);
 
@@ -100,8 +98,6 @@ export class ProjectComponent {
     let project: Project = this.form.value;
 
     if (this.form.valid) {
-      this.#loaderService.show();
-
       if (this.item) {
         project.id = this.item.id;
         this.item = project;

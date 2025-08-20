@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, effect, inject, viewChild, ViewChild } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
@@ -6,13 +6,12 @@ import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
-import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
+import { RegistrationFormComponent } from '../../../authentication/components/register/registration-form/registration-form.component';
 import { User } from '../../../authentication/models/user';
 import { GridService } from '../../../authentication/services/grid.service';
 import { UserService } from '../../../authentication/services/user-service';
 import { GridComponent } from '../../../grid/grid.component';
-import { RegistrationFormComponent } from '../../../authentication/components/register/registration-form/registration-form.component';
 
 @Component({
   selector: 'app-user',
@@ -25,7 +24,6 @@ export class UserComponent {
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
-  #loaderService = inject(LoaderService);
   #gridService = inject(GridService<User>);
 
   form: FormGroup;
@@ -83,8 +81,6 @@ export class UserComponent {
     }
 
     if (this.form.valid) {
-      this.#loaderService.show();
-
       if (this.item) {
         user.id = this.item.id;
         this.item = user;

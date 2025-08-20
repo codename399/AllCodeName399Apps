@@ -7,7 +7,6 @@ import {
   isInvalid,
 } from '../../../../../validators/field-validator';
 import { PasswordMatchValidator } from '../../../../../validators/password-match-validator';
-import { LoaderService } from '../../../../services/loader.service';
 import { ToastService } from '../../../../services/toast.service';
 import { ChangePasswordRequest } from '../../../authentication/models/change-password-request';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
@@ -25,7 +24,6 @@ export class ChangePasswordComponent {
   #userService = inject(UserService);
   #formBuilder = inject(FormBuilder);
   #router = inject(Router);
-  #loaderService = inject(LoaderService);
   #toastService = inject(ToastService);
   form: FormGroup;
 
@@ -57,17 +55,13 @@ export class ChangePasswordComponent {
       newPassword: this.form.value.password,
     };
 
-    this.#loaderService.show();
-
     this.#userService.changePassword(changePasswordRequest).subscribe({
       next: (response) => {
-        this.#loaderService.hide();
         this.#toastService.success('Password changed successfully!');
         this.#authenticationService.clearToken();
         this.#router.navigate(['/login']);
       },
       error: (error) => {
-        this.#loaderService.hide();
         this.#toastService.error('Failed to change password: ' + error.message);
       },
     });
