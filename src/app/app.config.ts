@@ -10,11 +10,12 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Config } from '../assets/environments/config';
 import { paginationRequestFactory } from '../factories/pagination-request-factory';
-import { CONFIG_FILE_PATH, PAGINATION_REQUEST } from '../injectors/common-injector';
+import { API_CONSTANTS, CONFIG_FILE_PATH, PAGINATION_REQUEST } from '../injectors/common-injector';
 import { authInterceptor } from '../interceptor/auth-interceptor';
 import { routes } from './app.routes';
 import { AuthenticationService } from './components/authentication/services/authentication-service';
 import { ConfigService } from './services/app-config-service';
+import { ApiConstants } from '../api-constants';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,7 +40,7 @@ export const appConfig: ApplicationConfig = {
         await configService.load();
       },
       deps: [ConfigService],
-      multi:true
+      multi: true
     },
     {
       provide: Config,
@@ -47,6 +48,10 @@ export const appConfig: ApplicationConfig = {
         return configService.value;
       },
       deps: [ConfigService]
+    },
+    {
+      provide: API_CONSTANTS,
+      useClass: ApiConstants
     }
   ],
 };

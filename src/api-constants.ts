@@ -1,30 +1,35 @@
-export abstract class ApiConstants {
+import { inject } from "@angular/core";
+import { Config } from "./assets/environments/config";
+
+export class ApiConstants {
+  #config = inject(Config);
+
   //Common API Endpoints
-  public static authenticationBaseURL = 'https://localhost:44357';
-  public static baseURL = 'http://localhost:58441';
+  public authenticationBaseURL = this.#config.authenticationBaseURL;
+  public baseURL = this.#config.baseURL;
 
   //Authentication API Endpoints
-  public static getAllUsers = '/getAllUsers';
-  public static getUserById = '/getUserById';
-  public static addUsers = '/addUsers';
-  public static updateUser = '/updateUser';
-  public static deleteUser = '/deleteUser';
-  public static validateUser = '/validateUser';
-  public static changePassword = '/changePassword';
-  public static getAllRoles = '/getAllRoles';
-  public static getRoleById = '/getRoleById';
-  public static addRoles = '/addRoles';
-  public static updateRole = '/updateRole';
-  public static deleteRole = '/deleteRole';
-  public static getAllProjects = '/getAllProjects';
-  public static getProjectById = '/getProjectById';
-  public static addProjects = '/addProjects';
-  public static updateProject = '/updateProject';
-  public static deleteProject = '/deleteProject';
-  public static getAllUserProjectMappings = "/getAllUserProjectMappings";
-  public static updateUserProjectMappings = "/updateUserProjectMappings";
+  public getAllUsers = '/getAllUsers';
+  public getUserById = '/getUserById';
+  public addUsers = '/addUsers';
+  public updateUser = '/updateUser';
+  public deleteUser = '/deleteUser';
+  public validateUser = '/validateUser';
+  public changePassword = '/changePassword';
+  public getAllRoles = '/getAllRoles';
+  public getRoleById = '/getRoleById';
+  public addRoles = '/addRoles';
+  public updateRole = '/updateRole';
+  public deleteRole = '/deleteRole';
+  public getAllProjects = '/getAllProjects';
+  public getProjectById = '/getProjectById';
+  public addProjects = '/addProjects';
+  public updateProject = '/updateProject';
+  public deleteProject = '/deleteProject';
+  public getAllUserProjectMappings = "/getAllUserProjectMappings";
+  public updateUserProjectMappings = "/updateUserProjectMappings";
 
-  public static getUrl = (
+  public getUrl = (
     endpoint: string,
     isAuth: boolean = false
   ): string => {

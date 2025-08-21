@@ -1,24 +1,24 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { inject } from "@angular/core/primitives/di";
+import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiConstants } from "../../../../api-constants";
 import { PagedResponse } from "../../../models/paged-response";
 import { PaginationRequest } from "../../../models/pagination-request";
-import { User } from "../models/user";
 import { UserProjectMapping } from "../models/user-project-mapping";
+import { API_CONSTANTS } from "../../../../injectors/common-injector";
 
 @Injectable({
     providedIn: "root"
 })
 export class UserProjectMappingService {
     #httpClient = inject(HttpClient);
+    #apiConstants = inject(API_CONSTANTS);
 
     getAll(
         paginationRequest: PaginationRequest
     ): Observable<PagedResponse<UserProjectMapping>> {
         return this.#httpClient.post<PagedResponse<UserProjectMapping>>(
-            ApiConstants.getUrl(ApiConstants.getAllUserProjectMappings, true),
+            this.#apiConstants.getUrl(this.#apiConstants.getAllUserProjectMappings, true),
             paginationRequest
         );
     }
@@ -27,7 +27,7 @@ export class UserProjectMappingService {
         userProjectMapping: UserProjectMapping
     ) {
         return this.#httpClient.put(
-            ApiConstants.getUrl(ApiConstants.updateUserProjectMappings, true),
+            this.#apiConstants.getUrl(this.#apiConstants.updateUserProjectMappings, true),
             userProjectMapping
         );
     }

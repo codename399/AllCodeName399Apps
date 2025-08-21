@@ -6,52 +6,54 @@ import { ChangePasswordRequest } from '../models/change-password-request';
 import { ApiConstants } from '../../../../api-constants';
 import { PagedResponse } from '../../../models/paged-response';
 import { PaginationRequest } from '../../../models/pagination-request';
+import { API_CONSTANTS } from '../../../../injectors/common-injector';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   #httpClient = inject(HttpClient);
+    #apiConstants = inject(API_CONSTANTS);
 
   getAll(
     paginationRequest: PaginationRequest
   ): Observable<PagedResponse<User>> {
     return this.#httpClient.post<PagedResponse<User>>(
-      ApiConstants.getUrl(ApiConstants.getAllUsers, true),
+      this.#apiConstants.getUrl(this.#apiConstants.getAllUsers, true),
       paginationRequest
     );
   }
 
   getById(userId: string): Observable<User[]> {
     return this.#httpClient.get<User[]>(
-      ApiConstants.getUrl(ApiConstants.getUserById, true) + '?id=' + userId
+      this.#apiConstants.getUrl(this.#apiConstants.getUserById, true) + '?id=' + userId
     );
   }
 
   add(user: User) {
     return this.#httpClient.post(
-      ApiConstants.getUrl(ApiConstants.addUsers, true),
+      this.#apiConstants.getUrl(this.#apiConstants.addUsers, true),
       user
     );
   }
 
   update(user: User) {
     return this.#httpClient.put(
-      ApiConstants.getUrl(ApiConstants.updateUser, true),
+      this.#apiConstants.getUrl(this.#apiConstants.updateUser, true),
       user
     );
   }
 
   delete(userIds: string[]) {
     return this.#httpClient.post(
-      ApiConstants.getUrl(ApiConstants.deleteUser, true),
+      this.#apiConstants.getUrl(this.#apiConstants.deleteUser, true),
       userIds
     );
   }
 
   changePassword(changePasswordRequest: ChangePasswordRequest) {
     return this.#httpClient.post(
-      ApiConstants.getUrl(ApiConstants.changePassword, true),
+      this.#apiConstants.getUrl(this.#apiConstants.changePassword, true),
       changePasswordRequest
     );
   }

@@ -7,6 +7,7 @@ import { ApiConstants } from '../../../../api-constants';
 import { Constants } from '../../../../constants';
 import { LoginResponse } from '../models/login-response';
 import { Router } from '@angular/router';
+import { API_CONSTANTS } from '../../../../injectors/common-injector';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AuthenticationService {
   #httpClient = inject(HttpClient);
   #user = signal<User | null>(null);
   #route = inject(Router);
+  #apiConstants = inject(API_CONSTANTS);
 
   get token() {
     return sessionStorage.getItem(Constants.token);
@@ -57,7 +59,7 @@ export class AuthenticationService {
   validateUser(loginRequest: LoginRequest) {
     return this.#httpClient
       .post<LoginResponse>(
-        ApiConstants.getUrl(ApiConstants.validateUser, true),
+        this.#apiConstants.getUrl(this.#apiConstants.validateUser, true),
         loginRequest
       )
       .pipe(
