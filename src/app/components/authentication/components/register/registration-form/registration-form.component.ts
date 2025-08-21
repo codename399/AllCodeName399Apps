@@ -10,6 +10,7 @@ import { PasswordMatchValidator } from '../../../../../../validators/password-ma
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { ToastService } from '../../../../../services/toast.service';
 import { User } from '../../../models/user';
+import { Config } from '../../../../../../assets/environments/config';
 
 @Component({
   selector: 'app-registration-form',
@@ -22,6 +23,7 @@ export class RegistrationFormComponent implements OnInit {
   #formBuilder = inject(FormBuilder);
   #toastService = inject(ToastService);
   #fileUploadService = inject(FileUploadService);
+  #config = inject(Config);
 
   user = input<User | null>();
   back = input<Function>();
@@ -67,7 +69,7 @@ export class RegistrationFormComponent implements OnInit {
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
         ],
-        profilePicture: [Constants.defaultProfileUrl],
+        profilePicture: [this.#config.profilePictureUrl],
       },
       {
         validators: PasswordMatchValidator,
@@ -87,7 +89,7 @@ export class RegistrationFormComponent implements OnInit {
 
       if (this.user()?.profilePicture) {
         this.profilePictureUrl =
-          this.user()?.profilePicture ?? Constants.defaultProfileUrl;
+          this.user()?.profilePicture ?? this.#config.profilePictureUrl;
       }
 
       if (this.user()) {

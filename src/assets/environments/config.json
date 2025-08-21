@@ -1,0 +1,7 @@
+{
+    "authenticationBaseURL": "https://localhost:44357",
+    "baseURL": "http://localhost:58441",
+    "toast_delay": "3000",
+    "profilePictureUrl": "../../../../../assets/images/default-avatar.png",
+    "logoUrl": "../../../../../assets/images/logo.png"
+}

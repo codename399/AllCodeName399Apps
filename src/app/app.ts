@@ -5,6 +5,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './services/loader.service';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastService } from './services/toast.service';
+import { Config } from '../assets/environments/config';
 
 
 declare const bootstrap: any; //
@@ -23,6 +24,7 @@ export class App {
   #loaderService = inject(LoaderService);
   #isLoading = signal<boolean>(false);
   #toastService = inject(ToastService);
+  #config = inject(Config);
 
   get isLoading() {
     return this.#isLoading();
@@ -38,7 +40,7 @@ export class App {
   ngAfterViewInit(): void {
     const toastDom = document.getElementById('myToast');
     if (toastDom) {
-      this.toastEl = new bootstrap.Toast(toastDom, { delay: this.#toastService.delay });
+      this.toastEl = new bootstrap.Toast(toastDom, { delay: Number(this.#config.toast_delay) });
     }
   }
 }

@@ -1,11 +1,12 @@
-import { Injectable, signal } from "@angular/core";
-import { Constants } from "../../constants";
+import { inject, Injectable, signal } from "@angular/core";
+import { Config } from "../../assets/environments/config";
 
 @Injectable({
     providedIn: "root"
 })
 export class FileUploadService {
-    #url = signal<string>(Constants.defaultProfileUrl);
+    #config = inject(Config)
+    #url = signal<string>(this.#config.profilePictureUrl);
 
     get url() {
         return this.#url();

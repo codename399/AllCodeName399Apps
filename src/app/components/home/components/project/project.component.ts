@@ -14,6 +14,7 @@ import { User } from '../../../authentication/models/user';
 import { GridService } from '../../../authentication/services/grid.service';
 import { ProjectService } from '../../../authentication/services/project-service';
 import { GridComponent } from '../../../grid/grid.component';
+import { Config } from '../../../../../assets/environments/config';
 
 @Component({
   selector: 'app-project',
@@ -29,6 +30,7 @@ export class ProjectComponent {
   #toastService = inject(ToastService);
   #gridService = inject(GridService<User>);
   #fileUploadService = inject(FileUploadService);
+  #config = inject(Config);
 
   form: FormGroup;
 
@@ -85,7 +87,7 @@ export class ProjectComponent {
       if (this.showForm) {
         if (this.item) {
           this.url =
-            this.item?.imageUrl ?? Constants.defaultProfileUrl;
+            this.item?.imageUrl ?? this.#config.profilePictureUrl;
         }
 
         this.form.patchValue(this.item ?? {});

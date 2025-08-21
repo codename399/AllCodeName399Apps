@@ -5,6 +5,7 @@ import { Constants } from '../../../../../constants';
 import { User } from '../../../authentication/models/user';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { UserService } from '../../../authentication/services/user-service';
+import { Config } from '../../../../../assets/environments/config';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +17,16 @@ export class HomeComponent implements OnInit {
   #authenticationService = inject(AuthenticationService);
   #userService = inject(UserService);
   #router = inject(Router);
+  #config = inject(Config);
+
   user!: User;
-  profilePictureUrl: string = Constants.defaultProfileUrl;
-  logoUrl: string = Constants.logoUrl;
+  profilePictureUrl!: string;
+  logoUrl!: string
+
+  constructor() {
+    this.profilePictureUrl = this.#config.profilePictureUrl;
+    this.logoUrl = this.#config.logoUrl;
+  }
 
   ngOnInit(): void {
     this.#userService
