@@ -83,8 +83,7 @@ export class UserProjectMappingComponent {
       }
     }
     else {
-      let index = selections.findIndex((f: any) => f == project.id);
-      selections.splice(1, index);
+      selections = selections.filter((f: any) => f != project.id);
       this.projectIds.setValue(selections);
     }
   }
@@ -105,5 +104,15 @@ export class UserProjectMappingComponent {
     else {
       this.#toastService.error("Please select projects to map");
     }
+  }
+
+  setSelection(projectId: string) {
+    let selections: string[] = this.projectIds.value ?? [];
+
+    if (selections.includes(projectId)) {
+      return true;
+    }
+
+    return false;
   }
 }

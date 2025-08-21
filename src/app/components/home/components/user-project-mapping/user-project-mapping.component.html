@@ -20,7 +20,7 @@
                 <div class="mb-3">
                     <label for="user" class="form-label">Select projects:</label>
                     @for(project of projects;track project.id){
-                    <mat-checkbox id="{{project.name}}" color="primary" class="form-control"
+                    <mat-checkbox id="{{project.name}}" color="primary" class="form-control" [checked] = "setSelection(project.id ?? '')"
                         (change)="onSelectionChange($event, project)">
                         <label for="{{project.name}}" class="form-label">{{project.name}}</label>
                     </mat-checkbox>
