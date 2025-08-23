@@ -21,6 +21,12 @@ export class ProjectService {
     );
   }
 
+  getAllMapped(userId: string): Observable<Project[]> {
+    return this.#httpClient.get<Project[]>(
+      `${this.#apiConstants.getUrl(this.#apiConstants.getAllMappedProjects, true)}?userId=${userId}`
+    );
+  }
+
   getById(projectId: string): Observable<Project[]> {
     return this.#httpClient.get<Project[]>(
       this.#apiConstants.getUrl(this.#apiConstants.getProjectById, true) +

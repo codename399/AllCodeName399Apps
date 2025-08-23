@@ -4,23 +4,20 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { ProjectService } from '../../authentication/services/project-service';
-import { PaginationRequest } from '../../../models/pagination-request';
-import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
 import { map } from 'rxjs';
-import { PagedResponse } from '../../../models/paged-response';
-import { Project } from '../../authentication/models/project';
+import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
+import { ProjectService } from '../../authentication/services/project-service';
+import { AuthenticationService } from '../../authentication/services/authentication-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardResolver implements Resolve<any> {
   #projectService = inject(ProjectService);
-  #paginationRequest = inject(PAGINATION_REQUEST);
+  #authService = inject(AuthenticationService);
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.#projectService
-      .getAll(this.#paginationRequest)
-      .pipe(map((projects) => projects.items));
+      .getAllMapped(this.#authService.userId ?? "");
   }
 }

@@ -22,6 +22,7 @@ export class ApiConstants {
   public updateRole = '/updateRole';
   public deleteRole = '/deleteRole';
   public getAllProjects = '/getAllProjects';
+  public getAllMappedProjects = '/getAllMappedProjects';
   public getProjectById = '/getProjectById';
   public addProjects = '/addProjects';
   public updateProject = '/updateProject';
