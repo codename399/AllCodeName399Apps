@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../../shared-module';
 import { Router } from '@angular/router';
 import { Constants } from '../../../../../constants';
-import { User } from '../../../authentication/models/user';
+import { User } from '../../models/user';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
-import { UserService } from '../../../authentication/services/user-service';
+import { UserService } from '../../services/user-service';
 import { Config } from '../../../../../assets/environments/config';
 
 @Component({

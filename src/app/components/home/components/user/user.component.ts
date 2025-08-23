@@ -8,9 +8,9 @@ import {
 } from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
 import { RegistrationFormComponent } from '../../../authentication/components/register/registration-form/registration-form.component';
-import { User } from '../../../authentication/models/user';
+import { User } from '../../models/user';
 import { GridService } from '../../../authentication/services/grid.service';
-import { UserService } from '../../../authentication/services/user-service';
+import { UserService } from '../../services/user-service';
 import { GridComponent } from '../../../grid/grid.component';
 
 @Component({

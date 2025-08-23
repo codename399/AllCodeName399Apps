@@ -9,10 +9,10 @@ import {
 } from '../../../../../validators/field-validator';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { ToastService } from '../../../../services/toast.service';
-import { Project } from '../../../authentication/models/project';
-import { User } from '../../../authentication/models/user';
+import { Project } from '../../models/project';
+import { User } from '../../models/user';
 import { GridService } from '../../../authentication/services/grid.service';
-import { ProjectService } from '../../../authentication/services/project-service';
+import { ProjectService } from '../../services/project-service';
 import { GridComponent } from '../../../grid/grid.component';
 import { Config } from '../../../../../assets/environments/config';
 

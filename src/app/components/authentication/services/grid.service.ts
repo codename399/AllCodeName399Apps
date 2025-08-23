@@ -69,11 +69,14 @@ export class GridService<I> {
     return this.service.getAll(this.paginationRequest);
   }
 
-  add() {
+  add(refresh: boolean = true) {
     this.service.add(this.item).subscribe({
       next: () => {
-        this.showForm = false;
-        window.location.reload();
+        if (refresh) {
+          this.showForm = false;
+          window.location.reload();
+        }
+
         this.#toastService.success('Added successfully');
       },
       error: () => {
@@ -82,12 +85,15 @@ export class GridService<I> {
     });
   }
 
-  update() {
+  update(refresh: boolean = true) {
     this.service.update(this.item).subscribe({
       next: () => {
-        this.showForm = false;
+        if (refresh) {
+          this.showForm = false;
+          window.location.reload();
+        }
+
         this.item = null;
-        window.location.reload();
         this.#toastService.success('Updated successfully');
       },
     });

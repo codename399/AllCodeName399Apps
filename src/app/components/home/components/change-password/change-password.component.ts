@@ -10,7 +10,7 @@ import { PasswordMatchValidator } from '../../../../../validators/password-match
 import { ToastService } from '../../../../services/toast.service';
 import { ChangePasswordRequest } from '../../../authentication/models/change-password-request';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
-import { UserService } from '../../../authentication/services/user-service';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-change-password',

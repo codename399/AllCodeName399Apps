@@ -2,8 +2,8 @@ import { inject, Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { combineLatest, forkJoin, merge } from "rxjs";
 import { PAGINATION_REQUEST } from "../../../../injectors/common-injector";
-import { ProjectService } from "../../authentication/services/project-service";
-import { UserService } from "../../authentication/services/user-service";
+import { ProjectService } from "../services/project-service";
+import { UserService } from "../services/user-service";
 import { Constants } from "../../../../constants";
 import { OperatorType } from "../../../models/enums/operator-type.enum";
 

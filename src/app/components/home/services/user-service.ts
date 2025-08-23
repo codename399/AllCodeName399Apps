@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { map, Observable } from 'rxjs';
-import { ChangePasswordRequest } from '../models/change-password-request';
+import { ChangePasswordRequest } from '../../authentication/models/change-password-request';
 import { ApiConstants } from '../../../../api-constants';
 import { PagedResponse } from '../../../models/paged-response';
 import { PaginationRequest } from '../../../models/pagination-request';
@@ -13,7 +13,7 @@ import { API_CONSTANTS } from '../../../../injectors/common-injector';
 })
 export class UserService {
   #httpClient = inject(HttpClient);
-    #apiConstants = inject(API_CONSTANTS);
+  #apiConstants = inject(API_CONSTANTS);
 
   getAll(
     paginationRequest: PaginationRequest

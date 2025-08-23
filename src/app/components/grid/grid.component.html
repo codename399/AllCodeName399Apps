@@ -47,7 +47,7 @@
           role="button">delete</span>
         }
         } @else{
-        {{ element[column | camelCase] }}
+        {{ element[column | camelCase | noSpace] }}
         }
       </td>
     </ng-container>

@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
 import { ToastService } from '../../../../services/toast.service';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user-service';
+import { User } from '../../../home/models/user';
+import { UserService } from '../../../home/services/user-service';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 @Component({

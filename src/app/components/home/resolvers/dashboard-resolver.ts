@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { map } from 'rxjs';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
-import { ProjectService } from '../../authentication/services/project-service';
+import { ProjectService } from '../services/project-service';
 import { AuthenticationService } from '../../authentication/services/authentication-service';
 
 @Injectable({

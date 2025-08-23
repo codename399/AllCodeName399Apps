@@ -11,9 +11,9 @@ import {
   isInvalid,
 } from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
-import { Role } from '../../../authentication/models/role';
+import { Role } from '../../models/role';
 import { GridService } from '../../../authentication/services/grid.service';
-import { RoleService } from '../../../authentication/services/role-service';
+import { RoleService } from '../../services/role-service';
 import { GridComponent } from '../../../grid/grid.component';
 
 @Component({

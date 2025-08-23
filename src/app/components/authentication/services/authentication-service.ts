@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { LoginRequest } from '../models/login-request';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
-import { User } from '../models/user';
+import { User } from '../../home/models/user';
 import { ApiConstants } from '../../../../api-constants';
 import { Constants } from '../../../../constants';
 import { LoginResponse } from '../models/login-response';

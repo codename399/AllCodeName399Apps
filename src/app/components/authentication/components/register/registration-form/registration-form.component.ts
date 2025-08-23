@@ -9,7 +9,7 @@ import {
 import { PasswordMatchValidator } from '../../../../../../validators/password-match-validator';
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { ToastService } from '../../../../../services/toast.service';
-import { User } from '../../../models/user';
+import { User } from '../../../../home/models/user';
 import { Config } from '../../../../../../assets/environments/config';
 
 @Component({

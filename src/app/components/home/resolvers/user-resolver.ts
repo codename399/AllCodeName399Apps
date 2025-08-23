@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { UserService } from '../../authentication/services/user-service';
+import { UserService } from '../services/user-service';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
 
 @Injectable({

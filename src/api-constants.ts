@@ -29,6 +29,10 @@ export class ApiConstants {
   public deleteProject = '/deleteProject';
   public getAllUserProjectMappings = "/getAllUserProjectMappings";
   public updateUserProjectMappings = "/updateUserProjectMappings";
+  public getAllGames = "/getAllGames";
+  public addGames = "/addGames";
+  public updateGame = "/updateGame";
+  public deleteGames = "/deleteGames";
 
   public getUrl = (
     endpoint: string,

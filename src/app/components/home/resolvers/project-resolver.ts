@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { ProjectService } from '../../authentication/services/project-service';
+import { ProjectService } from '../services/project-service';
 import { PaginationRequest } from '../../../models/pagination-request';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
 

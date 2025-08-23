@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
-import { Project } from '../../../authentication/models/project';
-import { User } from '../../../authentication/models/user';
+import { Project } from '../../models/project';
+import { User } from '../../models/user';
 import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
-import { UserProjectMappingService } from '../../../authentication/services/user-project-mapping-service';
+import { UserProjectMappingService } from '../../services/user-project-mapping-service';
 import { Constants } from '../../../../../constants';
 import { OperatorType } from '../../../../models/enums/operator-type.enum';
-import { UserProjectMapping } from '../../../authentication/models/user-project-mapping';
+import { UserProjectMapping } from '../../models/user-project-mapping';
 import { PagedResponse } from '../../../../models/paged-response';
 import { ToastService } from '../../../../services/toast.service';
 
