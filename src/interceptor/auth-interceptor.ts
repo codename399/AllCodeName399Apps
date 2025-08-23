@@ -31,8 +31,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      let message: string = error.error?.Message ?? error.message;
+
       loaderService.hide();
-      toastService.error(error.error.Message);
+      toastService.error(message);
 
       return throwError(() => error);
     }),
