@@ -1,7 +1,8 @@
 table {
   border: 1px solid;
   border-collapse: collapse;
-  table-layout: auto; /* 👈 column size = content */
+  table-layout: auto;
+  /* 👈 column size = content */
   width: auto;
 }
 
@@ -17,5 +18,5 @@ td {
 }
 
 .mat-column-action {
-  width: 10%;
+  width: 5%;
 }

@@ -5,5 +5,5 @@
     "profilePictureUrl": "../../../../../assets/images/default-avatar.png",
     "logoUrl": "../../../../../assets/images/logo.png",
     "pageSize": 10,
-    "enableMultiSelection": false
+    "enableMultiSelection": true
 }

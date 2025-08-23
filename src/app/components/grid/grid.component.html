@@ -8,11 +8,12 @@
     }
     <div class="justify-content-end py-3">
       @if(showAdd()){
-      <button class="btn btn-primary mx-1" (click)="add()">Add</button>
+      <span class="text text-primary material-icons-round mx-1 display-6" role="button" (click)="add()">add</span>
       }
 
       @if(selection.hasValue() && showDelete()){
-      <button class="btn btn-danger" (click)="openDeleteConfirmation()">Delete</button>
+      <span class="text text-danger material-icons-round display-6" role="button"
+        (click)="openDeleteConfirmation()">delete</span>
       }
     </div>
   </div>
@@ -39,10 +40,11 @@
         }
         @else if(column == "action"){
         @if(showEdit()){
-        <button class="btn btn-primary mx-1" (click)="edit(element)">Edit</button>
+        <span class="text text-primary material-icons-round mx-1" (click)="edit(element)" role="button">edit</span>
         }
         @if(showDelete()){
-        <button class="btn btn-danger" (click)="openDeleteConfirmation(element)">Delete</button>
+        <span class="text text-danger material-icons-round mx-1" (click)="openDeleteConfirmation(element)"
+          role="button">delete</span>
         }
         } @else{
         {{ element[column | camelCase] }}
