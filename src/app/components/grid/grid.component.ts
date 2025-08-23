@@ -37,6 +37,7 @@ export class GridComponent<I> implements AfterViewInit {
   showAdd = input(true);
   showEdit = input(true);
   showDelete = input(true);
+  showDeleteAll = input(true);
   showSearch = input(true);
 
   pagedItems: any[] = [];
