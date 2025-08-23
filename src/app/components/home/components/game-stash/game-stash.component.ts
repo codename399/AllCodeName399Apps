@@ -10,6 +10,10 @@ import { GridComponent } from '../../../grid/grid.component';
 import { SharedModule } from '../../../../../shared-module';
 import { Status } from '../../models/enum/status-enum';
 import { Website } from '../../models/enum/website-enum';
+import { PagedResponse } from '../../../../models/paged-response';
+import { PaginationRequest } from '../../../../models/pagination-request';
+import { DialogComponent } from '../../../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game-stash',
@@ -23,10 +27,13 @@ export class GameStashComponent {
   #route = inject(ActivatedRoute);
   #toastService = inject(ToastService);
   #gridService = inject(GridService<GameDetail>);
+  #gameStashService = inject(GameStashService);
+  #dialog = inject(MatDialog);
 
   form: FormGroup;
   statuses: string[] = Object.keys(Status);
   websites: string[] = Object.keys(Website);
+  gameDetail!: GameDetail | null;
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<GameDetail>;
 
@@ -96,5 +103,36 @@ export class GameStashComponent {
 
   refresh() {
     window.location.reload();
+  }
+
+  getRandomGame() {
+    let paginationRequest: PaginationRequest = { fetchAll: true, ascending: false, isDeleted: false };
+
+    this.#gameStashService.getAll(paginationRequest).subscribe((response: PagedResponse<GameDetail>) => {
+      const index = Math.floor(Math.random() * response.items.length);
+      this.gameDetail = response.items[index];
+      if (this.gameDetail) {
+        this.openGameDialog();
+      }
+    })
+  }
+
+  openGameDialog() {
+    const dialogRef = this.#dialog.open(DialogComponent, {
+      width: '350px',
+      data: { title: 'Hope you enjoy this!!', message: this.gameDetail?.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.gameDetail != null) {
+          this.gameDetail.status = Status.Started;
+          this.gameDetail.startDate = new Date();
+        }
+
+        this.item = this.gameDetail;
+        this.#gridService.update();
+      }
+    });
   }
 }
