@@ -44,7 +44,7 @@ export class UserProjectMappingComponent {
 
     this.form = this.#formBuilder.group({
       userId: [null, [Validators.required]],
-      projectIds: [[], [Validators.required]]
+      projectIds: [[]]
     });
 
     this.userId.valueChanges.subscribe((userId: string) => {
