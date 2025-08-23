@@ -17,10 +17,10 @@
       }
     </div>
   </div>
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
     @for(column of displayedColumns;track column){
     <ng-container [matColumnDef]="column">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
         @if(column == "select"){
         <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
           [indeterminate]="selection.hasValue() && !isAllSelected()">

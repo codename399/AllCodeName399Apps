@@ -20,6 +20,7 @@ import { PagedResponse } from '../../models/paged-response';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 import { DialogComponent } from '../dialog/dialog.component';
+import { PaginationRequest } from '../../models/pagination-request';
 
 @Component({
   selector: 'app-grid',
@@ -147,6 +148,13 @@ export class GridComponent<I> implements AfterViewInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
+
+  onSort(event: any) {
+    this.#gridService.paginationRequest.sortBy = event.active;
+    this.#gridService.paginationRequest.ascending = event.direction == "asc";
+
+    this.getAll();
   }
 
   getAll() {
