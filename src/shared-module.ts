@@ -15,6 +15,7 @@ import { CamelCasePipe } from './app/pipes/camelcase-pipe';
 import { NoSpacePipe } from './app/pipes/nospace-pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
+import { AdminClaimDirective } from './directives/admin-claim-directive';
 
 @NgModule({
   declarations: [],

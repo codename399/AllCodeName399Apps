@@ -8,6 +8,7 @@ import { RoleResolver } from './components/home/resolvers/role-resolver';
 import { UserResolver } from './components/home/resolvers/user-resolver';
 import { UserProjectMappingResolver } from './components/home/resolvers/user-project-mapping-resolver';
 import { GameStashResolver } from './components/home/resolvers/game-stash-resolver';
+import { GameStashAuthGuard } from '../route-guards/game-stash-auth-guard';
 
 export const routes: Routes = [
   {
@@ -116,7 +117,7 @@ export const routes: Routes = [
           import(
             '../app/components/home/components/game-stash/game-stash.component'
           ).then((c) => c.GameStashComponent),
-        canActivate: [AuthGuard],
+        canActivate: [GameStashAuthGuard],
         resolve: {
           pagedResponse: GameStashResolver,
         },

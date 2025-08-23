@@ -8,6 +8,7 @@ import { Constants } from '../../../../constants';
 import { LoginResponse } from '../models/login-response';
 import { Router } from '@angular/router';
 import { API_CONSTANTS } from '../../../../injectors/common-injector';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -67,8 +68,32 @@ export class AuthenticationService {
           if (response?.token) {
             this.userId = response.userId;
             this.token = response.token;
+            console.log("decodedToken", jwtDecode(this.token));
           }
         })
       );
+  }
+
+  getClaims() {
+    if (this.token) {
+      const decodedToken = jwtDecode(this.token);
+      return decodedToken;
+    }
+
+    return null;
+  }
+
+  hasClaim(claimName: string, value?: string) {
+    const claims: any = this.getClaims();
+
+    if (!claims) {
+      return false;
+    }
+
+    if (value) {
+      return claims[claimName] && claims[claimName] == value;
+    }
+
+    return !!claims[claimName];
   }
 }

@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from '../../models/project';
-import { Constants } from '../../../../../constants';
 import { SharedModule } from '../../../../../shared-module';
+import { Project } from '../../models/project';
 
 @Component({
   selector: 'app-dashboard',
