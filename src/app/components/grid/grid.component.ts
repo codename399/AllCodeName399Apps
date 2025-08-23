@@ -47,6 +47,7 @@ export class GridComponent<I> implements AfterViewInit {
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  searchBy: FormControl = new FormControl(this.displayedColumns[1]);
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -111,7 +112,7 @@ export class GridComponent<I> implements AfterViewInit {
         else {
           this.#gridService.paginationRequest.filters = [
             {
-              key: Constants.name,
+              key: this.searchBy.value,
               value: term,
               operator: OperatorType.Like
             }

@@ -17,6 +17,16 @@
       }
     </div>
   </div>
+  <div class="py-3 flex justify-content-between">
+    <span class="fw-bold mx-3">Search By:</span>
+    @for(column of displayedColumns;track column){
+    @if(column != "select" && column != "action"){
+    <input class="form-check-input mx-2" type="radio" name="role" id="{{column}}" value="{{column}}"
+      [formControl]="searchBy">
+    <label class="form-check-label" for="{{column}}">{{column}}</label>
+    }
+    }
+  </div>
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
     @for(column of displayedColumns;track column){
     <ng-container [matColumnDef]="column">
