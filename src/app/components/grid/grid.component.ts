@@ -5,20 +5,20 @@ import {
   effect,
   inject,
   input,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { Config } from '../../../assets/environments/config';
 import { Constants } from '../../../constants';
-import { PAGINATION_REQUEST } from '../../../injectors/common-injector';
 import { SharedModule } from '../../../shared-module';
 import { OperatorType } from '../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../models/paged-response';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -29,9 +29,9 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class GridComponent<I> implements AfterViewInit {
   #gridService = inject(GridService<I>);
-  #paginationRequest = inject(PAGINATION_REQUEST);
   #toastService = inject(ToastService);
   #dialog = inject(MatDialog);
+  #config = inject(Config);
 
   showAdd = input(true);
   showEdit = input(true);
@@ -74,6 +74,10 @@ export class GridComponent<I> implements AfterViewInit {
     return this.#gridService;
   }
 
+  get enableMultiSelection() {
+    return this.#config.enableMultiSelection;
+  }
+
   set showForm(value: boolean) {
     this.#gridService.showForm = value;
   }
@@ -87,8 +91,12 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   constructor() {
-    if (!this.#gridService.service) {
-      this.#gridService.paginationRequest = this.#paginationRequest;
+    if (!this.#config.enableMultiSelection) {
+      this.displayedColumns = this.displayedColumns.filter(f => f != "select");
+    }
+
+    if (!this.displayedColumns.includes("action")) {
+      this.displayedColumns.push("action")
     }
 
     this.searchInput.valueChanges.pipe(
@@ -154,12 +162,12 @@ export class GridComponent<I> implements AfterViewInit {
     this.showForm = true;
   }
 
-  edit() {
-    this.item = this.selection.selected[0];
+  edit(item: I) {
+    this.item = item;
     this.showForm = true;
   }
 
-  openDeleteConfirmation() {
+  openDeleteConfirmation(item?: I) {
     const dialogRef = this.#dialog.open(DialogComponent, {
       width: '350px',
       data: { title: 'Confirm Delete', message: 'Are you sure you want to delete this user?' }
@@ -167,14 +175,15 @@ export class GridComponent<I> implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.delete();
-        ;
+        this.delete(item);
       }
     });
   }
 
-  delete() {
-    this.#gridService.delete(this.selection.selected).subscribe({
+  delete(item?: I) {
+    let items: I[] = item ? [item] : this.selection.selected;
+
+    this.#gridService.delete(items).subscribe({
       next: () => {
         this.getAll();
         this.#toastService.success('Deleted successfully');

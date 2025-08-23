@@ -1,17 +1,17 @@
 <div class="mat-elevation-z8">
   <div class="d-flex justify-content-between">
+    @if(showSearch()){
     <div class="d-flex justify-content-start py-3 align-items-center">
       <label for="searchInput" class="form-label">Search:</label>
       <input id="searchInput" class="form-control mx-3" [formControl]="searchInput" />
     </div>
+    }
     <div class="justify-content-end py-3">
       @if(showAdd()){
       <button class="btn btn-primary mx-1" (click)="add()">Add</button>
       }
 
-      @if(selection.hasValue() && selection.selected.length == 1 && showEdit()){
-      <button class="btn btn-primary mx-1" (click)="edit()">Edit</button>
-      } @if(selection.hasValue() && showDelete()){
+      @if(selection.hasValue() && showDelete()){
       <button class="btn btn-danger" (click)="openDeleteConfirmation()">Delete</button>
       }
     </div>
@@ -24,6 +24,9 @@
         <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="isAllSelected()"
           [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
+        }
+        @else if(column == "action"){
+        <b></b>
         } @else{
         <b>{{ column }}</b>
         }
@@ -33,6 +36,14 @@
         <mat-checkbox color="primary" (click)="$event.stopPropagation()"
           (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)">
         </mat-checkbox>
+        }
+        @else if(column == "action"){
+        @if(showEdit()){
+        <button class="btn btn-primary mx-1" (click)="edit(element)">Edit</button>
+        }
+        @if(showDelete()){
+        <button class="btn btn-danger" (click)="openDeleteConfirmation(element)">Delete</button>
+        }
         } @else{
         {{ element[column | camelCase] }}
         }

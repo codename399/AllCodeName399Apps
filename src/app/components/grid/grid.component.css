@@ -15,3 +15,7 @@ td {
 .mat-column-select {
   width: 5%;
 }
+
+.mat-column-action {
+  width: 10%;
+}

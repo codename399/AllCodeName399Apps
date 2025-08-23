@@ -1,7 +1,9 @@
 {
     "authenticationBaseURL": "http://localhost:5001",
     "baseURL": "http://localhost:5000",
-    "toast_delay": "3000",
+    "toast_delay": 3000,
     "profilePictureUrl": "../../../../../assets/images/default-avatar.png",
-    "logoUrl": "../../../../../assets/images/logo.png"
+    "logoUrl": "../../../../../assets/images/logo.png",
+    "pageSize": 10,
+    "enableMultiSelection": false
 }
