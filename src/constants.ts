@@ -9,4 +9,5 @@ export abstract class Constants {
   public static gameStash = 'GameStash';
   public static debtManager = 'DebtManager';
   public static admin = 'Admin';
+  public static status = 'Status';
 }

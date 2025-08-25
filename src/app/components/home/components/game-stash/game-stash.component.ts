@@ -14,6 +14,8 @@ import { PagedResponse } from '../../../../models/paged-response';
 import { PaginationRequest } from '../../../../models/pagination-request';
 import { DialogComponent } from '../../../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Constants } from '../../../../../constants';
+import { OperatorType } from '../../../../models/enums/operator-type.enum';
 
 @Component({
   selector: 'app-game-stash',
@@ -106,7 +108,18 @@ export class GameStashComponent {
   }
 
   getRandomGame() {
-    let paginationRequest: PaginationRequest = { fetchAll: true, ascending: false, isDeleted: false };
+    let paginationRequest: PaginationRequest = {
+      filters: [
+        {
+          key: Constants.status,
+          value: Status.Added,
+          operator: OperatorType.Equal
+        }
+      ],
+      fetchAll: true,
+      ascending: false,
+      isDeleted: false
+    };
 
     this.#gameStashService.getAll(paginationRequest).subscribe((response: PagedResponse<GameDetail>) => {
       const index = Math.floor(Math.random() * response.items.length);
