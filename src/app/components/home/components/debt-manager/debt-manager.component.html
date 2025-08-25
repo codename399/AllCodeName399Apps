@@ -1,29 +1,116 @@
 @if(showForm){
 <div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="card shadow" style="width: 100%; max-width: 400px">
-    <div class="card-body">
-      <h4 class="card-title text-center mb-4">
-        {{ item ? "Update" : "Add" }}
-      </h4>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="title" class="form-label">Title:</label>
-          <input id="title" class="form-control" formControlName="title" />
-          @if(isInvalid(form,"title")){
-          <small class="text-danger">{{ getErrorMessage(form, "title") }}</small>
-          }
+    <div class="card shadow" style="width: 100%; max-width: 400px">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">
+                {{ item ? "Update" : "Add" }}
+            </h4>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input id="title" class="form-control" formControlName="title" />
+                    @if(isInvalid(form,"title")){
+                    <small class="text-danger">{{ getErrorMessage(form, "title") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea id="description" class="form-control" formControlName="description"></textarea>
+                    @if(isInvalid(form,"description")){
+                    <small class="text-danger">{{ getErrorMessage(form, "description") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="fromUserId" class="form-label">From User:</label>
+                    <select id="fromUserId" class="form-select" formControlName="fromUserId">
+                        <option value="">Choose...</option>
+                        @for(user of users; track user){
+                        <option [value]="user.id">
+                            {{ user.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(isInvalid(form,"fromUserId")){
+                    <small class="text-danger">{{ getErrorMessage(form, "fromUserId") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="toUserId" class="form-label">To User:</label>
+                    <select id="toUserId" class="form-select" formControlName="toUserId">
+                        <option value="">Choose...</option>
+                        @for(user of users; track user){
+                        <option [value]="user.id">
+                            {{ user.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(isInvalid(form,"toUserId")){
+                    <small class="text-danger">{{ getErrorMessage(form, "toUserId") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="transactionType" class="form-label">To User:</label>
+                    <select id="transactionType" class="form-select" formControlName="transactionType"
+                        [disabled]="item == null">
+                        <option value="">Choose...</option>
+                        @for(transactionType of transactionTypes; track transactionType){
+                        <option [value]="transactionType">
+                            {{ transactionType }}
+                        </option>
+                        }
+                    </select>
+                    @if(isInvalid(form,"transactionType")){
+                    <small class="text-danger">{{ getErrorMessage(form, "transactionType") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="totalAmount" class="form-label">Total Amount:</label>
+                    <input id="totalAmount" class="form-control" formControlName="totalAmount" />
+                </div>
+                <div class="mb-3">
+                    <label for="settledAmount" class="form-label">Settled Amount:</label>
+                    <input id="settledAmount" class="form-control" formControlName="settledAmount" />
+                </div>
+                <div class="mb-3">
+                    <label for="amountToSettle" class="form-label">Amount to settle:</label>
+                    <input id="amountToSettle" class="form-control" formControlName="amountToSettle" />
+                    @if(isInvalid(form,"amountToSettle")){
+                    <small class="text-danger">{{ getErrorMessage(form, "amountToSettle") }}</small>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="isSettled" class="form-label">Is Settled:</label>
+                    <mat-checkbox id="isSettled" color="primary" class="form-control" formControlName="isSettled">
+                    </mat-checkbox>
+                </div>
+                <div class="mb-3">
+                    <mat-form-field appearance="fill" class="datepicker">
+                        <mat-label>Settlement Date:</mat-label>
+                        <input matInput [matDatepicker]="settlementDatePicker" formControlName="settlementDate">
+                        <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #settlementDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="mb-3">
+                    <mat-form-field appearance="fill" class="datepicker">
+                        <mat-label>Expected Date:</mat-label>
+                        <input matInput [matDatepicker]="expectedDatePicker" formControlName="expectedDate">
+                        <mat-datepicker-toggle matSuffix [for]="expectedDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #expectedDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">
+                        {{ item ? "Update" : "Add" }}
+                    </button>
+                    <button (click)="showForm = false" class="btn">
+                        Back
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary">
-            {{ item ? "Update" : "Add" }}
-          </button>
-          <button (click)="showForm = false" class="btn">
-            Back
-          </button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 } @else {
 <app-grid></app-grid>

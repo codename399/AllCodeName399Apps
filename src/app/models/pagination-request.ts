@@ -6,7 +6,7 @@ export class PaginationRequest {
   limit?: number = 5;
   sortBy?: string = Constants.updationDate;
   filters?: FilterRequest[];
-  ascending: boolean = false;
-  isDeleted: boolean = false;
-  fetchAll: boolean = false;
+  ascending?: boolean = false;
+  isDeleted?: boolean = false;
+  fetchAll?: boolean = false;
 }

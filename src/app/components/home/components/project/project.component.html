@@ -44,9 +44,6 @@
                     <label for="isAdmin" class="form-label">Is Admin:</label>
                     <mat-checkbox id="isAdmin" color="primary" class="form-control" formControlName="isAdmin">
                     </mat-checkbox>
-                    @if(isInvalid(form,"isAdmin")){
-                    <small class="text-danger">{{ getErrorMessage(form, "isAdmin") }}</small>
-                    }
                 </div>
 
                 <div class="d-flex justify-content-between">
