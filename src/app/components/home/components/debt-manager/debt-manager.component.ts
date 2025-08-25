@@ -73,7 +73,7 @@ export class DebtManagerComponent implements OnInit {
     this.#gridService.service = DebtManagerService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Title'];
+    this.#gridService.displayedColumns = ['select', 'Title','Description','Transaction Type','Total Amount','Settled Amount','Is Settled','Settlement Date','Expected Date'];
 
     this.form = this.#formBuilder.group({
       title: ['', [Validators.required]],
@@ -145,8 +145,8 @@ export class DebtManagerComponent implements OnInit {
           filters: [
             {
               key: "ProjectIds",
-              values: projectPagedResponse.items.map(m => m.id ?? ""),
-              operator: OperatorType.In
+              value: projectPagedResponse.items.map(m => m.id ?? "")[0],
+              operator: OperatorType.AnyEq
             }
           ],
           fetchAll: true
