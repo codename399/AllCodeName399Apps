@@ -6,13 +6,14 @@ import { Constants } from "../constants";
 @Injectable({
     providedIn: "root"
 })
-export class GameStashAuthGuard implements CanActivate {
+export class ProjectAuthGuard implements CanActivate {
     #authService = inject(AuthenticationService);
     #router = inject(Router);
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
         const isLoggedIn = this.#authService.isLoggedIn();
-        const hasClaim = this.#authService.hasClaim(Constants.gameStash, "False") || this.#authService.hasClaim(Constants.roleClaim, Constants.admin)
+        const projectName = route.data["projectName"];
+        const hasClaim = this.#authService.hasClaim(projectName, "False") || this.#authService.hasClaim(Constants.roleClaim, Constants.admin)
 
         if (!isLoggedIn && !hasClaim) {
             this.#router.navigate(['/home']);

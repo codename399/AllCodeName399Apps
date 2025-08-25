@@ -8,7 +8,9 @@ import { RoleResolver } from './components/home/resolvers/role-resolver';
 import { UserResolver } from './components/home/resolvers/user-resolver';
 import { UserProjectMappingResolver } from './components/home/resolvers/user-project-mapping-resolver';
 import { GameStashResolver } from './components/home/resolvers/game-stash-resolver';
-import { GameStashAuthGuard } from '../route-guards/game-stash-auth-guard';
+import { ProjectAuthGuard } from '../route-guards/project-auth-guard';
+import { Constants } from '../constants';
+import { DebtManagerResolver } from './components/home/resolvers/debt-manager-resolver';
 
 export const routes: Routes = [
   {
@@ -117,9 +119,22 @@ export const routes: Routes = [
           import(
             '../app/components/home/components/game-stash/game-stash.component'
           ).then((c) => c.GameStashComponent),
-        canActivate: [GameStashAuthGuard],
+        canActivate: [ProjectAuthGuard],
+        data: { projectName: Constants.gameStash },
         resolve: {
           pagedResponse: GameStashResolver,
+        },
+      },
+      {
+        path: 'debt-manager',
+        loadComponent: () =>
+          import(
+            '../app/components/home/components/debt-manager/debt-manager.component'
+          ).then((c) => c.DebtManagerComponent),
+        canActivate: [ProjectAuthGuard],
+        data: { projectName: Constants.debtManager },
+        resolve: {
+          pagedResponse: DebtManagerResolver,
         },
       }
     ],

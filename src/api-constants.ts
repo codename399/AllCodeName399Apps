@@ -33,6 +33,10 @@ export class ApiConstants {
   public addGames = "/addGames";
   public updateGame = "/updateGame";
   public deleteGames = "/deleteGames";
+  public getAllDebts = "/getAllDebts";
+  public addDebts = "/addDebts";
+  public updateDebt = "/updateDebt";
+  public deleteDebts = "/deleteDebts";
 
   public getUrl = (
     endpoint: string,

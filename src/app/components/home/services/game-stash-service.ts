@@ -36,10 +36,10 @@ export class GameStashService {
         );
     }
 
-    delete(gameDetailIds: string[]) {
+    delete(ids: string[]) {
         return this.#httpClient.post(
             this.#apiConstants.getUrl(this.#apiConstants.deleteGames),
-            gameDetailIds
+            ids
         );
     }
 }
