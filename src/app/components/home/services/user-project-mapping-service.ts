@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { ApiConstants } from "../../../../api-constants";
 import { PagedResponse } from "../../../models/paged-response";
 import { PaginationRequest } from "../../../models/pagination-request";
-import { UserProjectMapping } from "../models/user-project-mapping";
+import { UserProjectMappingDto } from "../models/dto/user-project-mapping-dto";
 import { API_CONSTANTS } from "../../../../injectors/common-injector";
 
 @Injectable({
@@ -16,15 +16,15 @@ export class UserProjectMappingService {
 
     getAll(
         paginationRequest: PaginationRequest
-    ): Observable<PagedResponse<UserProjectMapping>> {
-        return this.#httpClient.post<PagedResponse<UserProjectMapping>>(
+    ): Observable<PagedResponse<UserProjectMappingDto>> {
+        return this.#httpClient.post<PagedResponse<UserProjectMappingDto>>(
             this.#apiConstants.getUrl(this.#apiConstants.getAllUserProjectMappings, true),
             paginationRequest
         );
     }
 
     update(
-        userProjectMapping: UserProjectMapping
+        userProjectMapping: UserProjectMappingDto
     ) {
         return this.#httpClient.put(
             this.#apiConstants.getUrl(this.#apiConstants.updateUserProjectMappings, true),

@@ -1,6 +1,6 @@
 import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { DebtManagerService } from '../../services/debt-manager-service';
-import { Debt } from '../../models/debt';
+import { DebtDto } from '../../models/dto/debt-dto';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../../../../../shared-module';
@@ -18,6 +18,7 @@ import { Constants } from '../../../../../constants';
 import { OperatorType } from '../../../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../../../models/paged-response';
 import { Project } from '../../models/project';
+import { Debt } from '../../models/debt';
 
 @Component({
   selector: 'app-debt-manager',
@@ -61,7 +62,7 @@ export class DebtManagerComponent implements OnInit {
     return this.#gridService.showForm;
   }
 
-  set item(value: Debt | null) {
+  set item(value: DebtDto | null) {
     this.#gridService.item = value;
   }
 
@@ -73,7 +74,7 @@ export class DebtManagerComponent implements OnInit {
     this.#gridService.service = DebtManagerService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Title','Description','Transaction Type','Total Amount','Settled Amount','Is Settled','Settlement Date','Expected Date'];
+    this.#gridService.displayedColumns = ['select', 'Title', 'Description', 'Transaction Type', 'Total Amount', 'Settled Amount', 'Is Settled', 'Settlement Date', 'Expected Date'];
 
     this.form = this.#formBuilder.group({
       title: ['', [Validators.required]],
@@ -111,7 +112,7 @@ export class DebtManagerComponent implements OnInit {
   }
 
   onSubmit() {
-    let debt: Debt = this.form.value;
+    let debt: DebtDto = this.form.value;
 
     if (this.form.valid) {
       if (this.item) {

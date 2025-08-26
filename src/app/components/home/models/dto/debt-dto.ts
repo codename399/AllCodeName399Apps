@@ -1,8 +1,10 @@
-import { Audit } from "../../../models/audit";
+import { Audit } from "../../../../models/audit";
 
-export interface Debt extends Audit {
+export interface DebtDto extends Audit {
     fromUserId?: string;
+    fromUserName?: string;
     toUserId?: string;
+    toUserName?: string;
     title?: string;
     description?: string;
     transactionType?: string;

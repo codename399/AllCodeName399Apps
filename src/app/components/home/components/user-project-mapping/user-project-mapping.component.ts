@@ -8,7 +8,7 @@ import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
 import { UserProjectMappingService } from '../../services/user-project-mapping-service';
 import { Constants } from '../../../../../constants';
 import { OperatorType } from '../../../../models/enums/operator-type.enum';
-import { UserProjectMapping } from '../../models/user-project-mapping';
+import { UserProjectMappingDto } from '../../models/dto/user-project-mapping-dto';
 import { PagedResponse } from '../../../../models/paged-response';
 import { ToastService } from '../../../../services/toast.service';
 
@@ -27,7 +27,7 @@ export class UserProjectMappingComponent {
 
   users: User[] = [];
   projects: Project[] = [];
-  userProjectMapping!: UserProjectMapping | null;
+  userProjectMapping!: UserProjectMappingDto | null;
   form!: FormGroup;
 
   get userId() {
@@ -64,7 +64,7 @@ export class UserProjectMappingComponent {
       }
     ]
 
-    this.#userProjectMappingService.getAll(this.#paginationRequest).subscribe((pagedResponse: PagedResponse<UserProjectMapping>) => {
+    this.#userProjectMappingService.getAll(this.#paginationRequest).subscribe((pagedResponse: PagedResponse<UserProjectMappingDto>) => {
       if (pagedResponse) {
         if (pagedResponse.count > 0) {
           this.userProjectMapping = pagedResponse.items[0];
@@ -90,7 +90,7 @@ export class UserProjectMappingComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      let userProjectMapping: UserProjectMapping = this.form.value;
+      let userProjectMapping: UserProjectMappingDto = this.form.value;
 
       if (this.userProjectMapping != null) {
         userProjectMapping.id = this.userProjectMapping.id;
