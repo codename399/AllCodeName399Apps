@@ -11,6 +11,7 @@ export class ApiConstants {
   //Authentication API Endpoints
   public getAllUsers = '/getAllUsers';
   public getUserById = '/getUserById';
+  public getByProject = "/getByProject";
   public addUsers = '/addUsers';
   public updateUser = '/updateUser';
   public deleteUser = '/deleteUser';

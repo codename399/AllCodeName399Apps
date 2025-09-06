@@ -30,6 +30,12 @@ export class UserService {
     );
   }
 
+  getByProject(projectName: string): Observable<User[]> {
+    return this.#httpClient.get<User[]>(
+      this.#apiConstants.getUrl(this.#apiConstants.getByProject, true) + '?projectName=' + projectName
+    );
+  }
+
   add(user: User) {
     return this.#httpClient.post(
       this.#apiConstants.getUrl(this.#apiConstants.addUsers, true),

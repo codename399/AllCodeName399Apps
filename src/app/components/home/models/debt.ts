@@ -2,7 +2,9 @@ import { Audit } from "../../../models/audit";
 
 export interface Debt extends Audit {
     fromUserId?: string;
+    fromUserName?: string;
     toUserId?: string;
+    toUserName?: string;
     title?: string;
     description?: string;
     transactionType?: string;
@@ -11,5 +13,5 @@ export interface Debt extends Audit {
     settlementDate?: Date;
     transactionDate?: Date;
     isSettled?: boolean;
-    expectedDate?: Date;
+    expectedSettlementDate?: Date;
 }

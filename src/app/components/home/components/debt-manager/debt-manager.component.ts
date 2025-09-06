@@ -1,24 +1,24 @@
 import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
-import { DebtManagerService } from '../../services/debt-manager-service';
-import { DebtDto } from '../../models/dto/debt-dto';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Constants } from '../../../../../constants';
 import { SharedModule } from '../../../../../shared-module';
 import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
+import { OperatorType } from '../../../../models/enums/operator-type.enum';
+import { PagedResponse } from '../../../../models/paged-response';
+import { PaginationRequest } from '../../../../models/pagination-request';
 import { ToastService } from '../../../../services/toast.service';
 import { GridService } from '../../../authentication/services/grid.service';
 import { GridComponent } from '../../../grid/grid.component';
-import { Role } from '../../models/role';
-import { TransactionType } from '../../models/enum/transaction-type-enum';
-import { UserService } from '../../services/user-service';
-import { User } from '../../models/user';
-import { ProjectService } from '../../services/project-service';
-import { PaginationRequest } from '../../../../models/pagination-request';
-import { Constants } from '../../../../../constants';
-import { OperatorType } from '../../../../models/enums/operator-type.enum';
-import { PagedResponse } from '../../../../models/paged-response';
-import { Project } from '../../models/project';
 import { Debt } from '../../models/debt';
+import { DebtDto } from '../../models/dto/debt-dto';
+import { TransactionType } from '../../models/enum/transaction-type-enum';
+import { Project } from '../../models/project';
+import { Role } from '../../models/role';
+import { User } from '../../models/user';
+import { DebtManagerService } from '../../services/debt-manager-service';
+import { ProjectService } from '../../services/project-service';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-debt-manager',
@@ -34,7 +34,6 @@ export class DebtManagerComponent implements OnInit {
   #toastService = inject(ToastService);
   #gridService = inject(GridService<Role>);
   #userService = inject(UserService);
-  #projectService = inject(ProjectService);
 
   form: FormGroup;
   users: User[] = [];
@@ -83,6 +82,7 @@ export class DebtManagerComponent implements OnInit {
       description: ['', [Validators.required]],
       transactionType: [TransactionType.Take, [Validators.required]],
       totalAmount: [{ value: 0, disabled: true }, [Validators.required]],
+      transactionDate: [new Date(), [Validators.required]],
       amountToSettle: [0, [Validators.required]],
       settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
       isSettled: [{ value: false, disabled: true }, [Validators.required]],
@@ -130,34 +130,9 @@ export class DebtManagerComponent implements OnInit {
   }
 
   getAllDebtManagerUsers() {
-    let projectPaginationRequest: PaginationRequest = {
-      filters: [
-        {
-          key: Constants.name,
-          value: "Debt Manager",
-          operator: OperatorType.Equal
-        }
-      ]
-    }
-
-    this.#projectService.getAll(projectPaginationRequest).subscribe((projectPagedResponse: PagedResponse<Project>) => {
-      if (projectPagedResponse && !!projectPagedResponse.items) {
-        let userPaginationRequest: PaginationRequest = {
-          filters: [
-            {
-              key: "ProjectIds",
-              value: projectPagedResponse.items.map(m => m.id ?? "")[0],
-              operator: OperatorType.AnyEq
-            }
-          ],
-          fetchAll: true
-        }
-
-        this.#userService.getAll(userPaginationRequest).subscribe((userPagedResponse: PagedResponse<User>) => {
-          if (userPagedResponse && !!userPagedResponse.items) {
-            this.users = userPagedResponse.items;
-          }
-        });
+    this.#userService.getByProject("Debt Manager").subscribe((users: User[]) => {
+      if (!!users.length) {
+        this.users = users;
       }
     });
   }

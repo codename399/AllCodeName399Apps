@@ -2,7 +2,6 @@ import { Audit } from "../../../../models/audit";
 
 export interface DebtDto extends Audit {
     fromUserId?: string;
-    fromUserName?: string;
     toUserId?: string;
     toUserName?: string;
     title?: string;

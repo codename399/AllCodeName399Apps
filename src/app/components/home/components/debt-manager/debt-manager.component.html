@@ -68,6 +68,14 @@
                     <input id="totalAmount" class="form-control" formControlName="totalAmount" />
                 </div>
                 <div class="mb-3">
+                    <mat-form-field appearance="fill" class="datepicker">
+                        <mat-label>Transaction Date:</mat-label>
+                        <input matInput [matDatepicker]="transactionDatePicker" formControlName="transactionDate">
+                        <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #transactionDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="mb-3">
                     <label for="settledAmount" class="form-label">Settled Amount:</label>
                     <input id="settledAmount" class="form-control" formControlName="settledAmount" />
                 </div>
@@ -93,10 +101,10 @@
                 </div>
                 <div class="mb-3">
                     <mat-form-field appearance="fill" class="datepicker">
-                        <mat-label>Expected Date:</mat-label>
-                        <input matInput [matDatepicker]="expectedDatePicker" formControlName="expectedDate">
-                        <mat-datepicker-toggle matSuffix [for]="expectedDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #expectedDatePicker></mat-datepicker>
+                        <mat-label>Expected Settlement Date:</mat-label>
+                        <input matInput [matDatepicker]="expectedSettlementDatePicker" formControlName="expectedSettlementDate">
+                        <mat-datepicker-toggle matSuffix [for]="expectedSettlementDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #expectedSettlementDatePicker></mat-datepicker>
                     </mat-form-field>
                 </div>
 
