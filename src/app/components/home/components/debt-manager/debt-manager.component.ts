@@ -73,7 +73,7 @@ export class DebtManagerComponent implements OnInit {
     this.#gridService.service = DebtManagerService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Title', 'Description', 'Transaction Type', 'Total Amount', 'Settled Amount', 'Is Settled', 'Settlement Date', 'Expected Date'];
+    this.#gridService.displayedColumns = ['select', 'Title', 'Description', 'Transaction Type', 'Total Amount', 'Settled Amount', 'Is Settled', 'Settlement Date', 'Expected Settlement Date'];
 
     this.form = this.#formBuilder.group({
       title: ['', [Validators.required]],
@@ -87,7 +87,7 @@ export class DebtManagerComponent implements OnInit {
       settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
       isSettled: [{ value: false, disabled: true }, [Validators.required]],
       settlementDate: [null, [Validators.required]],
-      expectedDate: [null, [Validators.required]]
+      expectedSettlementDate: [null, [Validators.required]]
     });
 
     this.amountToSettle.valueChanges.subscribe((value) => {
