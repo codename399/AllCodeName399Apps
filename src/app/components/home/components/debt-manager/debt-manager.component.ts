@@ -71,11 +71,19 @@ export class DebtManagerComponent implements OnInit {
     this.#gridService.showForm = value;
   }
 
+  get settledAmount() {
+    return this.form.get("settledAmount") as FormControl;
+  }
+
+  get settlementDate() {
+    return this.form.get("settlementDate") as FormControl;
+  }
+
   constructor() {
     this.#gridService.service = DebtManagerService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Title', 'Description', 'Transaction Type', 'Total Amount', 'Settled Amount', 'Is Settled', 'Settlement Date', 'Expected Settlement Date'];
+    this.#gridService.displayedColumns = ['select', 'Title', 'From User Name', 'To User Name', 'Description', 'Transaction Type', 'Total Amount', 'Settled Amount', 'Is Settled', 'Settlement Date', 'Expected Settlement Date'];
 
     this.form = this.#formBuilder.group({
       title: ['', [Validators.required]],
@@ -83,7 +91,7 @@ export class DebtManagerComponent implements OnInit {
       toUserId: ['', [Validators.required]],
       description: ['', [Validators.required]],
       transactionType: [TransactionType.Take, [Validators.required]],
-      totalAmount: [{ value: 0, disabled: this.item }, [Validators.required]],
+      totalAmount: [{ disabled: this.item == null }, [Validators.required]],
       transactionDate: [new Date(), [Validators.required]],
       amountToSettle: [0, [Validators.required]],
       settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
@@ -93,11 +101,15 @@ export class DebtManagerComponent implements OnInit {
     });
 
     this.amountToSettle.valueChanges.subscribe((value) => {
+      value = Number(value);
       if (value && value > 0 && this.item) {
-        this.item.settledAmount += value;
+        this.settledAmount.setValue((this.item.settledAmount ?? 0) + value);
 
-        if ((this.item.settledAmount ?? 0) >= (this.item.totalAmount ?? 0)) {
-          this.item.settlementDate = new Date();
+        if ((this.settledAmount.value ?? 0) >= (this.item.totalAmount ?? 0)) {
+          this.settlementDate.setValue(new Date());
+        }
+        else{
+          this.settlementDate.reset();
         }
       }
     })
