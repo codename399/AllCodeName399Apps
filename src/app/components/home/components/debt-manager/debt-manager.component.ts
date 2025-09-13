@@ -19,6 +19,7 @@ import { User } from '../../models/user';
 import { DebtManagerService } from '../../services/debt-manager-service';
 import { ProjectService } from '../../services/project-service';
 import { UserService } from '../../services/user-service';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
 
 @Component({
   selector: 'app-debt-manager',
@@ -34,6 +35,7 @@ export class DebtManagerComponent implements OnInit {
   #toastService = inject(ToastService);
   #gridService = inject(GridService<Role>);
   #userService = inject(UserService);
+  #authService = inject(AuthenticationService);
 
   form: FormGroup;
   users: User[] = [];
@@ -77,17 +79,17 @@ export class DebtManagerComponent implements OnInit {
 
     this.form = this.#formBuilder.group({
       title: ['', [Validators.required]],
-      fromUserId: ['', [Validators.required]],
+      fromUserId: [this.#authService.userId, [Validators.required]],
       toUserId: ['', [Validators.required]],
       description: ['', [Validators.required]],
       transactionType: [TransactionType.Take, [Validators.required]],
-      totalAmount: [{ value: 0, disabled: true }, [Validators.required]],
+      totalAmount: [{ value: 0, disabled: this.item }, [Validators.required]],
       transactionDate: [new Date(), [Validators.required]],
       amountToSettle: [0, [Validators.required]],
       settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
       isSettled: [{ value: false, disabled: true }, [Validators.required]],
-      settlementDate: [null, [Validators.required]],
-      expectedSettlementDate: [null, [Validators.required]]
+      settlementDate: [null],
+      expectedSettlementDate: [null]
     });
 
     this.amountToSettle.valueChanges.subscribe((value) => {
@@ -132,7 +134,7 @@ export class DebtManagerComponent implements OnInit {
   getAllDebtManagerUsers() {
     this.#userService.getByProject("Debt Manager").subscribe((users: User[]) => {
       if (!!users.length) {
-        this.users = users;
+        this.users = users.filter(f => f.id != this.#authService.userId);
       }
     });
   }

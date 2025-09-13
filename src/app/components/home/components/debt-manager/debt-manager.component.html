@@ -21,20 +21,6 @@
                     }
                 </div>
                 <div class="mb-3">
-                    <label for="fromUserId" class="form-label">From User:</label>
-                    <select id="fromUserId" class="form-select" formControlName="fromUserId">
-                        <option value="">Choose...</option>
-                        @for(user of users; track user){
-                        <option [value]="user.id">
-                            {{ user.name }}
-                        </option>
-                        }
-                    </select>
-                    @if(isInvalid(form,"fromUserId")){
-                    <small class="text-danger">{{ getErrorMessage(form, "fromUserId") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
                     <label for="toUserId" class="form-label">To User:</label>
                     <select id="toUserId" class="form-select" formControlName="toUserId">
                         <option value="">Choose...</option>
