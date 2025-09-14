@@ -75,6 +75,10 @@ export class DebtManagerComponent implements OnInit {
     return this.form.get("settledAmount") as FormControl;
   }
 
+  get totalAmount() {
+    return this.form.get("totalAmount") as FormControl;
+  }
+
   get settlementDate() {
     return this.form.get("settlementDate") as FormControl;
   }
@@ -94,7 +98,7 @@ export class DebtManagerComponent implements OnInit {
       totalAmount: [{ value: 0, disabled: this.item != null }, [Validators.required]],
       transactionDate: [new Date(), [Validators.required]],
       amountToSettle: [0, [Validators.required]],
-      settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
+      settledAmount: [{ value: null, disabled: true }, [Validators.required]],
       isSettled: [{ value: false, disabled: true }, [Validators.required]],
       settlementDate: [{ value: null, disabled: true },],
       expectedSettlementDate: [null]
@@ -102,10 +106,10 @@ export class DebtManagerComponent implements OnInit {
 
     this.amountToSettle.valueChanges.subscribe((value) => {
       value = Number(value);
-      if (value && value > 0 && this.item) {
-        this.settledAmount.setValue((this.item.settledAmount ?? 0) + value);
+      if (value && value > 0) {
+        this.settledAmount.setValue((this.item?.settledAmount ?? 0) + value);
 
-        if ((this.settledAmount.value ?? 0) >= (this.item.totalAmount ?? 0)) {
+        if ((this.settledAmount.value ?? 0) >= (this.totalAmount.value ?? 0)) {
           this.settlementDate.setValue(new Date());
         }
         else {

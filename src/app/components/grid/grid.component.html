@@ -64,10 +64,10 @@
         } @else{
         @if(typeof element[column | camelCase | noSpace]=="boolean"){
         <span class="text text-danger material-icons-round mx-1" (click)="openDeleteConfirmation(element)"
-          role="button">{{element[column | camelCase | noSpace] == true?"checkcircle":"cancel"}}</span>
+          role="button">{{element[column | camelCase | noSpace] == true?"check":"close"}}</span>
         }
         @else if (isValidDate(element[column | camelCase | noSpace])) {
-        {{ element[column | camelCase | noSpace]|date:'shortDate'}}
+        {{ element[column | camelCase | noSpace]|date:'longDate'}}
         }
         @else{
         {{ element[column | camelCase | noSpace]}}
