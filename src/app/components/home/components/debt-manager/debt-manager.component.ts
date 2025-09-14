@@ -91,12 +91,12 @@ export class DebtManagerComponent implements OnInit {
       toUserId: ['', [Validators.required]],
       description: ['', [Validators.required]],
       transactionType: [TransactionType.Take, [Validators.required]],
-      totalAmount: [{ disabled: this.item == null }, [Validators.required]],
+      totalAmount: [{ value: 0, disabled: this.item != null }, [Validators.required]],
       transactionDate: [new Date(), [Validators.required]],
       amountToSettle: [0, [Validators.required]],
       settledAmount: [{ value: 0, disabled: true }, [Validators.required]],
       isSettled: [{ value: false, disabled: true }, [Validators.required]],
-      settlementDate: [null],
+      settlementDate: [{ value: null, disabled: true },],
       expectedSettlementDate: [null]
     });
 
@@ -108,7 +108,7 @@ export class DebtManagerComponent implements OnInit {
         if ((this.settledAmount.value ?? 0) >= (this.item.totalAmount ?? 0)) {
           this.settlementDate.setValue(new Date());
         }
-        else{
+        else {
           this.settlementDate.reset();
         }
       }
@@ -126,7 +126,7 @@ export class DebtManagerComponent implements OnInit {
   }
 
   onSubmit() {
-    let debt: DebtDto = this.form.value;
+    let debt: DebtDto = this.form.getRawValue();
 
     if (this.form.valid) {
       if (this.item) {
