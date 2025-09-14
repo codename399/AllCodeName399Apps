@@ -62,7 +62,16 @@
           role="button">delete</span>
         }
         } @else{
-        {{ element[column | camelCase | noSpace] }}
+        @if(typeof element[column | camelCase | noSpace]=="boolean"){
+        <span class="text text-danger material-icons-round mx-1" (click)="openDeleteConfirmation(element)"
+          role="button">{{element[column | camelCase | noSpace] == "true"?"checkcircle":"cancel"}}</span>
+        }
+        @else if (isValidDate(element[column | camelCase | noSpace])) {
+        {{ element[column | camelCase | noSpace]|date:'shortDate'}}
+        }
+        @else{
+        {{ element[column | camelCase | noSpace]}}
+        }
         }
       </td>
     </ng-container>

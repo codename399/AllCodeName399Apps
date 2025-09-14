@@ -200,4 +200,10 @@ export class GridComponent<I> implements AfterViewInit {
       },
     });
   }
+
+  isValidDate(dateString: string): boolean {
+    if (typeof dateString !== "string") return false;
+    const date = new Date(dateString);
+    return !isNaN(date.getTime())
+  }
 }
