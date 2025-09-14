@@ -1,7 +1,7 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { GameDetail } from '../../models/game-detail';
 import { GameStashService } from '../../services/game-stash-service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
@@ -87,6 +87,17 @@ export class GameStashComponent {
 
   onSubmit() {
     let gameDetail: GameDetail = this.form.value;
+
+    //Setting date based on selected status
+    if (gameDetail.status == Status.Started && gameDetail.startDate == null) {
+      gameDetail.startDate = new Date();
+    }
+    else if (gameDetail.status == Status.Archived && gameDetail.archiveDate == null) {
+      gameDetail.archiveDate = new Date();
+    }
+    else if (gameDetail.status == Status.Completed && gameDetail.completionDate == null) {
+      gameDetail.completionDate = new Date();
+    }
 
     if (this.form.valid) {
       if (this.item) {
