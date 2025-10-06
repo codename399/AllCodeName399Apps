@@ -1,0 +1,1 @@
+var t=class{static token="token";static userId="UserId";static creationDate="CreationDate";static updationDate="UpdationDate";static name="Name";static isAdmin="IsAdmin";static roleClaim="http://schemas.microsoft.com/ws/2008/06/identity/claims/role";static gameStash="GameStash";static debtManager="DebtManager";static admin="Admin";static status="Status"};export{t as a};
