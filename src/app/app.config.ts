@@ -2,6 +2,7 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
+  isDevMode,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -16,6 +17,7 @@ import { routes } from './app.routes';
 import { AuthenticationService } from './components/authentication/services/authentication-service';
 import { ConfigService } from './services/app-config-service';
 import { ApiConstants } from '../api-constants';
+import { environment } from '../assets/environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,7 +47,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: Config,
       useFactory: (configService: ConfigService) => {
-        return configService.value;
+        return isDevMode() ? environment as Config : configService.value;
       },
       deps: [ConfigService]
     },

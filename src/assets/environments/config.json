@@ -1,6 +1,6 @@
 {
-    "authenticationBaseURL": "http://localhost:5001",
-    "baseURL": "http://localhost:5000",
+    "authenticationBaseURL": "https://codename399.com",
+    "baseURL": "https://codename399.com",
     "toast_delay": 3000,
     "profilePictureUrl": "../../../../../assets/images/default-avatar.png",
     "logoUrl": "../../../../../assets/images/logo.png",
