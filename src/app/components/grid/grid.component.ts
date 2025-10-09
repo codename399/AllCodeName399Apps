@@ -7,24 +7,26 @@ import {
   input,
   ViewChild
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { Config } from '../../../assets/environments/config';
-import { Constants } from '../../../constants';
-import { SharedModule } from '../../../shared-module';
 import { OperatorType } from '../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../models/paged-response';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 import { DialogComponent } from '../dialog/dialog.component';
-import { PaginationRequest } from '../../models/pagination-request';
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { NoSpacePipe } from '../../pipes/nospace-pipe';
+import { CamelCasePipe } from '../../pipes/camelcase-pipe';
+import { DatePipe } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-grid',
-  imports: [SharedModule],
+  imports: [MatPaginatorModule, NoSpacePipe, CamelCasePipe, DatePipe, MatCheckboxModule, MatTableModule, ReactiveFormsModule],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css'
 })

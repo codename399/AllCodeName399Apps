@@ -1,22 +1,21 @@
 import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
 import { RegistrationFormComponent } from '../../../authentication/components/register/registration-form/registration-form.component';
-import { User } from '../../models/user';
 import { GridService } from '../../../authentication/services/grid.service';
-import { UserService } from '../../services/user-service';
 import { GridComponent } from '../../../grid/grid.component';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [SharedModule, GridComponent, RegistrationFormComponent],
+  imports: [GridComponent, RegistrationFormComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })

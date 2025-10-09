@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { SharedModule } from '../../../shared-module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [SharedModule],
+  imports: [MatDialogModule],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
 })

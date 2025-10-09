@@ -1,7 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { SharedModule } from "../../../../../shared-module";
 import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
 import { ToastService } from "../../../../services/toast.service";
 import { AuthenticationService } from "../../services/authentication-service";
@@ -10,7 +9,7 @@ import { AuthenticationService } from "../../services/authentication-service";
   selector: 'app-login-component',
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
-  imports: [SharedModule],
+  imports: [ReactiveFormsModule],
 })
 export class LoginComponent {
   #authenticationService = inject(AuthenticationService);

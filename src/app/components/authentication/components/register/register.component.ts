@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
 import { ToastService } from '../../../../services/toast.service';
 import { User } from '../../../home/models/user';
 import { UserService } from '../../../home/services/user-service';
@@ -8,7 +7,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 
 @Component({
   selector: 'app-register',
-  imports: [RegistrationFormComponent, SharedModule],
+  imports: [RegistrationFormComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

@@ -1,30 +1,27 @@
 import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Constants } from '../../../../../constants';
-import { SharedModule } from '../../../../../shared-module';
 import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
-import { OperatorType } from '../../../../models/enums/operator-type.enum';
-import { PagedResponse } from '../../../../models/paged-response';
-import { PaginationRequest } from '../../../../models/pagination-request';
 import { ToastService } from '../../../../services/toast.service';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { GridService } from '../../../authentication/services/grid.service';
 import { GridComponent } from '../../../grid/grid.component';
 import { Debt } from '../../models/debt';
 import { DebtDto } from '../../models/dto/debt-dto';
 import { TransactionType } from '../../models/enum/transaction-type-enum';
-import { Project } from '../../models/project';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { DebtManagerService } from '../../services/debt-manager-service';
-import { ProjectService } from '../../services/project-service';
 import { UserService } from '../../services/user-service';
-import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-debt-manager',
   standalone: true,
-  imports: [SharedModule, GridComponent],
+  imports: [GridComponent, MatDatepickerModule, MatInputModule, MatNativeDateModule, MatCheckboxModule, ReactiveFormsModule],
   templateUrl: './debt-manager.component.html',
   styleUrl: './debt-manager.component.css',
   providers: [DebtManagerService]

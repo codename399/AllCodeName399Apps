@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
@@ -15,7 +14,7 @@ import { UserService } from '../../services/user-service';
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [SharedModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css',
 })

@@ -1,25 +1,24 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Constants } from '../../../../../constants';
-import { SharedModule } from '../../../../../shared-module';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Config } from '../../../../../assets/environments/config';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { ToastService } from '../../../../services/toast.service';
+import { GridService } from '../../../authentication/services/grid.service';
+import { GridComponent } from '../../../grid/grid.component';
 import { Project } from '../../models/project';
 import { User } from '../../models/user';
-import { GridService } from '../../../authentication/services/grid.service';
 import { ProjectService } from '../../services/project-service';
-import { GridComponent } from '../../../grid/grid.component';
-import { Config } from '../../../../../assets/environments/config';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [SharedModule, GridComponent],
+  imports: [GridComponent, MatCheckboxModule, ReactiveFormsModule],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css',
   providers: [FileUploadService]

@@ -1,7 +1,6 @@
 import { Component, effect, inject, input, OnInit, output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Constants } from '../../../../../../constants';
-import { SharedModule } from '../../../../../../shared-module';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Config } from '../../../../../../assets/environments/config';
 import {
   getErrorMessage,
   isInvalid,
@@ -10,11 +9,10 @@ import { PasswordMatchValidator } from '../../../../../../validators/password-ma
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { ToastService } from '../../../../../services/toast.service';
 import { User } from '../../../../home/models/user';
-import { Config } from '../../../../../../assets/environments/config';
 
 @Component({
   selector: 'app-registration-form',
-  imports: [SharedModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.css',
   providers: [FileUploadService]

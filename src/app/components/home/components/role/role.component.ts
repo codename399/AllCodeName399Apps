@@ -2,24 +2,24 @@ import { Component, effect, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  ReactiveFormsModule,
   Validators
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
 import {
   getErrorMessage,
   isInvalid,
 } from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
-import { Role } from '../../models/role';
 import { GridService } from '../../../authentication/services/grid.service';
-import { RoleService } from '../../services/role-service';
 import { GridComponent } from '../../../grid/grid.component';
+import { Role } from '../../models/role';
+import { RoleService } from '../../services/role-service';
 
 @Component({
   selector: 'app-role',
   standalone: true,
-  imports: [SharedModule, GridComponent],
+  imports: [GridComponent, ReactiveFormsModule],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
   providers: [GridService],
@@ -77,7 +77,7 @@ export class RoleComponent {
 
   onSubmit() {
     let role: Role = this.form.value;
-    
+
     if (this.form.valid) {
       if (this.item) {
         role.id = this.item.id;

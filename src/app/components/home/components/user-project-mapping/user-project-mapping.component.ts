@@ -1,20 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SharedModule } from '../../../../../shared-module';
-import { Project } from '../../models/project';
-import { User } from '../../models/user';
-import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
-import { UserProjectMappingService } from '../../services/user-project-mapping-service';
 import { Constants } from '../../../../../constants';
+import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
 import { OperatorType } from '../../../../models/enums/operator-type.enum';
-import { UserProjectMappingDto } from '../../models/dto/user-project-mapping-dto';
 import { PagedResponse } from '../../../../models/paged-response';
 import { ToastService } from '../../../../services/toast.service';
+import { UserProjectMappingDto } from '../../models/dto/user-project-mapping-dto';
+import { Project } from '../../models/project';
+import { User } from '../../models/user';
+import { UserProjectMappingService } from '../../services/user-project-mapping-service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-user-project-mapping',
-  imports: [SharedModule],
+  imports: [MatCheckboxModule, ReactiveFormsModule],
   templateUrl: './user-project-mapping.component.html',
   styleUrl: './user-project-mapping.component.css'
 })

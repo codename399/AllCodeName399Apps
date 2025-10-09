@@ -1,22 +1,13 @@
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200;">
-  <div
-    class="toast align-items-center text-white border-0"
-    [ngClass] = "{
-      'bg-primary':toastType == 'Primary',
-      'bg-success':toastType == 'Success',
-      'bg-danger':toastType == 'Danger',
-      'bg-warning':toastType == 'Warning'
-    }"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-    id="myToast"
-  >
+  <div class="toast align-items-center text-white border-0" [class.bg-primary]="toastType == 'Primary'"
+    [class.bg-success]="toastType == 'Success'" [class.bg-danger]="toastType == 'Danger'"
+    [class.bg-warning]="toastType == 'Warning'" role="alert" aria-live="assertive" aria-atomic="true" id="myToast">
     <div class="d-flex">
       <div class="toast-body">
         {{ message }}
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
     </div>
   </div>
 </div>

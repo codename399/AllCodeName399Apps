@@ -1,25 +1,24 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
-import { GameDetail } from '../../models/game-detail';
-import { GameStashService } from '../../services/game-stash-service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Constants } from '../../../../../constants';
 import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
-import { ToastService } from '../../../../services/toast.service';
-import { GridService } from '../../../authentication/services/grid.service';
-import { GridComponent } from '../../../grid/grid.component';
-import { SharedModule } from '../../../../../shared-module';
-import { Status } from '../../models/enum/status-enum';
-import { Website } from '../../models/enum/website-enum';
+import { OperatorType } from '../../../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../../../models/paged-response';
 import { PaginationRequest } from '../../../../models/pagination-request';
+import { ToastService } from '../../../../services/toast.service';
+import { GridService } from '../../../authentication/services/grid.service';
 import { DialogComponent } from '../../../dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Constants } from '../../../../../constants';
-import { OperatorType } from '../../../../models/enums/operator-type.enum';
+import { GridComponent } from '../../../grid/grid.component';
+import { Status } from '../../models/enum/status-enum';
+import { Website } from '../../models/enum/website-enum';
+import { GameDetail } from '../../models/game-detail';
+import { GameStashService } from '../../services/game-stash-service';
 
 @Component({
   selector: 'app-game-stash',
-  imports: [GridComponent, SharedModule],
+  imports: [GridComponent, ReactiveFormsModule],
   templateUrl: './game-stash.component.html',
   styleUrl: './game-stash.component.css',
   providers: [GridService]

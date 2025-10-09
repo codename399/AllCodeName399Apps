@@ -1,5 +1,4 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { SharedModule } from '../shared-module';
 import { RouterModule } from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './services/loader.service';
@@ -12,7 +11,7 @@ declare const bootstrap: any; //
 
 @Component({
   selector: 'app-root',
-  imports: [LoaderComponent, ToastComponent, RouterModule, SharedModule],
+  imports: [LoaderComponent, ToastComponent, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
