@@ -1,19 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { Config } from '../../../../../assets/environments/config';
+import { Component, HostListener, inject } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { Router } from '@angular/router';
+import { Config } from '../../../../../assets/environments/config';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service';
-import { HomeHeaderComponent } from '../home-header/home-header.component';
-import { HomeFooterComponent } from '../home-footer/home-footer.component';
 
 @Component({
-  selector: 'app-home',
-  imports: [RouterModule, HomeHeaderComponent, HomeFooterComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  selector: 'app-home-header',
+  standalone: true,
+  imports: [],
+  templateUrl: './home-header.component.html',
+  styleUrl: './home-header.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeHeaderComponent {
   #authenticationService = inject(AuthenticationService);
   #userService = inject(UserService);
   #router = inject(Router);
@@ -22,6 +21,7 @@ export class HomeComponent implements OnInit {
   user!: User;
   profilePictureUrl!: string;
   logoUrl!: string
+  isDropdownOpen: boolean = false;
 
   constructor() {
     this.profilePictureUrl = this.#config.profilePictureUrl;
@@ -43,6 +43,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   logout() {
     this.#authenticationService.logout();
   }
@@ -53,5 +57,18 @@ export class HomeComponent implements OnInit {
 
   editProfile() {
     this.#router.navigate(['/home/register', this.user.id]);
+  }
+
+  goHome() {
+    this.#router.navigate(['/home']);
+  }
+
+  // Optional: Close dropdown when clicking outside
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.relative')) {
+      this.isDropdownOpen = false;
+    }
   }
 }
