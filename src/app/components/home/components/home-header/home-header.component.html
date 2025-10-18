@@ -16,7 +16,7 @@
             <!-- Right: Profile Dropdown -->
             <div class="relative" (clickOutside)="isDropdownOpen = false">
                 <button (click)="toggleDropdown()" class="flex items-center focus:outline-none space-x-2">
-                    <img class="w-9 h-9 rounded-full border-2 border-indigo-500" src="https://i.pravatar.cc/100"
+                    <img class="w-9 h-9 rounded-full border-2 border-indigo-500" [src]="profilePictureUrl"
                         alt="User avatar" />
                     <span class="hidden md:block text-gray-700 font-medium">Ajay</span>
                     <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"

@@ -18,7 +18,11 @@ export class DashboardComponent implements OnInit {
     this.projects = this.#route.snapshot.data['projects'];
 
     if (this.projects?.length == 1) {
-      this.#router.navigate([this.projects[0].route]);
+      this.openProject(this.projects[0]);
     }
+  }
+
+  openProject(project: Project) {
+    this.#router.navigate([project.route]);
   }
 }

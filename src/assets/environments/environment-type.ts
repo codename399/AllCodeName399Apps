@@ -6,4 +6,5 @@ export interface IEnvironment {
     logoUrl: string;
     pageSize: number;
     enableMultiSelection: boolean;
+    loadGridImages: boolean;
 }

@@ -8,4 +8,5 @@ export class Config implements IEnvironment {
     authenticationBaseURL!: string;
     baseURL!: string;
     toast_delay!: number;
+    loadGridImages!: boolean;
 }

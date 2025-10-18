@@ -1,20 +1,40 @@
-<div class="container">
-  <div class="row pt-4">
-    @for(project of projects;let i = $index;track project.name){
-    <div class="col-md-3 mb-3" >
-      <div class="card">
-        <img [src]="project.imageUrl" class="card-img-top project-img" alt="{{ project.name }}" />
-        <div class="card-body">
-          <h5 class="card-title">{{ project.name }}</h5>
-          <p class="card-text">
-            {{ project.description }}
-          </p>
-          <a href="#" [routerLink]="project.route" class="btn btn-primary">{{
-            project.navigationText
-            }}</a>
+<div class="bg-gray-100 p-4">
+  <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for(project of projects;track project.id){
+    <li><a (click)="openProject(project)"
+        class="block h-full transition-all duration-200 bg-white border border-gray-200 rounded group hover:shadow-lg hover:border-green-500 hover:ring-1 hover:ring-green-500/20">
+        <div class="flex items-center p-6">
+          <div
+            class="flex items-center justify-center flex-shrink-0 w-16 h-16 transition-colors duration-200 rounded bg-green-50 group-hover:bg-green-100">
+            <span class="text-4xl" role="img"><span class="text-4xl text-indigo-600 material-icons">
+                {{project.navigationText}}
+              </span>
+            </span>
+          </div>
+
+          <div class="flex-grow ml-6">
+            <h3
+              class="text-lg font-semibold text-gray-900 transition-colors duration-200 line-clamp-1 group-hover:text-green-600">
+              {{project.name}}
+            </h3>
+
+            <div class="inline-flex items-center mt-1">
+              <span class="text-gray-600 rounded">
+                {{project.description}}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex-shrink-0 ml-4">
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors duration-200"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" aria-hidden="true" data-slot="icon">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+            </svg>
+          </div>
         </div>
-      </div>
-    </div>
+      </a>
+    </li>
     }
-  </div>
+  </ul>
 </div>

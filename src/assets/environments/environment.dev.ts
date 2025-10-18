@@ -7,5 +7,6 @@ export const environment: IEnvironment = {
     profilePictureUrl: "../../../../../assets/images/default-avatar.png",
     logoUrl: "../../../../../assets/images/logo.png",
     pageSize: 5,
-    enableMultiSelection: true
+    enableMultiSelection: true,
+    loadGridImages: false
 }

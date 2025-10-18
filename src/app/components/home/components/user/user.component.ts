@@ -56,8 +56,6 @@ export class UserComponent {
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
     this.#gridService.displayedColumns = [
-      'select',
-      'Name',
       'Username',
       'EmailId',
       'ContactNumber',

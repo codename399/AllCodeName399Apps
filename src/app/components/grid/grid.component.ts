@@ -1,4 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,21 +9,19 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { Config } from '../../../assets/environments/config';
 import { OperatorType } from '../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../models/paged-response';
+import { CamelCasePipe } from '../../pipes/camelcase-pipe';
+import { NoSpacePipe } from '../../pipes/nospace-pipe';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 import { DialogComponent } from '../dialog/dialog.component';
-import { MatPaginatorModule } from '@angular/material/paginator'
-import { NoSpacePipe } from '../../pipes/nospace-pipe';
-import { CamelCasePipe } from '../../pipes/camelcase-pipe';
-import { DatePipe } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-grid',
@@ -37,16 +36,16 @@ export class GridComponent<I> implements AfterViewInit {
   #config = inject(Config);
 
   showAdd = input(true);
-  showEdit = input(true);
   showDelete = input(true);
-  showDeleteAll = input(true);
   showSearch = input(true);
+  title = input<string>('Name');
+  date = input<string>('UpdationDate');
 
-  pagedItems: any[] = [];
   searchInput: FormControl = new FormControl('');
+  loadGridImages: boolean = this.#config.loadGridImages;
 
-  dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
+  items: Record<string, any>[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchBy: FormControl = new FormControl(this.displayedColumns[1]);
@@ -96,14 +95,6 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   constructor() {
-    if (!this.#config.enableMultiSelection) {
-      this.displayedColumns = this.displayedColumns.filter(f => f != "select");
-    }
-
-    if (!this.displayedColumns.includes("action")) {
-      this.displayedColumns.push("action")
-    }
-
     this.searchInput.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged(),
@@ -125,33 +116,21 @@ export class GridComponent<I> implements AfterViewInit {
       })
     ).subscribe((result => {
       this.#gridService.pagedResponse = result as PagedResponse<I>;
-      this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
+      this.items = this.#gridService.pagedResponse?.items ?? [];
     }))
 
     effect(() => {
-      this.dataSource.data = this.#gridService.pagedResponse?.items ?? [];
+      this.items = this.#gridService.pagedResponse?.items ?? [];
     });
   }
 
   ngAfterViewInit() {
-    this.paginator.page.subscribe((event: any) => {
-      this.#gridService.paginationRequest = event;
-      this.getAll();
-    });
-  }
-
-  /** Whether all rows are selected. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.paginator) {
+      this.paginator.page.subscribe((event: any) => {
+        this.#gridService.paginationRequest = event;
+        this.getAll();
+      });
+    }
   }
 
   onSort(event: any) {

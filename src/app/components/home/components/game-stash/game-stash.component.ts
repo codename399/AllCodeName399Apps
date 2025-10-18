@@ -66,7 +66,7 @@ export class GameStashComponent {
     this.#gridService.service = GameStashService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Name', 'Status', 'Website', 'Start Date', 'Archive Date', 'Completion Date'];
+    this.#gridService.displayedColumns = ['Status', 'Website', 'Start Date', 'Archive Date', 'Completion Date'];
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
