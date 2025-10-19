@@ -48,7 +48,9 @@ export class GridComponent<I> implements AfterViewInit {
   items: Record<string, any>[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  searchBy: FormControl = new FormControl(this.displayedColumns[1]);
+  searchBy: FormControl = new FormControl(this.title());
+  sortBy: FormControl = new FormControl(this.title());
+  sortAscending: boolean = true
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -133,9 +135,9 @@ export class GridComponent<I> implements AfterViewInit {
     }
   }
 
-  onSort(event: any) {
-    this.#gridService.paginationRequest.sortBy = event.active;
-    this.#gridService.paginationRequest.ascending = event.direction == "asc";
+  onSort() {
+    this.#gridService.paginationRequest.sortBy = this.sortBy.value;
+    this.#gridService.paginationRequest.ascending = this.sortAscending;
 
     this.getAll();
   }
@@ -186,5 +188,9 @@ export class GridComponent<I> implements AfterViewInit {
     if (typeof dateString !== "string") return false;
     const date = new Date(dateString);
     return !isNaN(date.getTime())
+  }
+
+  changeSortDirection() {
+    this.sortAscending = !this.sortAscending;
   }
 }

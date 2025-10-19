@@ -23,6 +23,20 @@
       </button>
     </div>
   </div>
+  <div class="flex justify-center items-center">
+    <select [formControl]="sortBy" (change)="onSort()"
+      class="bg-white dark:bg-gray-800 h-10 px-2 rounded-full text-sm focus:outline-none outline-none border-2 border-gray-500 dark:border-gray-600 border-r-1 cursor-pointer max-h-10 overflow-y-hidden">
+      <option class="font-medium cursor-pointer" [value]="title()">{{title()}}</option>
+      @for(column of displayedColumns;track column){
+      <option class="font-medium cursor-pointer" [value]="column">{{column}}</option>
+      }
+    </select>
+    <span class="text text-primary material-icons mx-1" role="button" (click)="changeSortDirection()">{{ sortAscending ?
+      'arrow_upward':
+      'arrow_downward'}}</span>
+    <span class="text text-success material-icons mx-1" role="button">add</span>
+    <span class="text text-danger material-icons mx-1" role="button">delete</span>
+  </div>
 </div>
 }
 
@@ -32,7 +46,7 @@
     <div class='px-2'>
       <ul class='grid grid-cols-1 gap-8 px-1 md:grid-cols-2 
          lg:grid-cols-3 md:p-2 xl:p-4'>
-        @for(item of items;track item['id']){
+        @for(item of items;track $index){
         <li
           class='cursor-pointer relative flex w-full gap-4 p-2 border border-gray-700 rounded hover:transition shadow-md hover:border-fuchsia-800 hover:shadow-fuchsia-600'>
           @if(loadGridImages){
@@ -49,13 +63,26 @@
               @if(!!displayedColumns.length){
               @for(column of displayedColumns;track column)
               {
-              <p class='pt-1 text-sm text-black '>
-                <b>{{column}}: </b>{{item[column | noSpace | camelCase]}}
+              <p class='pt-1 text-sm text-black'>
+                <b>{{column}}: </b>
+                @if(typeof item[column | camelCase | noSpace]=="boolean"){
+                <span class="text text-danger material-icons-round mx-1" role="button">{{item[column | camelCase |
+                  noSpace] == true?"check":"close"}}</span>
+                }
+                @else if (isValidDate(item[column | camelCase | noSpace])) {
+                {{ item[column | camelCase | noSpace]|date:'longDate'}}
+                }
+                @else{
+                {{ item[column | camelCase | noSpace]}}
+                }
               </p>
               }
               }
             </div>
-            <div class='flex items-center justify-end gap-1'>
+            <div class='flex items-center justify-between gap-1'>
+              <div class="text-xxs text-gray-300">
+                {{$index + 1}}
+              </div>
               <div class='flex items-center gap-1 px-2 py-1 text-xs text-gray-700 rounded cursor-pointer'>
                 <span>
                   {{(item[date()] ?? item['creationDate']) | date:'longDate'}}
