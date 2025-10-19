@@ -34,8 +34,16 @@
     <span class="text text-primary material-icons mx-1" role="button" (click)="changeSortDirection()">{{ sortAscending ?
       'arrow_upward':
       'arrow_downward'}}</span>
+    @if(showAdd() && !isDeleteMode){
     <span class="text text-success material-icons mx-1" role="button">add</span>
-    <span class="text text-danger material-icons mx-1" role="button">delete</span>
+    }
+    @if(showDelete() && !isDeleteMode){
+    <span class="text text-danger material-icons mx-1" role="button" (click)="enableDeleteMode()">delete</span>
+    }
+    @if(isDeleteMode){
+    <span class="text text-success material-icons mx-1" role="button" (click)="delete()">check</span>
+    <span class="text text-danger material-icons mx-1" role="button" (click)="disableDeleteMode()">close</span>
+    }
   </div>
 </div>
 }
@@ -48,7 +56,8 @@
          lg:grid-cols-3 md:p-2 xl:p-4'>
         @for(item of items;track $index){
         <li
-          class='cursor-pointer relative flex w-full gap-4 p-2 border border-gray-700 rounded hover:transition shadow-md hover:border-fuchsia-800 hover:shadow-fuchsia-600'>
+          class='cursor-pointer relative flex w-full gap-4 p-2 border border-gray-700 rounded hover:transition shadow-md hover:border-fuchsia-800 hover:shadow-fuchsia-600'
+          [class.opacity-50]="isSelected(item)" (click)="onTileClick(item)">
           @if(loadGridImages){
           <div class='w-full overflow-hidden rounded'>
             <img src="https://github.com/sardorazimov/e_commerce/blob/master/public/users/opa.png?raw=true" alt="Opa"

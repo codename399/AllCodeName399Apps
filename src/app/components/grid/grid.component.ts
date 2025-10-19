@@ -43,8 +43,8 @@ export class GridComponent<I> implements AfterViewInit {
 
   searchInput: FormControl = new FormControl('');
   loadGridImages: boolean = this.#config.loadGridImages;
-
-  selection = new SelectionModel<any>(true, []);
+  isDeleteMode: boolean = false;
+  selection: I[] = [];
   items: Record<string, any>[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -146,7 +146,7 @@ export class GridComponent<I> implements AfterViewInit {
     this.#gridService.getAll().subscribe({
       next: (pagedResponse: PagedResponse<I>) => {
         this.#gridService.pagedResponse = pagedResponse;
-        this.selection.clear();
+        this.selection = [];
       },
     });
   }
@@ -174,7 +174,7 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   delete(item?: I) {
-    let items: I[] = item ? [item] : this.selection.selected;
+    let items: I[] = item ? [item] : this.selection;
 
     this.#gridService.delete(items).subscribe({
       next: () => {
@@ -192,5 +192,43 @@ export class GridComponent<I> implements AfterViewInit {
 
   changeSortDirection() {
     this.sortAscending = !this.sortAscending;
+    this.onSort();
+  }
+
+  enableDeleteMode() {
+    this.isDeleteMode = true;
+  }
+
+  disableDeleteMode() {
+    this.isDeleteMode = false;
+    this.selection = [];
+  }
+
+  isSelected(item: any) {
+    if (this.selection.includes(item) && this.isDeleteMode) {
+      return true;
+    }
+
+    return false;
+  }
+
+  onTileClick(item: any) {
+    if (this.isDeleteMode) {
+      this.addSelection(item);
+    }
+    else {
+      this.edit(item);
+    }
+  }
+
+  addSelection(item: I) {
+    let index = this.selection.indexOf(item);
+
+    if (index > -1) {
+      this.selection.splice(index, 1);
+    }
+    else {
+      this.selection.push(item);
+    }
   }
 }
