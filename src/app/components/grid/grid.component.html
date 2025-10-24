@@ -35,7 +35,7 @@
       'arrow_upward':
       'arrow_downward'}}</span>
     @if(showAdd() && !isDeleteMode){
-    <span class="text text-success material-icons mx-1" role="button">add</span>
+    <span class="text text-success material-icons mx-1" role="button" (click)="add()">add</span>
     }
     @if(showDelete() && !isDeleteMode){
     <span class="text text-danger material-icons mx-1" role="button" (click)="enableDeleteMode()">delete</span>
