@@ -22,6 +22,7 @@ import { NoSpacePipe } from '../../pipes/nospace-pipe';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 import { DialogComponent } from '../dialog/dialog.component';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-grid',
@@ -34,6 +35,7 @@ export class GridComponent<I> implements AfterViewInit {
   #toastService = inject(ToastService);
   #dialog = inject(MatDialog);
   #config = inject(Config);
+  #loaderService = inject(LoaderService);
 
   showAdd = input(true);
   showDelete = input(true);
@@ -136,6 +138,10 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   onSort() {
+    this.#gridService.paginationRequest = {
+      pageIndex: 0,
+      pageSize: this.pageSize
+    }
     this.#gridService.paginationRequest.sortBy = this.sortBy.value;
     this.#gridService.paginationRequest.ascending = this.sortAscending;
 
@@ -146,6 +152,7 @@ export class GridComponent<I> implements AfterViewInit {
     this.#gridService.getAll().subscribe({
       next: (pagedResponse: PagedResponse<I>) => {
         this.#gridService.pagedResponse = pagedResponse;
+
         this.selection = [];
       },
     });
@@ -230,5 +237,13 @@ export class GridComponent<I> implements AfterViewInit {
     else {
       this.selection.push(item);
     }
+  }
+
+  getTileIndex(index: number) {
+    return (index + 1) + ((this.currentPage - 1) * this.pageSize);
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
