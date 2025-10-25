@@ -1,109 +1,34 @@
 @if(showForm){
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-    <div class="card shadow" style="width: 100%; max-width: 400px">
-        <div class="card-body">
-            <h4 class="card-title text-center mb-4">
-                {{ item ? "Update" : "Add" }}
-            </h4>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title:</label>
-                    <input id="title" class="form-control" formControlName="title" />
-                    @if(isInvalid(form,"title")){
-                    <small class="text-danger">{{ getErrorMessage(form, "title") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <textarea id="description" class="form-control" formControlName="description"></textarea>
-                    @if(isInvalid(form,"description")){
-                    <small class="text-danger">{{ getErrorMessage(form, "description") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="toUserId" class="form-label">To User:</label>
-                    <select id="toUserId" class="form-select" formControlName="toUserId">
-                        <option value="">Choose...</option>
-                        @for(user of users; track user){
-                        <option [value]="user.id">
-                            {{ user.name }}
-                        </option>
-                        }
-                    </select>
-                    @if(isInvalid(form,"toUserId")){
-                    <small class="text-danger">{{ getErrorMessage(form, "toUserId") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="transactionType" class="form-label">To User:</label>
-                    <select id="transactionType" class="form-select" formControlName="transactionType"
-                        [disabled]="item == null">
-                        <option value="">Choose...</option>
-                        @for(transactionType of transactionTypes; track transactionType){
-                        <option [value]="transactionType">
-                            {{ transactionType }}
-                        </option>
-                        }
-                    </select>
-                    @if(isInvalid(form,"transactionType")){
-                    <small class="text-danger">{{ getErrorMessage(form, "transactionType") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="totalAmount" class="form-label">Total Amount:</label>
-                    <input id="totalAmount" class="form-control" formControlName="totalAmount" />
-                </div>
-                <div class="mb-3">
-                    <mat-form-field appearance="fill" class="datepicker">
-                        <mat-label>Transaction Date:</mat-label>
-                        <input matInput [matDatepicker]="transactionDatePicker" formControlName="transactionDate">
-                        <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #transactionDatePicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="mb-3">
-                    <label for="settledAmount" class="form-label">Settled Amount:</label>
-                    <input id="settledAmount" class="form-control" formControlName="settledAmount" />
-                </div>
-                <div class="mb-3">
-                    <label for="amountToSettle" class="form-label">Amount to settle:</label>
-                    <input id="amountToSettle" class="form-control" formControlName="amountToSettle" />
-                    @if(isInvalid(form,"amountToSettle")){
-                    <small class="text-danger">{{ getErrorMessage(form, "amountToSettle") }}</small>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="isSettled" class="form-label">Is Settled:</label>
-                    <mat-checkbox id="isSettled" color="primary" class="form-control" formControlName="isSettled">
-                    </mat-checkbox>
-                </div>
-                <div class="mb-3">
-                    <mat-form-field appearance="fill" class="datepicker">
-                        <mat-label>Settlement Date:</mat-label>
-                        <input matInput [matDatepicker]="settlementDatePicker" formControlName="settlementDate">
-                        <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #settlementDatePicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="mb-3">
-                    <mat-form-field appearance="fill" class="datepicker">
-                        <mat-label>Expected Settlement Date:</mat-label>
-                        <input matInput [matDatepicker]="expectedSettlementDatePicker" formControlName="expectedSettlementDate">
-                        <mat-datepicker-toggle matSuffix [for]="expectedSettlementDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #expectedSettlementDatePicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
+<div class="flex items-center justify-center p-12">
+    <!-- Author: FormBold Team -->
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <app-input [type]="InputType.Text" [label]="'Title'" formControlName="title"></app-input>
+            <app-input [type]="InputType.Textarea" [label]="'Description'" formControlName="description"></app-input>
+            <app-input [type]="InputType.Dropdown" [label]="'To User'" [options]="users"
+                formControlName="toUserId"></app-input>
+            <app-input [type]="InputType.Dropdown" [label]="'Transaction Type'" [options]="transactionTypes"
+                formControlName="transactionType"></app-input>
+            <app-input [type]="InputType.Number" [label]="'Total Amount'" [min]="0"
+                formControlName="totalAmount"></app-input>
+            <app-input [type]="InputType.Date" [label]="'Transaction Date'"
+                formControlName="transactionDate"></app-input>
+            <app-input [type]="InputType.Number" [label]="'Settled Amount'" [min]="0"
+                formControlName="settledAmount"></app-input>
+            <app-input [type]="InputType.Number" [label]="'Amount to Settle'" [min]="0"
+                formControlName="amountToSettle"></app-input>
+            <app-input [type]="InputType.Checkbox" [options]="isSettled" formControlName="isSettled"></app-input>
+            <app-input [type]="InputType.Date" [label]="'Settlement Date'" formControlName="settlementDate"></app-input>
+            <app-input [type]="InputType.Date" [label]="'Expected Settlement Date'"
+                formControlName="expectedSettlementDate"></app-input>
 
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">
-                        {{ item ? "Update" : "Add" }}
-                    </button>
-                    <button (click)="showForm = false" class="btn">
-                        Back
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div>
+                <button
+                    class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 } @else {

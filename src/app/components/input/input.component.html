@@ -1,0 +1,91 @@
+<div class="mb-5">
+    @if(type()==InputType.Text){
+    <label for="{{id}}" class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="text"
+        name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.maxlength]="maxlength()"
+        class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+    }
+    @else if(type()==InputType.Number){
+    <label for="{{id}}" class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="number"
+        name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.min]="min()" [attr.max]="max()"
+        class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+    }
+    @else if(type()==InputType.Textarea){
+    <label for="{{id}}" class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <textarea [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="text"
+        name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.maxlength]="maxlength()"
+        class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
+    }
+    @else if(type()==InputType.Dropdown){
+    <label class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <div class="flex items-center space-x-6">
+        <select [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()"
+            class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+            <option class="font-medium cursor-pointer" value="">Choose...</option>
+            @for(option of options();track $index){
+            <option class="font-medium cursor-pointer" [value]="option[valueField()]">{{option[textField()]}}</option>
+            }
+        </select>
+    </div>
+    }
+    @else if(type()==InputType.Radio){
+    <label class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <div class="flex items-center space-x-6">
+        @for(option of options();track $index){
+        <div class="flex items-center">
+            <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()"
+                type="radio" name="{{id}}" id="{{id}}_{{$index}}" class="h-5 w-5 cursor-pointer" />
+            <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]">
+                {{option[textField()]}}
+            </label>
+        </div>
+        }
+    </div>
+    }
+    @else if(type()==InputType.Checkbox){
+    <label class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <div class="flex items-center space-x-6">
+        @for(option of options();track $index){
+        <div class="flex items-center">
+            <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()"
+                type="checkbox" name="{{id}}" id="{{id}}_{{$index}}" class="h-5 w-5 cursor-pointer" />
+            <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]">
+                {{option[textField()]}}
+            </label>
+        </div>
+        }
+    </div>
+    }
+    @else if(type()==InputType.Date){
+    <label for="{{id}}" class="mb-3 block text-base font-medium text-[#07074D]">
+        {{label()}}
+    </label>
+    <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="date"
+        name="{{id}}" id="{{id}}"
+        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+    }
+    @else if(type()==InputType.Time){
+    <label for="{{id}}" class="mb-3 block text-base font-medium text-[#07074D]">
+        Time
+    </label>
+    <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="time"
+        name="{{id}}" id="{{id}}"
+        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+    }
+    <!-- @if(isInvalid(form,"toUserId")){
+<small class="text-danger">{{ getErrorMessage(form, "toUserId") }}</small>
+} -->
+</div>

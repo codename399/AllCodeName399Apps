@@ -2,10 +2,12 @@ import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
+import { InputType } from '../../../../models/enums/input-type';
 import { ToastService } from '../../../../services/toast.service';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { GridService } from '../../../authentication/services/grid.service';
 import { GridComponent } from '../../../grid/grid.component';
+import { InputComponent } from '../../../input/input.component';
 import { Debt } from '../../models/debt';
 import { DebtDto } from '../../models/dto/debt-dto';
 import { TransactionType } from '../../models/enum/transaction-type-enum';
@@ -13,15 +15,11 @@ import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { DebtManagerService } from '../../services/debt-manager-service';
 import { UserService } from '../../services/user-service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-debt-manager',
   standalone: true,
-  imports: [GridComponent, MatDatepickerModule, MatInputModule, MatNativeDateModule, MatCheckboxModule, ReactiveFormsModule],
+  imports: [GridComponent, ReactiveFormsModule, InputComponent],
   templateUrl: './debt-manager.component.html',
   styleUrl: './debt-manager.component.css',
   providers: [DebtManagerService]
@@ -34,9 +32,11 @@ export class DebtManagerComponent implements OnInit {
   #userService = inject(UserService);
   #authService = inject(AuthenticationService);
 
+  InputType = InputType;
   form: FormGroup;
   users: User[] = [];
-  transactionTypes: string[] = Object.keys(TransactionType);
+  transactionTypes = Object.keys(TransactionType).map(key => ({ id: key, name: key }));
+  isSettled = [{ id: "Is Settled", name: "Is Settled" }];
 
   get amountToSettle() {
     return this.form.get("amountToSettle") as FormControl
