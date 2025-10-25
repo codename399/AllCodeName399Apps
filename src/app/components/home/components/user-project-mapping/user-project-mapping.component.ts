@@ -3,18 +3,19 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../constants';
 import { PAGINATION_REQUEST } from '../../../../../injectors/common-injector';
+import { InputType } from '../../../../models/enums/input-type';
 import { OperatorType } from '../../../../models/enums/operator-type.enum';
 import { PagedResponse } from '../../../../models/paged-response';
 import { ToastService } from '../../../../services/toast.service';
+import { InputComponent } from '../../../input/input.component';
 import { UserProjectMappingDto } from '../../models/dto/user-project-mapping-dto';
 import { Project } from '../../models/project';
 import { User } from '../../models/user';
 import { UserProjectMappingService } from '../../services/user-project-mapping-service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-user-project-mapping',
-  imports: [MatCheckboxModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent],
   templateUrl: './user-project-mapping.component.html',
   styleUrl: './user-project-mapping.component.css'
 })
@@ -29,6 +30,7 @@ export class UserProjectMappingComponent {
   projects: Project[] = [];
   userProjectMapping!: UserProjectMappingDto | null;
   form!: FormGroup;
+  InputType = InputType;
 
   get userId() {
     return this.form.get("userId") as FormControl;

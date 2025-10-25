@@ -74,7 +74,7 @@
         <div class="flex items-center">
             <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()"
                 type="checkbox" name="{{id}}" id="{{id}}_{{$index}}" class="h-5 w-5 cursor-pointer" />
-            <label for="radioButton1" class="pl-3 text-base font-medium text-[#07074D]">
+            <label for="{{id}}" class="pl-3 text-base font-medium text-[#07074D]">
                 {{option[textField()]}}
             </label>
         </div>

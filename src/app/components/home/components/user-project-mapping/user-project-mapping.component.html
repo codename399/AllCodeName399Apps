@@ -1,38 +1,31 @@
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-    <div class="card shadow" style="width: 100%; max-width: 400px">
-        <div class="card-body">
-            <h4 class="card-title text-center mb-4">
-                Map Projects
-            </h4>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class=" mb-3">
-                    <label for="userId" class="form-label">Select a user:</label>
-                    <select id="userId" class="form-select" formControlName="userId">
-                        <option value="">Choose...</option>
-                        @for(user of users; track user.id){
-                        <option [value]="user.id">
-                            {{ user.name }}
-                        </option>
-                        }
-                    </select>
-                </div>
-                @if(userId.value){
-                <div class="mb-3">
-                    <label for="user" class="form-label">Select projects:</label>
+<div class="flex items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <app-input [type]="InputType.Dropdown" [label]="'Select a user'" [options]="users"
+                formControlName="userId"></app-input>
+            @if(userId.value){
+            <div class="mb-5">
+                <div class="flex items-center space-x-6">
+                    <label class="block text-base font-medium text-[#07074D]">Select projects:</label>
                     @for(project of projects;track project.id){
-                    <mat-checkbox id="{{project.name}}" color="primary" class="form-control" [checked] = "setSelection(project.id ?? '')"
-                        (change)="onSelectionChange($event, project)">
-                        <label for="{{project.name}}" class="form-label">{{project.name}}</label>
-                    </mat-checkbox>
+                    <div class="flex items-center align-middle">
+                        <input [checked]="setSelection(project.id ?? '')" (change)="onSelectionChange($event, project)"
+                            type="checkbox" name="{{project.name}}" id="{{project.name}}"
+                            class="h-5 w-5 cursor-pointer" />
+                        <label for="{{project.name}}" class="pl-3 text-base font-medium text-[#07074D]">
+                            {{project.name}}
+                        </label>
+                    </div>
                     }
                 </div>
-                }
-                <div class="d-flex justify-content-start">
-                    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-                        Update
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+            }
+            <div>
+                <button
+                    class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
 </div>
