@@ -71,7 +71,7 @@ export class ProjectComponent {
     this.#gridService.service = ProjectService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Name', 'Description'];
+    this.#gridService.displayedColumns = ['Name', 'Description'];
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],

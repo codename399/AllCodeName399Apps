@@ -62,7 +62,7 @@ export class RoleComponent {
     this.#gridService.service = RoleService;
     this.#gridService.pagedResponse =
       this.#route.snapshot.data['pagedResponse'];
-    this.#gridService.displayedColumns = ['select', 'Name'];
+    this.#gridService.displayedColumns = ['Name'];
 
     this.form = this.#formBuilder.group({
       name: ['', [Validators.required]],
