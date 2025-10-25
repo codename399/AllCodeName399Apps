@@ -10,11 +10,13 @@ import { GridComponent } from '../../../grid/grid.component';
 import { Project } from '../../models/project';
 import { User } from '../../models/user';
 import { ProjectService } from '../../services/project-service';
+import { InputComponent } from '../../../input/input.component';
+import { InputType } from '../../../../models/enums/input-type';
 
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [GridComponent, MatCheckboxModule, ReactiveFormsModule],
+  imports: [GridComponent, MatCheckboxModule, ReactiveFormsModule, InputComponent],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css',
   providers: [FileUploadService]
@@ -27,7 +29,9 @@ export class ProjectComponent {
   #fileUploadService = inject(FileUploadService);
   #config = inject(Config);
 
+  InputType = InputType;
   form: FormGroup;
+  isAdmin = [{ id: "Is Admin", name: "Is Admin" }];
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<Project>;
 

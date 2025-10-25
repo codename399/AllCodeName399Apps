@@ -1,45 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="profile-pic-container mb-3">
-    <img [src]="profilePictureUrl" class="profile-pic" alt="Profile Picture" />
-    <label for="fileUpload" class="add-icon"> </label>
-    <input type="file" id="fileUpload" hidden (change)="onFileSelected($event)" />
-  </div>
-  <div class="mb-3">
-    <label for="name" class="form-label">Name:</label>
-    <input id="name" class="form-control" formControlName="name" />
-  </div>
-  @if(!user()){
-  <div class="mb-3">
-    <label for="username" class="form-label">Username:</label>
-    <input id="username" class="form-control" formControlName="username" />
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Password:</label>
-    <input id="password" type="password" class="form-control" formControlName="password" />
-  </div>
-  <div class="mb-3">
-    <label for="confirmPassword" class="form-label">Confirm Password:</label>
-    <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword" />
-  </div>
-  }
-  <div class="mb-3">
-    <label for="emailId" class="form-label">Email ID:</label>
-    <input id="emailId" class="form-control" formControlName="emailId" />
-  </div>
-  <div class="mb-3">
-    <label for="contactNumber" class="form-label">Contact Number:</label>
-    <input id="contactNumber" class="form-control" formControlName="contactNumber" />
-  </div>
+  <app-input [type]="InputType.Text" [label]="'Name'" formControlName="name"></app-input>
+  <app-input [type]="InputType.Text" [label]="'Username'" formControlName="username"></app-input>
+  <app-input [type]="InputType.Password" [label]="'Password'" formControlName="password"></app-input>
+  <app-input [type]="InputType.Password" [label]="'Confirm Password'" formControlName="confirmPassword"></app-input>
+  <app-input [type]="InputType.Text" [label]="'Email Id'" formControlName="emailId"></app-input>
+  <app-input [type]="InputType.Text" [label]="'Contact Number'" formControlName="contactNumber"></app-input>
 
-  <div class="d-flex justify-content-between">
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-      {{ user() ? "Update" : "Register" }}
+  <div class="flex justify-between items-center">
+    <button
+      class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+      Submit
     </button>
     @if(!user()){
     <u><a href="#" routerLink="/login">Already have an account? Login</a></u>
     }
     @if(back()){
-    <button class="btn">
+    <button
+      class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
       Back
     </button>
     }

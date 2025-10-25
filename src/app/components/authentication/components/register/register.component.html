@@ -1,10 +1,5 @@
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="card shadow" style="width: 100%; max-width: 400px">
-    <div class="card-body">
-      <h4 class="card-title text-center mb-4">
-        {{ user ? "Update" : "Register" }}
-      </h4>
-      <app-registration-form  [user] = "user" (onFormSubmit) = "onSubmit($event)"></app-registration-form>
-    </div>
+<div class="flex items-center justify-center p-12">
+  <div class="mx-auto w-full max-w-[550px] bg-white">
+    <app-registration-form [user]="user" (onFormSubmit)="onSubmit($event)"></app-registration-form>
   </div>
 </div>

@@ -5,10 +5,12 @@ import { PasswordMatchValidator } from '../../../../../../validators/password-ma
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { ToastService } from '../../../../../services/toast.service';
 import { User } from '../../../../home/models/user';
+import { InputComponent } from '../../../../input/input.component';
+import { InputType } from '../../../../../models/enums/input-type';
 
 @Component({
   selector: 'app-registration-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent],
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.css',
   providers: [FileUploadService]
@@ -23,6 +25,7 @@ export class RegistrationFormComponent implements OnInit {
   back = input<Function>();
   onFormSubmit = output<User>();
 
+  InputType = InputType;
   form: FormGroup;
   id!: string | null;
   roleId!: string | null;

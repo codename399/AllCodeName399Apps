@@ -6,11 +6,13 @@ import { ToastService } from '../../../../services/toast.service';
 import { ChangePasswordRequest } from '../../../authentication/models/change-password-request';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { UserService } from '../../services/user-service';
+import { InputComponent } from '../../../input/input.component';
+import { InputType } from '../../../../models/enums/input-type';
 
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css',
 })
@@ -21,6 +23,7 @@ export class ChangePasswordComponent {
   #router = inject(Router);
   #toastService = inject(ToastService);
   form: FormGroup;
+  InputType = InputType;
 
   constructor() {
     this.form = this.#formBuilder.group(
