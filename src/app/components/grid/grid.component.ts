@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   input,
+  signal,
   ViewChild
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +25,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-grid',
-  imports: [MatPaginatorModule, NoSpacePipe, CamelCasePipe, DatePipe, MatCheckboxModule, MatTableModule, ReactiveFormsModule],
+  imports: [MatPaginatorModule, NoSpacePipe, CamelCasePipe, DatePipe, MatCheckboxModule, MatTableModule, ReactiveFormsModule, DialogComponent],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css'
 })
@@ -50,6 +51,7 @@ export class GridComponent<I> implements AfterViewInit {
   searchBy: FormControl = new FormControl(this.title());
   sortBy: FormControl = new FormControl(this.title());
   sortAscending: boolean = true
+  showModal = signal<boolean>(false);
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -162,16 +164,7 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   openDeleteConfirmation(item?: I) {
-    const dialogRef = this.#dialog.open(DialogComponent, {
-      width: '350px',
-      data: { title: 'Confirm Delete', message: 'Are you sure you want to delete this user?' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.delete(item);
-      }
-    });
+    this.showModal.set(true);
   }
 
   delete(item?: I) {

@@ -1,25 +1,29 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Component, input, model, output } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [MatDialogModule],
+  imports: [],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { title: string; message: string }
-  ) { }
+  title = input<string>("Confirmation!!");
+  message = input<string>("Are you sure?");
+  confirmationText = input<string>("Confirm");
+  cancelText = input<string>("Cancel");
+  showConfirmation = input<boolean>(true);
+  showCancel = input<boolean>(true);
+  showModal = model<boolean>(false);
+
+  confirm = output();
 
   onConfirm() {
-    this.dialogRef.close(true);
+    this.confirm.emit();
+    this.onCancel();
   }
 
   onCancel() {
-    this.dialogRef.close(false);
+    this.showModal.set(false);
   }
 }
