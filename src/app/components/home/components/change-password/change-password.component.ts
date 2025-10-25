@@ -1,10 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../validators/field-validator';
 import { PasswordMatchValidator } from '../../../../../validators/password-match-validator';
 import { ToastService } from '../../../../services/toast.service';
 import { ChangePasswordRequest } from '../../../authentication/models/change-password-request';
@@ -37,14 +33,6 @@ export class ChangePasswordComponent {
         validators: PasswordMatchValidator,
       }
     );
-  }
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
   }
 
   onSubmit() {

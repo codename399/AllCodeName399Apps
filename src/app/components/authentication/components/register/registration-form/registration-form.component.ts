@@ -1,10 +1,6 @@
 import { Component, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Config } from '../../../../../../assets/environments/config';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../../validators/field-validator';
 import { PasswordMatchValidator } from '../../../../../../validators/password-match-validator';
 import { FileUploadService } from '../../../../../services/file-upload.service';
 import { ToastService } from '../../../../../services/toast.service';
@@ -30,14 +26,6 @@ export class RegistrationFormComponent implements OnInit {
   form: FormGroup;
   id!: string | null;
   roleId!: string | null;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   get profilePictureUrl() {
     return this.#fileUploadService.url;

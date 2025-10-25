@@ -14,31 +14,19 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
                     <input id="name" class="form-control" formControlName="name" />
-                    @if(isInvalid(form,"name")){
-                    <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
-                    }
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description:</label>
                     <textarea id="description" class="form-control" formControlName="description">
         </textarea>
-                    @if(isInvalid(form,"description")){
-                    <small class="text-danger">{{ getErrorMessage(form, "description") }}</small>
-                    }
                 </div>
                 <div class="mb-3">
                     <label for="name" class="form-label">Route:</label>
                     <input id="route" class="form-control" formControlName="route" />
-                    @if(isInvalid(form,"route")){
-                    <small class="text-danger">{{ getErrorMessage(form, "route") }}</small>
-                    }
                 </div>
                 <div class="mb-3">
                     <label for="navigationText" class="form-label">Navigation Text:</label>
                     <input id="navigationText" class="form-control" formControlName="navigationText" />
-                    @if(isInvalid(form,"navigationText")){
-                    <small class="text-danger">{{ getErrorMessage(form, "navigationText") }}</small>
-                    }
                 </div>
                 <div class="mb-3">
                     <label for="isAdmin" class="form-label">Is Admin:</label>

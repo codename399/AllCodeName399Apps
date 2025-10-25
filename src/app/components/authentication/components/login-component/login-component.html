@@ -5,41 +5,18 @@
       <form [formGroup]="form" (ngSubmit)="onLogin()">
         <div class="mb-3">
           <label for="username" class="form-label">Username:</label>
-          <input
-            id="username"
-            class="form-control"
-            formControlName="username"
-          />
-          @if(isInvalid(form,"username")){
-          <small class="text-danger">{{
-            getErrorMessage(form, "username")
-          }}</small>
-          }
+          <input id="username" class="form-control" formControlName="username" />
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
-          <input
-            id="password"
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
-          @if(isInvalid(form,"password")){
-          <small class="text-danger">{{
-            getErrorMessage(form, "password")
-          }}</small>
-          }
+          <input id="password" type="password" class="form-control" formControlName="password" />
         </div>
         <div class="mb-3">
           <u><a href="#" routerLink="/forgot-password">Forgot Password?</a></u>
         </div>
 
         <div class="d-flex justify-content-between">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="form.invalid"
-          >
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
             Login
           </button>
           <button class="btn btn-success" (click)="gotoRegister()">Register</button>

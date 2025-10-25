@@ -1,7 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { getErrorMessage, isInvalid } from "../../../../../validators/field-validator";
 import { ToastService } from "../../../../services/toast.service";
 import { AuthenticationService } from "../../services/authentication-service";
 
@@ -17,14 +16,6 @@ export class LoginComponent {
   #router = inject(Router);
   #toastService = inject(ToastService);
   form: FormGroup;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   constructor() {
     // Initialization code can go here

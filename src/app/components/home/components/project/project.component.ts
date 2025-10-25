@@ -1,11 +1,8 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ActivatedRoute } from '@angular/router';
 import { Config } from '../../../../../assets/environments/config';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../validators/field-validator';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { ToastService } from '../../../../services/toast.service';
 import { GridService } from '../../../authentication/services/grid.service';
@@ -13,7 +10,6 @@ import { GridComponent } from '../../../grid/grid.component';
 import { Project } from '../../models/project';
 import { User } from '../../models/user';
 import { ProjectService } from '../../services/project-service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-project',
@@ -34,14 +30,6 @@ export class ProjectComponent {
   form: FormGroup;
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<Project>;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   get item() {
     return this.#gridService.item;

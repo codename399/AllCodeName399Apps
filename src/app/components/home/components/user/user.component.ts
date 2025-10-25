@@ -1,10 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../validators/field-validator';
 import { ToastService } from '../../../../services/toast.service';
 import { RegistrationFormComponent } from '../../../authentication/components/register/registration-form/registration-form.component';
 import { GridService } from '../../../authentication/services/grid.service';
@@ -26,14 +22,6 @@ export class UserComponent {
   #gridService = inject(GridService<User>);
 
   form: FormGroup;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   get item() {
     return this.#gridService.item;
