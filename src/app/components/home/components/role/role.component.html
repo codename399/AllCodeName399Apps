@@ -1,29 +1,17 @@
 @if(showForm){
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="card shadow" style="width: 100%; max-width: 400px">
-    <div class="card-body">
-      <h4 class="card-title text-center mb-4">
-        {{ item ? "Update" : "Add" }}
-      </h4>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="name" class="form-label">Name:</label>
-          <input id="name" class="form-control" formControlName="name" />
-          @if(isInvalid(form,"name")){
-          <small class="text-danger">{{ getErrorMessage(form, "name") }}</small>
-          }
-        </div>
-        <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary">
-            {{ item ? "Update" : "Add" }}
-          </button>
-          <button (click)="showForm = false" class="btn">
-            Back
-          </button>
-        </div>
-      </form>
+<div class="flex items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <app-input [type]="InputType.Text" [label]="'Name'" formControlName="name"></app-input>
+
+            <div>
+                <button
+                    class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
-  </div>
 </div>
 } @else {
 <app-grid></app-grid>

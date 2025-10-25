@@ -1,19 +1,13 @@
-import { Component, forwardRef, input, model, OnInit } from '@angular/core';
+import { Component, forwardRef, input, model, OnInit, Optional, Self } from '@angular/core';
 import { InputType } from '../../models/enums/input-type';
 import { getErrorMessage, isInvalid } from '../../../validators/field-validator';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
-      multi: true
-    }
-  ],
+  imports: [CommonModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css'
 })
@@ -45,6 +39,13 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   #onChange = (value: any) => { };
   #onTouched = () => { };
 
+  constructor(@Optional() @Self() public ngControl: NgControl) {
+    if (ngControl) {
+      // tell Angular this component implements CVA
+      ngControl.valueAccessor = this;
+    }
+  }
+
   ngOnInit(): void {
     this.id = `${this.type.toString().toLowerCase}_${this.label.toString().toLowerCase().replaceAll(" ", "_")}`;
   }
@@ -73,5 +74,15 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
 
   handleBlur(): void {
     this.#onTouched();
+  }
+
+  // 🧠 Helper for validation state
+  get control(): AbstractControl | null {
+    return this.ngControl?.control;
+  }
+
+  get showError(): boolean {
+    const c = this.control;
+    return !!(c && c.invalid && (c.dirty || c.touched));
   }
 }

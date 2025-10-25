@@ -15,10 +15,12 @@ import { Status } from '../../models/enum/status-enum';
 import { Website } from '../../models/enum/website-enum';
 import { GameDetail } from '../../models/game-detail';
 import { GameStashService } from '../../services/game-stash-service';
+import { InputComponent } from '../../../input/input.component';
+import { InputType } from '../../../../models/enums/input-type';
 
 @Component({
   selector: 'app-game-stash',
-  imports: [GridComponent, ReactiveFormsModule],
+  imports: [GridComponent, ReactiveFormsModule, InputComponent],
   templateUrl: './game-stash.component.html',
   styleUrl: './game-stash.component.css',
   providers: [GridService]
@@ -31,9 +33,10 @@ export class GameStashComponent {
   #gameStashService = inject(GameStashService);
   #dialog = inject(MatDialog);
 
+  InputType = InputType;
   form: FormGroup;
-  statuses: string[] = Object.keys(Status);
-  websites: string[] = Object.keys(Website);
+  statuses = Object.keys(Status).map(key => ({ id: key, name: key }));
+  websites = Object.keys(Website).map(key => ({ id: key, name: key }));
   gameDetail!: GameDetail | null;
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<GameDetail>;

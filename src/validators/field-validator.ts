@@ -1,13 +1,11 @@
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
-export const isInvalid = (form: FormGroup, field: string): boolean | null => {
-  const control = form.get(field);
+export const isInvalid = (control: any): boolean | null => {
   return control && control.touched && control.invalid;
 };
 
-export const getErrorMessage = (form: FormGroup, field: string): string | null => {
-  const control = form.get(field);
-  
+export const getErrorMessage = (control: any): string | null => {
+
   if (control && control.errors) {
     if (control.errors['required']) {
       return `*Field is required`;

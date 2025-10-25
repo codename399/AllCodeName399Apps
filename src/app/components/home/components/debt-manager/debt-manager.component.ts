@@ -1,7 +1,6 @@
 import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { getErrorMessage, isInvalid } from '../../../../../validators/field-validator';
 import { InputType } from '../../../../models/enums/input-type';
 import { ToastService } from '../../../../services/toast.service';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
@@ -43,14 +42,6 @@ export class DebtManagerComponent implements OnInit {
   }
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<Debt>;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   get item() {
     return this.#gridService.item;

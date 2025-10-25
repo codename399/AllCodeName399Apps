@@ -5,6 +5,7 @@
     </label>
     <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="text"
         name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.maxlength]="maxlength()"
+        [ngClass]="{'border-red-500 ring-red-300': showError}"
         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
     }
     @else if(type()==InputType.Number){
@@ -13,6 +14,7 @@
     </label>
     <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="number"
         name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.min]="min()" [attr.max]="max()"
+        [ngClass]="{'border-red-500 ring-red-300': showError}"
         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
     }
     @else if(type()==InputType.Textarea){
@@ -21,6 +23,7 @@
     </label>
     <textarea [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="text"
         name="{{id}}" id="{{id}}" placeholder="{{placeholder()}}" [attr.maxlength]="maxlength()"
+        [ngClass]="{'border-red-500 ring-red-300': showError}"
         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
     }
     @else if(type()==InputType.Dropdown){
@@ -29,6 +32,7 @@
     </label>
     <div class="flex items-center space-x-6">
         <select [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()"
+            [ngClass]="{'border-red-500 ring-red-300': showError}"
             class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
             <option class="font-medium cursor-pointer" value="">Choose...</option>
             @for(option of options();track $index){
@@ -74,7 +78,7 @@
         {{label()}}
     </label>
     <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="date"
-        name="{{id}}" id="{{id}}"
+        name="{{id}}" id="{{id}}" [ngClass]="{'border-red-500 ring-red-300': showError}"
         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
     }
     @else if(type()==InputType.Time){
@@ -82,10 +86,10 @@
         Time
     </label>
     <input [value]="value" [disabled]="disabled()" (input)="handleInput($event)" (blur)="handleBlur()" type="time"
-        name="{{id}}" id="{{id}}"
+        name="{{id}}" id="{{id}}" [ngClass]="{'border-red-500 ring-red-300': showError}"
         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
     }
-    <!-- @if(isInvalid(form,"toUserId")){
-<small class="text-danger">{{ getErrorMessage(form, "toUserId") }}</small>
-} -->
+    @if(isInvalid(control)){
+    <small class="text-danger">{{ getErrorMessage(control) }}</small>
+    }
 </div>

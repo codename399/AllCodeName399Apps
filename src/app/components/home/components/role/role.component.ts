@@ -6,20 +6,18 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  getErrorMessage,
-  isInvalid,
-} from '../../../../../validators/field-validator';
+import { InputType } from '../../../../models/enums/input-type';
 import { ToastService } from '../../../../services/toast.service';
 import { GridService } from '../../../authentication/services/grid.service';
 import { GridComponent } from '../../../grid/grid.component';
+import { InputComponent } from '../../../input/input.component';
 import { Role } from '../../models/role';
 import { RoleService } from '../../services/role-service';
 
 @Component({
   selector: 'app-role',
   standalone: true,
-  imports: [GridComponent, ReactiveFormsModule],
+  imports: [GridComponent, ReactiveFormsModule, InputComponent],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
   providers: [GridService],
@@ -31,16 +29,9 @@ export class RoleComponent {
   #gridService = inject(GridService<Role>);
 
   form: FormGroup;
+  InputType = InputType;
 
   @ViewChild(GridComponent) gridComponent!: GridComponent<Role>;
-
-  get getErrorMessage() {
-    return getErrorMessage;
-  }
-
-  get isInvalid() {
-    return isInvalid;
-  }
 
   get item() {
     return this.#gridService.item;
