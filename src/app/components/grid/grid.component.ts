@@ -6,6 +6,7 @@ import {
   inject,
   input,
   signal,
+  viewChild,
   ViewChild
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -48,10 +49,11 @@ export class GridComponent<I> implements AfterViewInit {
   items: Record<string, any>[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(DialogComponent) dialog!: DialogComponent;
   searchBy: FormControl = new FormControl(this.title());
   sortBy: FormControl = new FormControl(this.title());
   sortAscending: boolean = true
-  showModal = signal<boolean>(false);
+
 
   get length() {
     return this.#gridService.pagedResponse?.count;
@@ -164,7 +166,7 @@ export class GridComponent<I> implements AfterViewInit {
   }
 
   openDeleteConfirmation(item?: I) {
-    this.showModal.set(true);
+    this.dialog.openDialog();
   }
 
   delete(item?: I) {

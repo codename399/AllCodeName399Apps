@@ -41,7 +41,9 @@
     <span class="text text-danger material-icons mx-1" role="button" (click)="enableDeleteMode()">delete</span>
     }
     @if(isDeleteMode){
+    @if(!!selection.length){
     <span class="text text-success material-icons mx-1" role="button" (click)="openDeleteConfirmation()">check</span>
+    }
     <span class="text text-danger material-icons mx-1" role="button" (click)="disableDeleteMode()">close</span>
     }
   </div>
@@ -109,5 +111,5 @@
 <mat-paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="[5, 10, 50, 100]"
   showFirstLastButtons></mat-paginator>
 
-<app-dialog [showModal]="showModal()" (confirm)="delete()" [title]="'Delete Confirmation'"
+<app-dialog (confirm)="delete()" [title]="'Delete Confirmation'"
   [message]="'Are you sure, you want to delete this item?'"></app-dialog>

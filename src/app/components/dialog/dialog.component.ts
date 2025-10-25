@@ -14,9 +14,10 @@ export class DialogComponent {
   cancelText = input<string>("Cancel");
   showConfirmation = input<boolean>(true);
   showCancel = input<boolean>(true);
-  showModal = model<boolean>(false);
 
   confirm = output();
+
+  showDialog: boolean = false;
 
   onConfirm() {
     this.confirm.emit();
@@ -24,6 +25,10 @@ export class DialogComponent {
   }
 
   onCancel() {
-    this.showModal.set(false);
+    this.showDialog = false;
+  }
+
+  openDialog() {
+    this.showDialog = true;
   }
 }
