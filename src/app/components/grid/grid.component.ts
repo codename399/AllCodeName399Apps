@@ -1,4 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
@@ -22,7 +21,6 @@ import { NoSpacePipe } from '../../pipes/nospace-pipe';
 import { ToastService } from '../../services/toast.service';
 import { GridService } from '../authentication/services/grid.service';
 import { DialogComponent } from '../dialog/dialog.component';
-import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-grid',
@@ -35,7 +33,6 @@ export class GridComponent<I> implements AfterViewInit {
   #toastService = inject(ToastService);
   #dialog = inject(MatDialog);
   #config = inject(Config);
-  #loaderService = inject(LoaderService);
 
   showAdd = input(true);
   showDelete = input(true);
@@ -80,10 +77,6 @@ export class GridComponent<I> implements AfterViewInit {
 
   get gridService() {
     return this.#gridService;
-  }
-
-  get enableMultiSelection() {
-    return this.#config.enableMultiSelection;
   }
 
   set showForm(value: boolean) {
@@ -132,6 +125,7 @@ export class GridComponent<I> implements AfterViewInit {
     if (this.paginator) {
       this.paginator.page.subscribe((event: any) => {
         this.#gridService.paginationRequest = event;
+        this.#gridService.paginationRequest.limit = this.#config.pageSize;
         this.getAll();
       });
     }
@@ -241,9 +235,5 @@ export class GridComponent<I> implements AfterViewInit {
 
   getTileIndex(index: number) {
     return (index + 1) + ((this.currentPage - 1) * this.pageSize);
-  }
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

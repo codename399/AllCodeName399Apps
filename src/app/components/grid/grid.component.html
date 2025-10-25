@@ -106,11 +106,6 @@
   </div>
 </div>
 
-<div class="flex justify-content-between">
-  <button (click)="scrollToTop()"
-    class="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300">
-    ↑
-  </button>
-  <mat-paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="[5, 10, 50, 100]"
-    showFirstLastButtons></mat-paginator>
-</div>
+
+<mat-paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="[5, 10, 50, 100]"
+  showFirstLastButtons></mat-paginator>

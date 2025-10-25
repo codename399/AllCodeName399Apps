@@ -25,7 +25,6 @@ export class HomeHeaderComponent {
 
   constructor() {
     this.profilePictureUrl = this.#config.profilePictureUrl;
-    this.logoUrl = this.#config.logoUrl;
   }
 
   ngOnInit(): void {

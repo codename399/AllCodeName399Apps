@@ -5,8 +5,6 @@ export const environment: IEnvironment = {
     baseURL: "https://api.codename399.com",
     toast_delay: 3000,
     profilePictureUrl: "../../../../../assets/images/default-avatar.png",
-    logoUrl: "../../../../../assets/images/logo.png",
-    pageSize: 5,
-    enableMultiSelection: true,
+    pageSize: 10,
     loadGridImages: false
 }

@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     this.profilePictureUrl = this.#config.profilePictureUrl;
-    this.logoUrl = this.#config.logoUrl;
   }
 
   ngOnInit(): void {
