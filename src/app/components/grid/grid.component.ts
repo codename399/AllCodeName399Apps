@@ -106,7 +106,7 @@ export class GridComponent<I> implements AfterViewInit {
         else {
           this.#gridService.paginationRequest.filters = [
             {
-              key: this.searchBy.value,
+              key: this.sortBy.value,
               value: term,
               operator: OperatorType.Like
             }

@@ -1,19 +1,12 @@
 <!-- Search bar -->
 @if(showSearch()){
 <div class="flex justify-center items-center align-middle h-14 bg-gray-100 dark:bg-gray-800">
-  <div class="p-4 text-gray-600 dark:text-gray-300 outline-none focus:outline-none w-screen">
+  <div class="p-1 text-gray-600 dark:text-gray-300 outline-none focus:outline-none w-screen">
     <div class="relative flex">
-      <select [formControl]="searchBy"
-        class="bg-white dark:bg-gray-800 h-10 px-3 rounded-l-full text-sm focus:outline-none outline-none border-2 border-gray-500 dark:border-gray-600 border-r-1 cursor-pointer max-h-10 overflow-y-hidden">
-        <option class="font-medium cursor-pointer" [value]="title()">{{title()}}</option>
-        @for(column of displayedColumns;track column){
-        <option class="font-medium cursor-pointer" [value]="column">{{column}}</option>
-        }
-      </select>
       <input id="searchInput" type="search" name="search" placeholder="Search" [formControl]="searchInput"
-        class="bg-white dark:bg-gray-800 h-10 flex px-3 w-full rounded-r-full text-sm focus:outline-none border-2 border-l-0 border-gray-500 dark:border-gray-600"
+        class="bg-white dark:bg-gray-800 h-10 flex px-3 w-full rounded-full text-sm focus:outline-none border-2 border-l-0 border-gray-500 dark:border-gray-600"
         autocomplete="off" spellcheck="false" required step="any" autocapitalize="none" autofocus />
-      <button type="submit" class="absolute inset-y-0 right-0 mr-2 flex items-center px-2">
+      <button type="submit" class="absolute inset-y-0 right-0 mr-2 flex items-center">
         <svg class="h-4 w-4 fill-current dark:text-white" xmlns="http://www.w3.org/2000/svg"
           xmlns:xdiv="http://www.w3.org/1999/xdiv" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966"
           xml:space="preserve" width="512px" height="512px">
@@ -110,6 +103,6 @@
 
 <mat-paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="[5, 10, 50, 100]"
   showFirstLastButtons></mat-paginator>
-
+ 
 <app-dialog (confirm)="delete()" [title]="'Delete Confirmation'"
   [message]="'Are you sure, you want to delete this item?'"></app-dialog>
