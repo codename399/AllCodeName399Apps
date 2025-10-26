@@ -56,4 +56,8 @@ export class ChangePasswordComponent {
       },
     });
   }
+
+  goHome(){
+    this.#router.navigate(["/"]);
+  }
 }

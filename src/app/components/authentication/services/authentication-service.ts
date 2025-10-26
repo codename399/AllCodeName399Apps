@@ -68,7 +68,6 @@ export class AuthenticationService {
           if (response?.token) {
             this.userId = response.userId;
             this.token = response.token;
-            console.log("decodedToken", jwtDecode(this.token));
           }
         })
       );
