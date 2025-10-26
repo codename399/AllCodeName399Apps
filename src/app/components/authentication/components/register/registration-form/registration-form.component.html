@@ -1,8 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-input [type]="InputType.Text" [label]="'Name'" formControlName="name"></app-input>
   <app-input [type]="InputType.Text" [label]="'Username'" formControlName="username"></app-input>
+  @if(!user()){
   <app-input [type]="InputType.Password" [label]="'Password'" formControlName="password"></app-input>
   <app-input [type]="InputType.Password" [label]="'Confirm Password'" formControlName="confirmPassword"></app-input>
+  }
   <app-input [type]="InputType.Text" [label]="'Email Id'" formControlName="emailId"></app-input>
   <app-input [type]="InputType.Text" [label]="'Contact Number'" formControlName="contactNumber"></app-input>
 
