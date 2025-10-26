@@ -87,22 +87,23 @@ export class ProjectComponent {
   }
 
   onSubmit() {
-    this.form.patchValue({ imageUrl: this.url });
-    let project: Project = this.form.value;
+    // this.form.patchValue({ imageUrl: this.url });
+    // let project: Project = this.form.value;
 
-    if (this.form.valid) {
-      if (this.item) {
-        project.id = this.item.id;
-        this.item = project;
+    // if (this.form.valid) {
+    //   if (this.item) {
+    //     project.id = this.item.id;
+    //     this.item = project;
 
-        this.#gridService.update();
-      } else {
-        this.item = project;
-        this.#gridService.add();
-      }
-    } else {
-      this.#toastService.error('Invalid form.');
-    }
+    //     this.#gridService.update();
+    //   } else {
+    //     this.item = project;
+    //     this.#gridService.add();
+    //   }
+    // } else {
+    //   this.#toastService.error('Invalid form.');
+    // }
+    console.log("form value", this.form.value);
   }
 
   onFileSelected(event: any) {

@@ -26,7 +26,7 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   disabled = model<boolean>(false);
 
   id: string = "";
-  value: string = "";
+  value: any = "";
 
   get getErrorMessage() {
     return getErrorMessage;
@@ -67,7 +67,8 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   }
 
   handleInput(event: Event): void {
-    const val = (event.target as HTMLInputElement).value;
+    const element = (event.target as HTMLInputElement)
+    const val = element.type == "checkbox" ? element.checked : element.value;
     this.value = val;
     this.#onChange(val);
   }
