@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { Router } from "@angular/router";
 import { ToastService } from "../../../../services/toast.service";
 import { AuthenticationService } from "../../services/authentication-service";
+import { InputComponent } from "../../../input/input.component";
+import { InputType } from "../../../../models/enums/input-type";
 
 @Component({
   selector: 'app-login-component',
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent],
 })
 export class LoginComponent {
   #authenticationService = inject(AuthenticationService);
@@ -16,6 +18,8 @@ export class LoginComponent {
   #router = inject(Router);
   #toastService = inject(ToastService);
   form: FormGroup;
+  rememberMe = [{ id: "Remember Me", name: "Remember Me" }];
+  InputType = InputType;
 
   constructor() {
     // Initialization code can go here

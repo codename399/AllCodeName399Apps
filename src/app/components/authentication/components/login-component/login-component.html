@@ -1,27 +1,75 @@
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="card shadow" style="width: 100%; max-width: 400px">
-    <div class="card-body">
-      <h4 class="card-title text-center mb-4">Login</h4>
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Sign in to your account
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600 max-w">
+      Or
+      <a href="#" (click)="gotoRegister()" class="font-medium text-blue-600 hover:text-blue-500">
+        create an account
+      </a>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
       <form [formGroup]="form" (ngSubmit)="onLogin()">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username:</label>
-          <input id="username" class="form-control" formControlName="username" />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password:</label>
-          <input id="password" type="password" class="form-control" formControlName="password" />
-        </div>
-        <div class="mb-3">
-          <u><a href="#" routerLink="/forgot-password">Forgot Password?</a></u>
+        <app-input [type]="InputType.Text" [label]="'Username'" formControlName="username"></app-input>
+        <app-input [type]="InputType.Password" [label]="'Password'" formControlName="password"></app-input>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <app-input class="chk_rememberme" [type]="InputType.Checkbox" [options]="rememberMe"></app-input>
+          </div>
+
+          <div class="text-sm">
+            <a href="#" routerLink="/forgot-password" class="font-medium text-blue-600 hover:text-blue-500">
+              Forgot your password?
+            </a>
+          </div>
         </div>
 
-        <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-            Login
+        <div>
+          <button [disabled]="form.invalid"
+            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+            Submit
           </button>
-          <button class="btn btn-success" (click)="gotoRegister()">Register</button>
         </div>
       </form>
+      <div class="mt-6">
+
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-gray-100 text-gray-500">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-3 gap-3">
+          <div>
+            <a href="#"
+              class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+              <img class="h-5 w-5" src="https://www.svgrepo.com/show/512120/facebook-176.svg" alt="">
+            </a>
+          </div>
+          <div>
+            <a href="#"
+              class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+              <img class="h-5 w-5" src="https://www.svgrepo.com/show/513008/twitter-154.svg" alt="">
+            </a>
+          </div>
+          <div>
+            <a href="#"
+              class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+              <img class="h-6 w-6" src="https://www.svgrepo.com/show/506498/google.svg" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
