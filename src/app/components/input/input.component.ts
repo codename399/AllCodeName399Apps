@@ -51,7 +51,7 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    this.value = value || '';
+    this.value = this.options().filter(f => f[this.valueField()] == value)[0];
   }
 
   registerOnChange(fn: any): void {
@@ -74,6 +74,13 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   }
 
   handleBlur(): void {
+    this.#onTouched();
+  }
+
+  onSelect(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.value = selectedValue;
+    this.#onChange(this.value);
     this.#onTouched();
   }
 
