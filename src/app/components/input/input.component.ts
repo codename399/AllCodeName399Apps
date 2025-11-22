@@ -51,7 +51,7 @@ export class InputComponent<I> implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    this.value = this.options().filter(f => f[this.valueField()] == value)[0];
+    this.value = value || '';
   }
 
   registerOnChange(fn: any): void {
