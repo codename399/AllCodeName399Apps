@@ -79,7 +79,7 @@ export class UserProjectMappingComponent {
   onSelectionChange(event: any, project: Project) {
     let selections: string[] = this.projectIds.value ?? [];
 
-    if (event.checked) {
+    if (event.target.checked) {
       if (!selections.includes(project.id ?? "")) {
         this.projectIds.setValue([...selections, project.id]);
       }
