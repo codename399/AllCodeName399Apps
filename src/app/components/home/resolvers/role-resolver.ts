@@ -4,9 +4,8 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { RoleService } from '../services/role-service';
-import { PaginationRequest } from '../../../models/pagination-request';
 import { PAGINATION_REQUEST } from '../../../../injectors/common-injector';
+import { RoleService } from '../services/role-service';
 
 @Injectable({
   providedIn: 'root',
