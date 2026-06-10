@@ -38,6 +38,7 @@ export class ApiConstants {
   public addDebts = "/addDebts";
   public updateDebt = "/updateDebt";
   public deleteDebts = "/deleteDebts";
+  public generateSession = "/generateSession";
 
   public getUrl = (
     endpoint: string,
