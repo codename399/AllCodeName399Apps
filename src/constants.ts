@@ -10,4 +10,5 @@ export abstract class Constants {
   public static debtManager = 'DebtManager';
   public static admin = 'Admin';
   public static status = 'Status';
+  public static kite = 'Kite';
 }

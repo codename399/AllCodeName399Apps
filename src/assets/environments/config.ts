@@ -7,4 +7,5 @@ export class Config implements IEnvironment {
     baseURL!: string;
     toast_delay!: number;
     loadGridImages!: boolean;
+    kiteApiKey!: string;
 }

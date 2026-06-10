@@ -136,6 +136,14 @@ export const routes: Routes = [
         resolve: {
           pagedResponse: DebtManagerResolver,
         },
+      },
+      {
+        path: 'kite',
+        loadComponent: () =>
+          import(
+            './components/home/components/kite/kite.component'
+          ).then((c) => c.KiteComponent),
+        data: { projectName: Constants.kite }
       }
     ],
   },
