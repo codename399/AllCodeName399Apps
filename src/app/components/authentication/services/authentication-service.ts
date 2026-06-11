@@ -9,6 +9,7 @@ import { LoginResponse } from '../models/login-response';
 import { Router } from '@angular/router';
 import { API_CONSTANTS } from '../../../../injectors/common-injector';
 import { jwtDecode } from 'jwt-decode';
+import { RefreshTokenRequest } from '../models/refresh-token-request';
 
 @Injectable({
   providedIn: 'root',
@@ -20,19 +21,27 @@ export class AuthenticationService {
   #apiConstants = inject(API_CONSTANTS);
 
   get token() {
-    return sessionStorage.getItem(Constants.token);
+    return localStorage.getItem(Constants.token);
   }
 
   set token(value: string | null) {
-    sessionStorage.setItem(Constants.token, value ?? '');
+    localStorage.setItem(Constants.token, value ?? '');
+  }
+
+  get refreshToken() {
+    return localStorage.getItem(Constants.refreshToken);
+  }
+
+  set refreshToken(value: string | null) {
+    localStorage.setItem(Constants.refreshToken, value ?? '');
   }
 
   get userId() {
-    return sessionStorage.getItem(Constants.userId);
+    return localStorage.getItem(Constants.userId);
   }
 
   set userId(value: string | null) {
-    sessionStorage.setItem(Constants.userId, value ?? '');
+    localStorage.setItem(Constants.userId, value ?? '');
   }
 
   get user() {
@@ -44,7 +53,7 @@ export class AuthenticationService {
   }
 
   clearToken() {
-    sessionStorage.clear();
+    localStorage.clear();
     this.#user.set(null);
   }
 
@@ -68,6 +77,28 @@ export class AuthenticationService {
           if (response?.token) {
             this.userId = response.userId;
             this.token = response.token;
+            this.refreshToken = response.refreshToken;
+          }
+        })
+      );
+  }
+
+  refresh() {
+    const refreshTokenRequest: RefreshTokenRequest = {
+      refreshToken: this.refreshToken ?? ''
+    }
+
+    return this.#httpClient
+      .post<LoginResponse>(
+        this.#apiConstants.getUrl(this.#apiConstants.refresh, true),
+        refreshTokenRequest
+      )
+      .pipe(
+        tap((response) => {
+          if (response?.token) {
+            this.userId = response.userId;
+            this.token = response.token;
+            this.refreshToken = response.refreshToken;
           }
         })
       );

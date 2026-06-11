@@ -1,6 +1,7 @@
 export abstract class Constants {
   public static token = 'token';
   public static kiteToken = 'kiteToken';
+  public static refreshToken = 'refreshToken';
   public static userId = 'UserId';
   public static creationDate = 'CreationDate';
   public static updationDate = 'UpdationDate';

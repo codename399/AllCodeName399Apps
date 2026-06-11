@@ -18,13 +18,14 @@ import { AuthenticationService } from './components/authentication/services/auth
 import { ConfigService } from './services/app-config-service';
 import { ApiConstants } from '../api-constants';
 import { environment } from '../assets/environments/environment';
+import { refreshTokenInterceptor } from '../interceptor/refresh-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, refreshTokenInterceptor])),
     importProvidersFrom(
       AuthenticationService // Import any additional modules here, e.g., HttpClientModule, FormsModule, etc.
     ),

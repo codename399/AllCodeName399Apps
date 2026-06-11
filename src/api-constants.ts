@@ -16,6 +16,7 @@ export class ApiConstants {
   public updateUser = '/updateUser';
   public deleteUser = '/deleteUser';
   public validateUser = '/validateUser';
+  public refresh = '/refresh';
   public changePassword = '/changePassword';
   public getAllRoles = '/getAllRoles';
   public getRoleById = '/getRoleById';
