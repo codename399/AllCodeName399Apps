@@ -15,13 +15,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   loaderService.show();
 
   if (token) {
-    const decodedToken: any = jwtDecode(token);
-    const exp = decodedToken.exp * 1000;
-
-    if (Date.now() >= exp) {
-      authenticationService.logout();
-    }
-
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
