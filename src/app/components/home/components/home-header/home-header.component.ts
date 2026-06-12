@@ -1,9 +1,8 @@
-import { Component, HostListener, inject } from '@angular/core';
-import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { Component, HostListener, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Config } from '../../../../../assets/environments/config';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { User } from '../../models/user';
-import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-home-header',
@@ -14,32 +13,28 @@ import { UserService } from '../../services/user-service';
 })
 export class HomeHeaderComponent {
   #authenticationService = inject(AuthenticationService);
-  #userService = inject(UserService);
   #router = inject(Router);
   #config = inject(Config);
 
-  user!: User;
+  @Input("user") set user(value: User) {
+    this._user = value;
+
+    if (this._user) {
+      this.#authenticationService.user = this.user;
+
+      if (this.user.profilePicture) {
+        this.profilePictureUrl = this.user.profilePicture ?? "";
+      }
+    }
+  }
+
+  private _user!: User;
   profilePictureUrl!: string;
   logoUrl!: string
   isDropdownOpen: boolean = false;
 
   constructor() {
     this.profilePictureUrl = this.#config.profilePictureUrl;
-  }
-
-  ngOnInit(): void {
-    this.#userService
-      .getById(this.#authenticationService.userId ?? '')
-      .subscribe((users: User[]) => {
-        if (!!users?.length) {
-          this.user = users[0];
-          this.#authenticationService.user = this.user;
-
-          if (this.user.profilePicture) {
-            this.profilePictureUrl = this.user.profilePicture;
-          }
-        }
-      });
   }
 
   toggleDropdown() {
