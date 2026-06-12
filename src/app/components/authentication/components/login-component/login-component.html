@@ -18,22 +18,16 @@
         <app-input [type]="InputType.Password" [label]="'Password'" formControlName="password"></app-input>
 
         <div class="flex items-center justify-between">
-          <div>
-            <app-input class="chk_rememberme" [type]="InputType.Checkbox" [options]="rememberMe"></app-input>
-          </div>
+          <button [disabled]="form.invalid"
+            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+            Submit
+          </button>
 
           <div class="text-sm">
             <a href="#" routerLink="/forgot-password" class="font-medium text-blue-600 hover:text-blue-500">
               Forgot your password?
             </a>
           </div>
-        </div>
-
-        <div>
-          <button [disabled]="form.invalid"
-            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
-            Submit
-          </button>
         </div>
       </form>
       <div class="mt-6">
