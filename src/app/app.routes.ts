@@ -32,7 +32,7 @@ export const routes: Routes = [
       import(
         '../app/components/authentication/components/logout-component/logout-component'
       ).then((c) => c.LogoutComponent),
-    canActivate: [NoAuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'home',
