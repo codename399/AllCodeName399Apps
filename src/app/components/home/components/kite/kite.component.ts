@@ -19,7 +19,9 @@ export class KiteComponent implements OnInit {
   #authenticationService = inject(AuthenticationService);
 
   ngOnInit(): void {
-    this.fetchRequestToken();
+    if (!this.#kiteService.isLoggedIn()) {
+      this.fetchRequestToken();
+    }
   }
 
   fetchRequestToken() {
@@ -27,12 +29,7 @@ export class KiteComponent implements OnInit {
       const requestToken = params['request_token'];
 
       if (requestToken) {
-        if (!this.#kiteService.isLoggedIn()) {
-          this.generateSession(requestToken);
-        }
-        else {
-          this.loginToKite();
-        }
+        this.generateSession(requestToken);
       }
       else {
         this.loginToKite();
