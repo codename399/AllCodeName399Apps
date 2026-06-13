@@ -16,10 +16,14 @@ export class HomeHeaderComponent {
   #router = inject(Router);
   #config = inject(Config);
 
+  get user(): User {
+    return this._user;
+  }
+
   @Input("user") set user(value: User) {
     this._user = value;
 
-    if (this._user) {
+    if (this.user) {
       this.#authenticationService.user = this.user;
 
       if (this.user.profilePicture) {
