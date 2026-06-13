@@ -2,6 +2,7 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { Config } from '../../../../../assets/environments/config';
 import { ActivatedRoute } from '@angular/router';
 import { KiteService } from '../../services/kite.service';
+import { AuthenticationService } from '../../../authentication/services/authentication-service';
 
 @Component({
   selector: 'app-kite',
@@ -15,6 +16,7 @@ export class KiteComponent implements OnInit {
   #route = inject(ActivatedRoute);
   #kiteService = inject(KiteService);
   #kiteApiKey = computed(() => this.#config.kiteApiKey);
+  #authenticationService = inject(AuthenticationService);
 
   ngOnInit(): void {
     this.fetchRequestToken();
@@ -46,6 +48,9 @@ export class KiteComponent implements OnInit {
   generateSession(requestToken: string) {
     const generateSessionRequest = { requestToken };
     this.#kiteService.generateSession(generateSessionRequest).subscribe(() => { }
+      , () => {
+        this.#authenticationService.logout();
+      }
     );
   }
 }
