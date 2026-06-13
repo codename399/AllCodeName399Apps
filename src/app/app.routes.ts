@@ -27,6 +27,14 @@ export const routes: Routes = [
     canActivate: [NoAuthGuard],
   },
   {
+    path: 'logout',
+    loadComponent: () =>
+      import(
+        '../app/components/authentication/components/logout-component/logout-component'
+      ).then((c) => c.LogoutComponent),
+    canActivate: [NoAuthGuard],
+  },
+  {
     path: 'home',
     loadComponent: () =>
       import('../app/components/home/components/home/home.component').then(
