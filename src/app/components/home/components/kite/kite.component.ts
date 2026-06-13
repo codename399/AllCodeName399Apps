@@ -17,9 +17,7 @@ export class KiteComponent implements OnInit {
   #kiteApiKey = computed(() => this.#config.kiteApiKey);
 
   ngOnInit(): void {
-    if (!this.#kiteService.isLoggedIn()) {
-      this.fetchRequestToken();
-    }
+    this.fetchRequestToken();
   }
 
   fetchRequestToken() {
@@ -27,7 +25,12 @@ export class KiteComponent implements OnInit {
       const requestToken = params['request_token'];
 
       if (requestToken) {
-        this.generateSession(requestToken);
+        if (!this.#kiteService.isLoggedIn()) {
+          this.generateSession(requestToken);
+        }
+        else {
+          this.loginToKite();
+        }
       }
       else {
         this.loginToKite();
@@ -43,9 +46,7 @@ export class KiteComponent implements OnInit {
   generateSession(requestToken: string) {
     const generateSessionRequest = { requestToken };
     this.#kiteService.generateSession(generateSessionRequest).subscribe(() => { }
-      , (error) => {
-        this.loginToKite();
-      });
+    );
   }
 }
 
