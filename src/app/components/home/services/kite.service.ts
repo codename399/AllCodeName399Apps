@@ -18,15 +18,15 @@ export class KiteService {
     #apiConstants = inject(API_CONSTANTS);
 
     get token() {
-        return sessionStorage.getItem(Constants.kiteToken);
+        return localStorage.getItem(Constants.kiteToken);
     }
 
     set token(value: string | null) {
-        sessionStorage.setItem(Constants.kiteToken, value ?? '');
+        localStorage.setItem(Constants.kiteToken, value ?? '');
     }
 
     clearToken() {
-        sessionStorage.clear();
+        localStorage.clear();
         this.#user.set(null);
     }
 
