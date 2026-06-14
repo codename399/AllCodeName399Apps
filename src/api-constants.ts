@@ -40,6 +40,8 @@ export class ApiConstants {
   public updateDebt = "/updateDebt";
   public deleteDebts = "/deleteDebts";
   public generateSession = "/generateSession";
+  public gainers = "/gainers";
+  public losers = "/losers";
 
   public getUrl = (
     endpoint: string,

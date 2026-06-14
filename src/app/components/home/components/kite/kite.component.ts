@@ -3,6 +3,7 @@ import { Config } from '../../../../../assets/environments/config';
 import { ActivatedRoute } from '@angular/router';
 import { KiteService } from '../../services/kite.service';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-kite',
@@ -44,11 +45,28 @@ export class KiteComponent implements OnInit {
 
   generateSession(requestToken: string) {
     const generateSessionRequest = { requestToken };
-    this.#kiteService.generateSession(generateSessionRequest).subscribe(() => { }
+    this.#kiteService.generateSession(generateSessionRequest).subscribe(() => {
+      interval(500).subscribe(() => {
+        this.gainers();
+        this.losers();
+      });
+    }
       , () => {
         this.#authenticationService.logout();
       }
     );
+  }
+
+  gainers() {
+    this.#kiteService.gainers().subscribe((response) => {
+      console.log('Gainers:', response);
+    });
+  }
+
+  losers() {
+    this.#kiteService.losers().subscribe((response) => {
+      console.log('Losers:', response);
+    });
   }
 }
 

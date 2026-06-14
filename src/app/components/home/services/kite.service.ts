@@ -7,6 +7,7 @@ import { API_CONSTANTS } from '../../../../injectors/common-injector';
 import { User } from '../../home/models/user';
 import { GenerateSessionRequest } from '../models/generate-session-request';
 import { GenerateSessionResponse } from '../models/generate-session-response';
+import { LiveQuote } from '../models/live-quote';
 
 @Injectable({
     providedIn: 'root',
@@ -51,6 +52,20 @@ export class KiteService {
                         this.token = response?.data?.access_token;
                     }
                 })
+            );
+    }
+
+    gainers() {
+        return this.#httpClient
+            .get<LiveQuote[]>(
+                this.#apiConstants.getUrl(this.#apiConstants.gainers, true)
+            );
+    }
+
+    losers() {
+        return this.#httpClient
+            .get<LiveQuote[]>(
+                this.#apiConstants.getUrl(this.#apiConstants.losers, true)
             );
     }
 }
