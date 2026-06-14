@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { KiteService } from '../../services/kite.service';
 import { AuthenticationService } from '../../../authentication/services/authentication-service';
 import { interval } from 'rxjs';
+import { ToastService } from '../../../../services/toast.service';
 
 @Component({
   selector: 'app-kite',
@@ -18,6 +19,7 @@ export class KiteComponent implements OnInit {
   #kiteService = inject(KiteService);
   #kiteApiKey = computed(() => this.#config.kiteApiKey);
   #authenticationService = inject(AuthenticationService);
+  #toastService = inject(ToastService);
 
   ngOnInit(): void {
     if (!this.#kiteService.isLoggedIn()) {
@@ -46,12 +48,15 @@ export class KiteComponent implements OnInit {
   generateSession(requestToken: string) {
     const generateSessionRequest = { requestToken };
     this.#kiteService.generateSession(generateSessionRequest).subscribe(() => {
+      this.#toastService.success('Session generated successfully');
+
       interval(500).subscribe(() => {
         this.gainers();
         this.losers();
       });
     }
       , () => {
+        this.#toastService.error('Failed to generate session');
         this.#authenticationService.logout();
       }
     );
