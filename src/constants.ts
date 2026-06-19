@@ -13,4 +13,8 @@ export abstract class Constants {
   public static admin = 'Admin';
   public static status = 'Status';
   public static kite = 'Kite';
+  public static angelOne = 'AngelOne';
+  public static angelOneAccessToken = 'AngelOneAccessToken';
+  public static angelOneRefreshToken = 'AngelOneRefreshToken';
+  public static angelOneFeedToken = 'AngelOneFeedToken';
 }

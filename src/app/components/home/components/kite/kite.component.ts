@@ -50,7 +50,7 @@ export class KiteComponent implements OnInit {
     this.#kiteService.generateSession(generateSessionRequest).subscribe(() => {
       this.#toastService.success('Session generated successfully');
 
-      interval(500).subscribe(() => {
+      interval(5000).subscribe(() => {
         this.gainers();
         this.losers();
       });

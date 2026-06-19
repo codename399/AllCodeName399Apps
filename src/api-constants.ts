@@ -42,6 +42,7 @@ export class ApiConstants {
   public generateSession = "/generateSession";
   public gainers = "/gainers";
   public losers = "/losers";
+  public loginToAngelOne = "/login-to-angel";
 
   public getUrl = (
     endpoint: string,

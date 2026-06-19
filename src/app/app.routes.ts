@@ -152,6 +152,14 @@ export const routes: Routes = [
             './components/home/components/kite/kite.component'
           ).then((c) => c.KiteComponent),
         data: { projectName: Constants.kite }
+      },
+      {
+        path: 'angel-one',
+        loadComponent: () =>
+          import(
+            './components/home/components/angel-one/angel-one.component'
+          ).then((c) => c.AngelOneComponent),
+        data: { projectName: Constants.angelOne }
       }
     ],
   },
