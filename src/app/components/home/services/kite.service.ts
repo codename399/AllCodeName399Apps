@@ -48,8 +48,8 @@ export class KiteService {
             )
             .pipe(
                 tap((response) => {
-                    if (response?.data?.access_token) {
-                        this.token = response?.data?.access_token;
+                    if (response?.access_token) {
+                        this.token = response?.access_token;
                     }
                 })
             );
