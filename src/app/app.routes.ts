@@ -146,14 +146,6 @@ export const routes: Routes = [
         },
       },
       {
-        path: 'kite',
-        loadComponent: () =>
-          import(
-            './components/home/components/kite/kite.component'
-          ).then((c) => c.KiteComponent),
-        data: { projectName: Constants.kite }
-      },
-      {
         path: 'angel-one',
         loadComponent: () =>
           import(
