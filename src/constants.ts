@@ -2,7 +2,7 @@ export abstract class Constants {
   public static token = 'token';
   public static kiteToken = 'kiteToken';
   public static refreshToken = 'refreshToken';
-  public static userId = 'UserId';
+  public static userId = 'userId';
   public static creationDate = 'CreationDate';
   public static updationDate = 'UpdationDate';
   public static name = 'Name';
@@ -14,7 +14,7 @@ export abstract class Constants {
   public static status = 'Status';
   public static kite = 'Kite';
   public static angelOne = 'AngelOne';
-  public static angelOneAccessToken = 'AngelOneAccessToken';
-  public static angelOneRefreshToken = 'AngelOneRefreshToken';
-  public static angelOneFeedToken = 'AngelOneFeedToken';
+  public static angelOneAccessToken = 'angelOneAccessToken';
+  public static angelOneRefreshToken = 'angelOneRefreshToken';
+  public static angelOneFeedToken = 'angelOneFeedToken';
 }
