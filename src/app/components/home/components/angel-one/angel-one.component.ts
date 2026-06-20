@@ -16,13 +16,27 @@ export class AngelOneComponent implements OnInit {
     if (!this.#angelOneService.isLoggedIn()) {
       this.loginToAngel();
     }
+    else {
+      this.gainers();
+    }
+
   }
 
   loginToAngel() {
     this.#angelOneService.loginToAngel().subscribe(() => {
       this.#toastService.success('Login to Angel One successful');
+
+      this.gainers();
     }, () => {
       this.#toastService.error('Login to Angel One failed');
+    });
+  }
+
+  gainers() {
+    this.#angelOneService.gainers().subscribe((response) => {
+      console.log('Gainers:', response);
+    }, (error) => {
+      console.error('Error fetching gainers:', error);
     });
   }
 }
