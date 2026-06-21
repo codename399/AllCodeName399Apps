@@ -43,6 +43,7 @@ export class ApiConstants {
   public gainers = "/gainers";
   public losers = "/losers";
   public loginToAngelOne = "/login-to-angel";
+  public marketHub = "/marketHub";
 
   public getUrl = (
     endpoint: string,

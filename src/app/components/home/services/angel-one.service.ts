@@ -60,12 +60,4 @@ export class AngelOneService {
                 })
             );
     }
-
-    gainers(){
-        return this.#httpClient
-            .get<Gainer[]>(
-                this.#apiConstants.getUrl(this.#apiConstants.gainers, true)
-            )
-            .pipe();
-    }
 }

@@ -4,6 +4,7 @@ import { ToastService } from '../../../../services/toast.service';
 import { Gainer } from '../../models/gainer';
 import { DecimalPipe } from '@angular/common';
 import { interval } from 'rxjs';
+import { MarketService } from '../../services/market.service';
 
 @Component({
   selector: 'app-angel-one',
@@ -15,6 +16,7 @@ import { interval } from 'rxjs';
 export class AngelOneComponent implements OnInit {
   #angelOneService = inject(AngelOneService);
   #toastService = inject(ToastService);
+  #marketService = inject(MarketService);
 
   gainer = signal<Gainer[]>([]);
 
@@ -38,17 +40,10 @@ export class AngelOneComponent implements OnInit {
     });
   }
 
-  gainers() {
-    this.#angelOneService.gainers().subscribe((response) => {
-      this.gainer.set(response);
-    }, (error) => {
-      console.error('Error fetching gainers:', error);
-    });
-  }
-
   subscribeToGainers() {
-    interval(1000).subscribe(() => {
-      this.gainers();
-    })
+    this.#marketService.startConnection(
+      data => {
+        this.gainer.set(data);
+      });
   }
 }

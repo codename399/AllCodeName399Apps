@@ -27,6 +27,7 @@
     "@angular/material": "^20.1.2",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "@microsoft/signalr": "^10.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.7",
     "jwt-decode": "^4.0.0",
