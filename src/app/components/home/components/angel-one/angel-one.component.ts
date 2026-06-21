@@ -48,7 +48,7 @@ export class AngelOneComponent implements OnInit {
 
   subscribeToGainers() {
     interval(1000).subscribe(() => {
-      this.gainer();
+      this.gainers();
     })
   }
 }
