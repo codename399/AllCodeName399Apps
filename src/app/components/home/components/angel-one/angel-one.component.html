@@ -24,9 +24,11 @@
 
                 <th>Risk</th>
 
-                <th>Reason</th>
                 <th>Stop Loss</th>
+
                 <th>Target Price</th>
+
+                <th>Reason</th>
 
             </tr>
 
@@ -92,12 +94,6 @@
 
                 <td>
 
-                    {{ stock.reason }}
-
-                </td>
-
-                <td>
-
                     {{ stock.stopLoss | number:'1.2-2' }}
 
                 </td>
@@ -107,6 +103,13 @@
                     {{ stock.targetPrice | number:'1.2-2' }}
 
                 </td>
+
+                <td>
+
+                    {{ stock.reason }}
+
+                </td>
+
             </tr>
 
             }
