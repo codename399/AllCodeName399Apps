@@ -1,1 +1,39 @@
-<p>angel-one works!</p>
+<div class="container">
+
+    <h2>Top Gainers</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Current Price</th>
+                <th>Previous Close</th>
+                <th>% Change</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (stock of gainer(); track stock.symbol) {
+            <tr>
+
+                <td>{{ stock.symbol }}</td>
+
+                <td>{{ stock.currentPrice | number:'1.2-2' }}</td>
+
+                <td class="positive">
+                    {{ stock.previousClose }}
+                </td>
+
+                <td class="positive">
+                    {{ stock.changePercent }}%
+                </td>
+
+            </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

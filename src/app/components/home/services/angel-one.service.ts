@@ -6,6 +6,7 @@ import { Constants } from '../../../../constants';
 import { API_CONSTANTS } from '../../../../injectors/common-injector';
 import { AngelOneLoginData, AngelOneLoginResponse } from '../models/angel-one-login-response';
 import { User } from '../models/user';
+import { Gainer } from '../models/gainer';
 
 @Injectable({
     providedIn: 'root',
@@ -62,7 +63,7 @@ export class AngelOneService {
 
     gainers(){
         return this.#httpClient
-            .get<any>(
+            .get<Gainer[]>(
                 this.#apiConstants.getUrl(this.#apiConstants.gainers, true)
             )
             .pipe();
