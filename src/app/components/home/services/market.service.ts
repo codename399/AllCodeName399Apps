@@ -17,7 +17,14 @@ export class MarketService {
         this.hub =
             new signalR.HubConnectionBuilder()
                 .withUrl(
-                    this.#apiConstants.getUrl(this.#apiConstants.marketHub, false)
+                    this.#apiConstants.getUrl(
+                        this.#apiConstants.marketHub,
+                        false
+                    ),
+                    {
+                        transport:
+                            signalR.HttpTransportType.WebSockets
+                    }
                 )
                 .withAutomaticReconnect()
                 .build();
