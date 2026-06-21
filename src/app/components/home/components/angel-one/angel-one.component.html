@@ -24,9 +24,7 @@
 
                 <th>Risk</th>
 
-                <th>Stop Loss</th>
-
-                <th>Target</th>
+                <th>Reason</th>
 
             </tr>
 
@@ -46,9 +44,7 @@
                     {{ stock.currentPrice | number:'1.2-2' }}
                 </td>
 
-                <td
-                    [class.positive]="stock.changePercent >= 0"
-                    [class.negative]="stock.changePercent < 0">
+                <td [class.positive]="stock.changePercent >= 0" [class.negative]="stock.changePercent < 0">
 
                     {{ stock.changePercent }}%
 
@@ -56,13 +52,13 @@
 
                 <td>
 
-                    {{ stock.ema9 | number:'1.2-2' }}
+                    {{ stock.emA9 | number:'1.2-2' }}
 
                 </td>
 
                 <td>
 
-                    {{ stock.ema21 | number:'1.2-2' }}
+                    {{ stock.emA21 | number:'1.2-2' }}
 
                 </td>
 
@@ -74,9 +70,7 @@
 
                 <td>
 
-                    <span
-                        class="signal"
-                        [ngClass]="{
+                    <span class="signal" [ngClass]="{
                             'buy': stock.signal === 'BUY',
                             'sell': stock.signal === 'SELL',
                             'hold': stock.signal === 'HOLD'
@@ -96,16 +90,9 @@
 
                 <td>
 
-                    {{ stock.stopLoss | number:'1.2-2' }}
+                    {{ stock.reason }}
 
                 </td>
-
-                <td>
-
-                    {{ stock.targetPrice | number:'1.2-2' }}
-
-                </td>
-
             </tr>
 
             }

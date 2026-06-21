@@ -27,7 +27,6 @@ export class AngelOneComponent implements OnInit {
     else {
       this.subscribeToGainers();
     }
-
   }
 
   loginToAngel() {
