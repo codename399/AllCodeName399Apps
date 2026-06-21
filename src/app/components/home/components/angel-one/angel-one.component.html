@@ -5,31 +5,109 @@
     <table>
 
         <thead>
+
             <tr>
+
                 <th>Symbol</th>
-                <th>Current Price</th>
-                <th>Previous Close</th>
+
+                <th>Price</th>
+
                 <th>% Change</th>
+
+                <th>EMA 9</th>
+
+                <th>EMA 21</th>
+
+                <th>RSI</th>
+
+                <th>Signal</th>
+
+                <th>Risk</th>
+
+                <th>Stop Loss</th>
+
+                <th>Target</th>
+
             </tr>
+
         </thead>
 
         <tbody>
+
             @for (stock of gainer(); track stock.symbol) {
+
             <tr>
 
-                <td>{{ stock.symbol }}</td>
-
-                <td>{{ stock.currentPrice | number:'1.2-2' }}</td>
-
-                <td class="positive">
-                    {{ stock.previousClose }}
+                <td>
+                    {{ stock.symbol }}
                 </td>
 
-                <td class="positive">
+                <td>
+                    {{ stock.currentPrice | number:'1.2-2' }}
+                </td>
+
+                <td
+                    [class.positive]="stock.changePercent >= 0"
+                    [class.negative]="stock.changePercent < 0">
+
                     {{ stock.changePercent }}%
+
+                </td>
+
+                <td>
+
+                    {{ stock.ema9 | number:'1.2-2' }}
+
+                </td>
+
+                <td>
+
+                    {{ stock.ema21 | number:'1.2-2' }}
+
+                </td>
+
+                <td>
+
+                    {{ stock.rsi | number:'1.0-0' }}
+
+                </td>
+
+                <td>
+
+                    <span
+                        class="signal"
+                        [ngClass]="{
+                            'buy': stock.signal === 'BUY',
+                            'sell': stock.signal === 'SELL',
+                            'hold': stock.signal === 'HOLD'
+                        }">
+
+                        {{ stock.signal }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    {{ stock.risk }}
+
+                </td>
+
+                <td>
+
+                    {{ stock.stopLoss | number:'1.2-2' }}
+
+                </td>
+
+                <td>
+
+                    {{ stock.targetPrice | number:'1.2-2' }}
+
                 </td>
 
             </tr>
+
             }
 
         </tbody>

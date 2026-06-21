@@ -2,14 +2,14 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { AngelOneService } from '../../services/angel-one.service';
 import { ToastService } from '../../../../services/toast.service';
 import { Gainer } from '../../models/gainer';
-import { DecimalPipe } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { interval } from 'rxjs';
 import { MarketService } from '../../services/market.service';
 
 @Component({
   selector: 'app-angel-one',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, CommonModule],
   templateUrl: './angel-one.component.html',
   styleUrl: './angel-one.component.css'
 })
