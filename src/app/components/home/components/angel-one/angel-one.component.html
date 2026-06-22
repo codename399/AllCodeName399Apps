@@ -14,6 +14,8 @@
 
                 <th>% Change</th>
 
+                <th>VWAP</th>
+
                 <th>EMA 9</th>
 
                 <th>EMA 21</th>
@@ -51,6 +53,12 @@
                 <td [class.positive]="stock.changePercent >= 0" [class.negative]="stock.changePercent < 0">
 
                     {{ stock.changePercent }}%
+
+                </td>
+
+                <td>
+
+                    {{ stock.vwap | number:'1.2-2' }}
 
                 </td>
 

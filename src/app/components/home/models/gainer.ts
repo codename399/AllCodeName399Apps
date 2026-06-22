@@ -16,6 +16,7 @@ export interface Gainer {
     change: number;
     changePercent: number;
 
+    vwap: number;
     emA9: number;
     emA21: number;
     rsi: number;
