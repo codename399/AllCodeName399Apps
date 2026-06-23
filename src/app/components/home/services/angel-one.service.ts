@@ -60,4 +60,12 @@ export class AngelOneService {
                 })
             );
     }
+
+    getAvailableCash() {
+        return this.#httpClient
+            .get<number>(
+                this.#apiConstants.getUrl(this.#apiConstants.getAvailableCash, true)
+            )
+            .pipe();
+    }
 }

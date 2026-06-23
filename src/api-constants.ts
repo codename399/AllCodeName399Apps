@@ -44,6 +44,7 @@ export class ApiConstants {
   public losers = "/losers";
   public loginToAngelOne = "/login-to-angel";
   public marketHub = "/marketHub";
+  public getAvailableCash = "/get-available-cash";
 
   public getUrl = (
     endpoint: string,

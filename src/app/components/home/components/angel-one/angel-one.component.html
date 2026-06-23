@@ -1,6 +1,45 @@
-<div class="container">
+<div class="market-timer">
 
-    <h2>Top Gainers</h2>
+    <div
+        class="status"
+        [class.open]="marketStatus() === 'OPEN'"
+        [class.closed]="marketStatus() === 'CLOSED'">
+
+        {{ marketStatus() === 'OPEN'
+            ? '🟢 Market Open'
+            : '🔴 Market Closed' }}
+
+    </div>
+
+    <div class="countdown">
+
+        {{ marketTimer() }}
+
+    </div>
+
+</div>
+
+<div class="dashboard-header">
+
+  <div class="wallet-card">
+
+    <div class="title">
+
+      💵 Available Cash
+
+    </div>
+
+    <div class="amount">
+
+      ₹ {{ availableCash() | number:'1.0-0' }}
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container">
 
     <table>
 
