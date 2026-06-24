@@ -1,103 +1,287 @@
 import {
   Component,
-  inject,
   OnDestroy,
   OnInit,
+  computed,
+  inject,
   signal
 } from '@angular/core';
 
-import { CommonModule, DecimalPipe } from '@angular/common';
+import {
+  CommonModule,
+  DecimalPipe
+} from '@angular/common';
 
-import { AngelOneService } from '../../services/angel-one.service';
-import { ToastService } from '../../../../services/toast.service';
-import { Gainer } from '../../models/gainer';
-import { MarketService } from '../../services/market.service';
+import { AngelOneService }
+  from '../../services/angel-one.service';
+
+import { MarketService }
+  from '../../services/market.service';
+
+import { ToastService }
+  from '../../../../services/toast.service';
+
+import { Gainer }
+  from '../../models/gainer';
 
 @Component({
   selector: 'app-angel-one',
+
   standalone: true,
-  imports: [DecimalPipe, CommonModule],
-  templateUrl: './angel-one.component.html',
-  styleUrl: './angel-one.component.css'
+
+  imports: [
+    DecimalPipe,
+    CommonModule
+  ],
+
+  templateUrl:
+    './angel-one.component.html',
+
+  styleUrl:
+    './angel-one.component.css'
 })
-export class AngelOneComponent implements OnInit, OnDestroy {
 
-  #angelOneService = inject(AngelOneService);
+export class AngelOneComponent
+  implements OnInit, OnDestroy {
 
-  #toastService = inject(ToastService);
+  readonly #angel =
+    inject(AngelOneService);
 
-  #marketService = inject(MarketService);
+  readonly #market =
+    inject(MarketService);
 
-  gainer = signal<Gainer[]>([]);
+  readonly #toast =
+    inject(ToastService);
 
-  marketStatus = signal('');
+  // ---------------- Dashboard ----------------
 
-  marketTimer = signal('');
+  gainers =
+    signal<Gainer[]>([]);
 
-  availableCash = signal<number>(0);
+  marketStatus =
+    signal('');
+
+  marketTimer =
+    signal('');
+
+  availableCash =
+    signal(0);
+
+  strategy =
+    signal('Pullback');
+
+  autoTradingEnabled =
+    signal(false);
+
+  dailyTrades =
+    signal(0);
+
+  dailyLoss =
+    signal(0);
+
+  killSwitch =
+    signal(false);
+
+  searchText =
+    signal('');
 
   private timerId: any;
 
+  // ---------------- Filter ----------------
+
+  filteredGainers =
+    computed(() => {
+
+      const search =
+
+        this.searchText()
+
+        .trim()
+
+        .toLowerCase();
+
+      if (!search) {
+
+        return this.gainers();
+      }
+
+      return this.gainers()
+
+        .filter(x =>
+
+          x.symbol
+
+          .toLowerCase()
+
+          .includes(search));
+    });
+
+  // ---------------- Lifecycle ----------------
+
   ngOnInit(): void {
 
-    this.updateMarketTimer();
+    this.startMarketTimer();
 
-    this.timerId = setInterval(() => {
-      this.updateMarketTimer();
-    }, 1000);
-
-    if (!this.#angelOneService.isLoggedIn()) {
+    if (!this.#angel.isLoggedIn()) {
 
       this.loginToAngel();
 
-    } else {
-
-      this.loadWalletBalance();
-
-      this.subscribeToGainers();
+      return;
     }
+
+    this.loadDashboard();
+
   }
 
   ngOnDestroy(): void {
 
     if (this.timerId) {
-      clearInterval(this.timerId);
+
+      clearInterval(
+        this.timerId
+      );
     }
   }
 
-  loginToAngel() {
+  // ---------------- Login ----------------
 
-    this.#angelOneService.loginToAngel().subscribe({
+  loginToAngel(): void {
 
-      next: () => {
+    this.#angel
 
-        this.#toastService.success(
-          'Login to Angel One successful'
-        );
+      .loginToAngel()
 
-        this.loadWalletBalance();
+      .subscribe({
 
-        this.subscribeToGainers();
-      },
+        next: () => {
 
-      error: () => {
+          this.#toast.success(
 
-        this.#toastService.error(
-          'Login to Angel One failed'
-        );
-      }
-    });
+            'Angel One login successful'
+          );
+
+          this.loadDashboard();
+        },
+
+        error: () => {
+
+          this.#toast.error(
+
+            'Angel One login failed'
+          );
+        }
+      });
   }
+
+  // ---------------- Dashboard ----------------
+
+  private loadDashboard(): void {
+
+    this.loadWalletBalance();
+
+    this.loadDashboardSummary();
+
+    this.subscribeToGainers();
+  }
+
+  private loadDashboardSummary(): void {
+
+    this.#angel
+
+      .getDashboardSummary()
+
+      .subscribe({
+
+        next: summary => {
+
+          this.strategy.set(
+
+            summary.strategy
+          );
+
+          this.autoTradingEnabled.set(
+
+            summary.autoTradingEnabled
+          );
+
+          this.dailyTrades.set(
+
+            summary.dailyTrades
+          );
+
+          this.dailyLoss.set(
+
+            summary.dailyLoss
+          );
+
+          this.killSwitch.set(
+
+            summary.killSwitch
+          );
+        },
+
+        error: () => {
+
+          console.error(
+
+            'Dashboard summary failed'
+          );
+        }
+      });
+  }
+
+  loadWalletBalance(): void {
+
+    this.#angel
+
+      .getAvailableCash()
+
+      .subscribe({
+
+        next: amount => {
+
+          this.availableCash.set(
+            amount
+          );
+        },
+
+        error: () => {
+
+          this.#toast.error(
+
+            'Unable to fetch wallet balance'
+          );
+        }
+      });
+  }
+
   subscribeToGainers(): void {
 
-    this.#marketService.startConnection(
+    this.#market
 
-      data => {
+      .startConnection(
 
-        this.gainer.set(data);
+        data => {
 
-      }
-    );
+          this.gainers.set(
+            data
+          );
+        });
+  }
+
+  // ---------------- Timer ----------------
+
+  private startMarketTimer(): void {
+
+    this.updateMarketTimer();
+
+    this.timerId =
+
+      setInterval(() => {
+
+        this.updateMarketTimer();
+
+      }, 1000);
   }
 
   private updateMarketTimer(): void {
@@ -106,54 +290,98 @@ export class AngelOneComponent implements OnInit, OnDestroy {
 
     const day = now.getDay();
 
-    const openTime = new Date();
+    const openTime =
 
-    openTime.setHours(9, 15, 0, 0);
+      new Date();
 
-    const closeTime = new Date();
+    openTime.setHours(
 
-    closeTime.setHours(15, 30, 0, 0);
+      9,
+
+      15,
+
+      0,
+
+      0);
+
+    const closeTime =
+
+      new Date();
+
+    closeTime.setHours(
+
+      15,
+
+      30,
+
+      0,
+
+      0);
 
     // Weekend
 
-    if (day === 0 || day === 6) {
+    if (day === 0
+      || day === 6)
+    {
+      this.marketStatus
+        .set('CLOSED');
 
-      this.marketStatus.set('CLOSED');
+      const nextMonday =
 
-      const nextMonday = new Date(now);
-
-      const daysToMonday = day === 0 ? 1 : 2;
+        new Date(now);
 
       nextMonday.setDate(
-        now.getDate() + daysToMonday
+
+        now.getDate()
+
+        + (day === 0 ? 1 : 2)
       );
 
       nextMonday.setHours(
+
         9,
+
         15,
+
         0,
+
         0
       );
 
       this.marketTimer.set(
-        `Opens in ${this.formatTime(
-          nextMonday.getTime() - now.getTime()
-        )}`
+
+        `Opens in ${
+
+          this.formatTime(
+
+            nextMonday.getTime()
+
+            - now.getTime()
+          )
+        }`
       );
 
       return;
     }
 
-    // Before market opens
+    // Before market
 
-    if (now < openTime) {
-
-      this.marketStatus.set('CLOSED');
+    if (now < openTime)
+    {
+      this.marketStatus
+        .set('CLOSED');
 
       this.marketTimer.set(
-        `Opens in ${this.formatTime(
-          openTime.getTime() - now.getTime()
-        )}`
+
+        `Opens in ${
+
+          this.formatTime(
+
+            openTime.getTime()
+
+            - now.getTime()
+          )
+        }`
       );
 
       return;
@@ -161,90 +389,109 @@ export class AngelOneComponent implements OnInit, OnDestroy {
 
     // Market open
 
-    if (now >= openTime &&
-      now < closeTime) {
+    if (
+      now >= openTime
 
-      this.marketStatus.set('OPEN');
+      && now < closeTime
+    ) {
+
+      this.marketStatus
+        .set('OPEN');
 
       this.marketTimer.set(
-        `Closes in ${this.formatTime(
-          closeTime.getTime() - now.getTime()
-        )}`
+
+        `Closes in ${
+
+          this.formatTime(
+
+            closeTime.getTime()
+
+            - now.getTime()
+          )
+        }`
       );
 
       return;
     }
 
-    // After market closes
+    // Market closed
 
-    this.marketStatus.set('CLOSED');
+    this.marketStatus
+      .set('CLOSED');
 
-    const nextOpen = new Date(now);
+    const nextOpen =
+
+      new Date(now);
 
     nextOpen.setDate(
-      now.getDate() + 1
+
+      now.getDate()
+
+      + 1
     );
 
     nextOpen.setHours(
+
       9,
+
       15,
+
       0,
+
       0
     );
 
-    // Friday -> Monday
-
-    if (day === 5) {
-
+    if (day === 5)
+    {
       nextOpen.setDate(
-        now.getDate() + 3
+
+        now.getDate()
+
+        + 3
       );
     }
 
     this.marketTimer.set(
-      `Opens in ${this.formatTime(
-        nextOpen.getTime() - now.getTime()
-      )}`
+
+      `Opens in ${
+
+        this.formatTime(
+
+          nextOpen.getTime()
+
+          - now.getTime()
+        )
+      }`
     );
   }
 
-  private formatTime(ms: number): string {
+  private formatTime(
+    ms: number
+  ): string {
 
-    const totalSeconds = Math.floor(
-      ms / 1000
-    );
+    const total =
 
-    const hours = Math.floor(
-      totalSeconds / 3600
-    );
+      Math.floor(
+        ms / 1000
+      );
 
-    const minutes = Math.floor(
-      (totalSeconds % 3600) / 60
-    );
+    const hours =
+
+      Math.floor(
+        total / 3600
+      );
+
+    const minutes =
+
+      Math.floor(
+        (total % 3600)
+        / 60
+      );
 
     const seconds =
-      totalSeconds % 60;
+
+      total % 60;
 
     return `${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  loadWalletBalance(): void {
-
-    this.#angelOneService
-      .getAvailableCash()
-      .subscribe({
-
-        next: (response) => {
-          this.availableCash.set(
-            response
-          );
-        },
-        error: () => {
-
-          this.#toastService.error(
-            'Unable to fetch wallet balance'
-          );
-        }
-      });
   }
 }

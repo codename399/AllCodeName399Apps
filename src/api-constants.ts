@@ -1,57 +1,186 @@
-import { inject } from "@angular/core";
-import { Config } from "./assets/environments/config";
+import { inject } from '@angular/core';
+
+import { Config }
+from './assets/environments/config';
 
 export class ApiConstants {
-  #config = inject(Config);
 
-  //Common API Endpoints
-  public authenticationBaseURL = this.#config.authenticationBaseURL;
-  public baseURL = this.#config.baseURL;
+  readonly #config =
+    inject(Config);
 
-  //Authentication API Endpoints
-  public getAllUsers = '/getAllUsers';
-  public getUserById = '/getUserById';
-  public getByProject = "/getByProject";
-  public addUsers = '/addUsers';
-  public updateUser = '/updateUser';
-  public deleteUser = '/deleteUser';
-  public validateUser = '/validateUser';
-  public refresh = '/refresh';
-  public changePassword = '/changePassword';
-  public getAllRoles = '/getAllRoles';
-  public getRoleById = '/getRoleById';
-  public addRoles = '/addRoles';
-  public updateRole = '/updateRole';
-  public deleteRole = '/deleteRole';
-  public getAllProjects = '/getAllProjects';
-  public getAllMappedProjects = '/getAllMappedProjects';
-  public getProjectById = '/getProjectById';
-  public addProjects = '/addProjects';
-  public updateProject = '/updateProject';
-  public deleteProject = '/deleteProject';
-  public getAllUserProjectMappings = "/getAllUserProjectMappings";
-  public updateUserProjectMappings = "/updateUserProjectMappings";
-  public getAllGames = "/getAllGames";
-  public addGames = "/addGames";
-  public updateGame = "/updateGame";
-  public deleteGames = "/deleteGames";
-  public getAllDebts = "/getAllDebts";
-  public addDebts = "/addDebts";
-  public updateDebt = "/updateDebt";
-  public deleteDebts = "/deleteDebts";
-  public generateSession = "/generateSession";
-  public gainers = "/gainers";
-  public losers = "/losers";
-  public loginToAngelOne = "/login-to-angel";
-  public marketHub = "/marketHub";
-  public getAvailableCash = "/get-available-cash";
+  // ---------------- Base URLs ----------------
 
-  public getUrl = (
+  readonly authenticationBaseURL =
+    this.#config.authenticationBaseURL;
+
+  readonly baseURL =
+    this.#config.baseURL;
+
+  // ---------------- Authentication ----------------
+
+  readonly getAllUsers =
+    '/getAllUsers';
+
+  readonly getUserById =
+    '/getUserById';
+
+  readonly addUsers =
+    '/addUsers';
+
+  readonly updateUser =
+    '/updateUser';
+
+  readonly deleteUser =
+    '/deleteUser';
+
+  readonly validateUser =
+    '/validateUser';
+
+  readonly refresh =
+    '/refresh';
+
+  readonly changePassword =
+    '/changePassword';
+
+  // ---------------- Roles ----------------
+
+  readonly getAllRoles =
+    '/getAllRoles';
+
+  readonly getRoleById =
+    '/getRoleById';
+
+  readonly addRoles =
+    '/addRoles';
+
+  readonly updateRole =
+    '/updateRole';
+
+  readonly deleteRole =
+    '/deleteRole';
+
+  // ---------------- Projects ----------------
+
+  readonly getByProject =
+    '/getByProject';
+
+  readonly getAllProjects =
+    '/getAllProjects';
+
+  readonly getProjectById =
+    '/getProjectById';
+
+  readonly addProjects =
+    '/addProjects';
+
+  readonly updateProject =
+    '/updateProject';
+
+  readonly deleteProject =
+    '/deleteProject';
+
+  readonly getAllMappedProjects =
+    '/getAllMappedProjects';
+
+  readonly getAllUserProjectMappings =
+    '/getAllUserProjectMappings';
+
+  readonly updateUserProjectMappings =
+    '/updateUserProjectMappings';
+
+  // ---------------- Games ----------------
+
+  readonly getAllGames =
+    '/getAllGames';
+
+  readonly addGames =
+    '/addGames';
+
+  readonly updateGame =
+    '/updateGame';
+
+  readonly deleteGames =
+    '/deleteGames';
+
+  // ---------------- Debts ----------------
+
+  readonly getAllDebts =
+    '/getAllDebts';
+
+  readonly addDebts =
+    '/addDebts';
+
+  readonly updateDebt =
+    '/updateDebt';
+
+  readonly deleteDebts =
+    '/deleteDebts';
+
+  // ---------------- Trading ----------------
+
+  readonly generateSession =
+    '/generateSession';
+
+  readonly gainers =
+    '/gainers';
+
+  readonly losers =
+    '/losers';
+
+  readonly marketHub =
+    '/marketHub';
+
+  // ---------------- Angel One ----------------
+
+  readonly loginToAngelOne =
+    '/login-to-angel';
+
+  readonly refreshAngelToken =
+    '/refresh-angel-token';
+
+  readonly getAvailableCash =
+    '/get-available-cash';
+
+  readonly ownedHoldings =
+    '/owned-holdings';
+
+  // ---------------- Dashboard ----------------
+
+  readonly dashboardSummary =
+    '/dashboard';
+
+  readonly getTradingState =
+    '/trading-state';
+
+  // ---------------- Auto Trading ----------------
+
+  readonly enableAutoTrading =
+    '/enable-auto-trading';
+
+  readonly disableAutoTrading =
+    '/disable-auto-trading';
+
+  readonly updateStrategy =
+    '/update-strategy';
+
+  readonly togglePaperTrading =
+    '/toggle-paper-trading';
+
+  readonly resetTradingState =
+    '/reset-trading-state';
+
+  // ---------------- Helpers ----------------
+
+  getUrl(
     endpoint: string,
-    isAuth: boolean = false
-  ): string => {
+
+    isAuth = false
+  ): string {
+
     return isAuth
-      ? this.authenticationBaseURL + endpoint
-      : this.baseURL + endpoint;
-  };
+
+      ? `${this.authenticationBaseURL}${endpoint}`
+
+      : `${this.baseURL}${endpoint}`;
+  }
 }

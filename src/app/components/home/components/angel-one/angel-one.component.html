@@ -1,168 +1,369 @@
-<div class="market-timer">
+<div class="dashboard">
 
-    <div
+  <!-- Header -->
+
+  <div class="header">
+
+    <div class="market-status">
+
+      <div
         class="status"
         [class.open]="marketStatus() === 'OPEN'"
         [class.closed]="marketStatus() === 'CLOSED'">
 
         {{ marketStatus() === 'OPEN'
-            ? '🟢 Market Open'
-            : '🔴 Market Closed' }}
 
-    </div>
+        ? '🟢 Market Open'
 
-    <div class="countdown">
+        : '🔴 Market Closed' }}
+
+      </div>
+
+      <div class="countdown">
 
         {{ marketTimer() }}
 
-    </div>
-
-</div>
-
-<div class="dashboard-header">
-
-  <div class="wallet-card">
-
-    <div class="title">
-
-      💵 Available Cash
-
-    </div>
-
-    <div class="amount">
-
-      ₹ {{ availableCash() | number:'1.0-0' }}
+      </div>
 
     </div>
 
   </div>
 
-</div>
 
-<div class="container">
+  <!-- Summary Cards -->
+
+  <div class="summary-container">
+
+    <div class="summary-card">
+
+      <div class="icon">
+
+        💵
+
+      </div>
+
+      <div>
+
+        <div class="label">
+
+          Available Cash
+
+        </div>
+
+        <div class="value">
+
+          ₹ {{ availableCash() | number:'1.0-0' }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+
+      <div class="icon">
+
+        📈
+
+      </div>
+
+      <div>
+
+        <div class="label">
+
+          Strategy
+
+        </div>
+
+        <div class="value">
+
+          {{ strategy() }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+
+      <div class="icon">
+
+        🤖
+
+      </div>
+
+      <div>
+
+        <div class="label">
+
+          Auto Trading
+
+        </div>
+
+        <div class="value">
+
+          {{ autoTradingEnabled() ? 'ON' : 'OFF' }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+
+      <div class="icon">
+
+        📊
+
+      </div>
+
+      <div>
+
+        <div class="label">
+
+          Daily Trades
+
+        </div>
+
+        <div class="value">
+
+          {{ dailyTrades() }}/5
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Search -->
+
+  <div class="search-container">
+
+    <input
+
+      type="text"
+
+      placeholder="🔍 Search symbol"
+
+      [value]="searchText()"
+
+      (input)="searchText.set($any($event.target).value)">
+
+  </div>
+
+
+  <!-- Table -->
+
+  <div class="table-container">
 
     <table>
 
-        <thead>
+      <thead>
 
-            <tr>
+        <tr>
 
-                <th>Symbol</th>
+          <th>⭐</th>
 
-                <th>Price</th>
+          <th>Symbol</th>
 
-                <th>% Change</th>
+          <th>Price</th>
 
-                <th>VWAP</th>
+          <th>%</th>
 
-                <th>EMA 9</th>
+          <th>VWAP</th>
 
-                <th>EMA 21</th>
+          <th>EMA9</th>
 
-                <th>RSI</th>
+          <th>EMA21</th>
 
-                <th>Signal</th>
+          <th>RSI</th>
 
-                <th>Risk</th>
+          <th>Vol x</th>
 
-                <th>Stop Loss</th>
+          <th>PB %</th>
 
-                <th>Target Price</th>
+          <th>Score</th>
 
-                <th>Reason</th>
+          <th>Signal</th>
 
-            </tr>
+          <th>Risk</th>
 
-        </thead>
+          <th>SL</th>
 
-        <tbody>
+          <th>Target</th>
 
-            @for (stock of gainer(); track stock.symbol) {
+          <th>Reason</th>
 
-            <tr>
+        </tr>
 
-                <td>
-                    {{ stock.symbol }}
-                </td>
+      </thead>
 
-                <td>
-                    {{ stock.currentPrice | number:'1.2-2' }}
-                </td>
+      <tbody>
 
-                <td [class.positive]="stock.changePercent >= 0" [class.negative]="stock.changePercent < 0">
+        @for (
+          stock of filteredGainers();
 
-                    {{ stock.changePercent }}%
+          track stock.symbol
+        ) {
 
-                </td>
+        <tr>
 
-                <td>
+          <td>
 
-                    {{ stock.vwap | number:'1.2-2' }}
+            <span
 
-                </td>
+              *ngIf="stock.isOwned"
 
-                <td>
+              class="owned">
 
-                    {{ stock.emA9 | number:'1.2-2' }}
+              ⭐
 
-                </td>
+            </span>
 
-                <td>
+          </td>
 
-                    {{ stock.emA21 | number:'1.2-2' }}
+          <td>
 
-                </td>
+            {{ stock.symbol }}
 
-                <td>
+          </td>
 
-                    {{ stock.rsi | number:'1.0-0' }}
+          <td>
 
-                </td>
+            ₹{{ stock.currentPrice | number:'1.2-2' }}
 
-                <td>
+          </td>
 
-                    <span class="signal" [ngClass]="{
-                            'buy': stock.signal === 'BUY',
-                            'sell': stock.signal === 'SELL',
-                            'hold': stock.signal === 'HOLD'
-                        }">
+          <td
 
-                        {{ stock.signal }}
+            [class.positive]="stock.changePercent >= 0"
 
-                    </span>
+            [class.negative]="stock.changePercent < 0">
 
-                </td>
+            {{ stock.changePercent }}
 
-                <td>
+            %
 
-                    {{ stock.risk }}
+          </td>
 
-                </td>
+          <td>
 
-                <td>
+            {{ stock.vwap | number:'1.2-2' }}
 
-                    {{ stock.stopLoss | number:'1.2-2' }}
+          </td>
 
-                </td>
+          <td>
 
-                <td>
+            {{ stock.emA9 | number:'1.2-2' }}
 
-                    {{ stock.targetPrice | number:'1.2-2' }}
+          </td>
 
-                </td>
+          <td>
 
-                <td>
+            {{ stock.emA21 | number:'1.2-2' }}
 
-                    {{ stock.reason }}
+          </td>
 
-                </td>
+          <td>
 
-            </tr>
+            {{ stock.rsi | number:'1.0-0' }}
 
-            }
+          </td>
 
-        </tbody>
+          <td>
+
+            {{ stock.volumeMultiplier | number:'1.1-1' }}
+
+          </td>
+
+          <td>
+
+            {{ stock.pullbackDistance | number:'1.1-1' }}
+
+            %
+
+          </td>
+
+          <td>
+
+            <div
+
+              class="score"
+
+              [class.excellent]="stock.score >= 80"
+
+              [class.good]="stock.score >= 60"
+
+              [class.average]="stock.score < 60">
+
+              {{ stock.score }}
+
+            </div>
+
+          </td>
+
+          <td>
+
+            <span
+
+              class="signal"
+
+              [ngClass]="{
+
+              'buy': stock.signal === 'BUY',
+
+              'sell': stock.signal === 'SELL',
+
+              'hold': stock.signal === 'HOLD',
+
+              'setup': stock.signal === 'SETUP'
+
+            }">
+
+              {{ stock.signal }}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            {{ stock.risk }}
+
+          </td>
+
+          <td>
+
+            ₹{{ stock.stopLoss | number:'1.2-2' }}
+
+          </td>
+
+          <td>
+
+            ₹{{ stock.targetPrice | number:'1.2-2' }}
+
+          </td>
+
+          <td>
+
+            {{ stock.reason }}
+
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
 
     </table>
+
+  </div>
 
 </div>

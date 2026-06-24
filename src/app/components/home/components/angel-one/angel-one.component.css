@@ -1,54 +1,43 @@
-.container {
-    overflow-x: auto;
+:host {
+  display: block;
+
+  padding: 24px;
+
+  background: #f1f5f9;
+
+  min-height: 100vh;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+/* ---------------- Dashboard ---------------- */
+
+.dashboard {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
 }
 
-th,
-td {
-    padding: 12px;
-    text-align: center;
+/* ---------------- Header ---------------- */
+
+.header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
 }
 
-th {
-    background: #f5f5f5;
-}
+.market-status {
 
-.positive {
-    color: green;
-    font-weight: 600;
-}
-
-.negative {
-    color: red;
-    font-weight: 600;
-}
-
-.signal {
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-weight: 600;
-}
-
-.buy {
-    background: #d4edda;
-    color: #155724;
-}
-
-.sell {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.hold {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.market-timer {
+  width: 100%;
 
   display: flex;
 
@@ -56,81 +45,405 @@ th {
 
   align-items: center;
 
-  padding: 12px 20px;
+  background: white;
 
-  margin-bottom: 20px;
+  padding: 16px 24px;
 
-  border-radius: 8px;
+  border-radius: 16px;
 
-  background: #f5f5f5;
+  box-shadow:
 
-  font-weight: 600;
+    0 4px 12px
+
+    rgba(0,0,0,.08);
 }
 
 .status {
 
-  padding: 8px 14px;
+  padding: 10px 18px;
 
-  border-radius: 20px;
+  border-radius: 30px;
+
+  font-size: 14px;
+
+  font-weight: 700;
 }
 
 .open {
 
-  background: #d4edda;
+  background: #dcfce7;
 
-  color: #155724;
+  color: #166534;
 }
 
 .closed {
 
-  background: #f8d7da;
+  background: #fee2e2;
 
-  color: #721c24;
+  color: #991b1b;
 }
 
 .countdown {
 
   font-size: 18px;
+
+  font-weight: 700;
+
+  color: #0f172a;
 }
 
-.dashboard-header {
+/* ---------------- Summary Cards ---------------- */
+
+.summary-container {
+
+  display: grid;
+
+  grid-template-columns:
+
+    repeat(4,1fr);
+
+  gap: 20px;
+}
+
+.summary-card {
 
   display: flex;
 
-  gap: 20px;
+  align-items: center;
 
-  margin-bottom: 20px;
-
-  flex-wrap: wrap;
-}
-
-.wallet-card {
-
-  flex: 1;
-
-  min-width: 220px;
+  gap: 16px;
 
   padding: 20px;
 
-  border-radius: 10px;
+  background: white;
 
-  background: #f4f4f4;
+  border-radius: 16px;
 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow:
+
+    0 4px 12px
+
+    rgba(0,0,0,.08);
+
+  transition: .2s ease;
 }
 
-.title {
+.summary-card:hover {
 
-  font-size: 14px;
+  transform:
 
-  color: #666;
+    translateY(-2px);
 
-  margin-bottom: 10px;
+  box-shadow:
+
+    0 8px 20px
+
+    rgba(0,0,0,.12);
 }
 
-.amount {
+.icon {
 
   font-size: 28px;
+}
 
-  font-weight: bold;
+.label {
+
+  font-size: 13px;
+
+  color: #64748b;
+
+  margin-bottom: 4px;
+}
+
+.value {
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+/* ---------------- Search ---------------- */
+
+.search-container {
+
+  background: white;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  box-shadow:
+
+    0 4px 12px
+
+    rgba(0,0,0,.08);
+}
+
+.search-container input {
+
+  width: 100%;
+
+  border: none;
+
+  outline: none;
+
+  font-size: 16px;
+
+  padding: 12px 16px;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+/* ---------------- Table ---------------- */
+
+.table-container {
+
+  overflow-x: auto;
+
+  background: white;
+
+  border-radius: 16px;
+
+  box-shadow:
+
+    0 4px 12px
+
+    rgba(0,0,0,.08);
+}
+
+table {
+
+  width: 100%;
+
+  min-width: 1700px;
+
+  border-collapse: collapse;
+}
+
+thead {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
+}
+
+th {
+
+  background: #0f172a;
+
+  color: white;
+
+  padding: 16px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+td {
+
+  padding: 14px;
+
+  text-align: center;
+
+  border-bottom:
+
+    1px solid #e2e8f0;
+
+  white-space: nowrap;
+}
+
+tbody tr {
+
+  transition: .15s ease;
+}
+
+tbody tr:hover {
+
+  background: #f8fafc;
+}
+
+/* ---------------- Positive Negative ---------------- */
+
+.positive {
+
+  color: #16a34a;
+
+  font-weight: 700;
+}
+
+.negative {
+
+  color: #dc2626;
+
+  font-weight: 700;
+}
+
+/* ---------------- Signal ---------------- */
+
+.signal {
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-width: 75px;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.buy {
+
+  background: #22c55e;
+
+  color: white;
+}
+
+.sell {
+
+  background: #ef4444;
+
+  color: white;
+}
+
+.hold {
+
+  background: #64748b;
+
+  color: white;
+}
+
+.setup {
+
+  background: #f59e0b;
+
+  color: white;
+}
+
+/* ---------------- Score ---------------- */
+
+.score {
+
+  width: 36px;
+
+  height: 36px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  margin: auto;
+
+  font-weight: 700;
+}
+
+.excellent {
+
+  background: #dcfce7;
+
+  color: #166534;
+}
+
+.good {
+
+  background: #fef9c3;
+
+  color: #854d0e;
+}
+
+.average {
+
+  background: #fee2e2;
+
+  color: #991b1b;
+}
+
+/* ---------------- Owned ---------------- */
+
+.owned {
+
+  font-size: 18px;
+}
+
+/* ---------------- Scrollbar ---------------- */
+
+.table-container::-webkit-scrollbar {
+
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+
+  background: #e2e8f0;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+
+  background: #94a3b8;
+
+  border-radius: 10px;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 1200px) {
+
+  .summary-container {
+
+    grid-template-columns:
+
+      repeat(2,1fr);
+  }
+}
+
+@media (max-width: 768px) {
+
+  :host {
+
+    padding: 12px;
+  }
+
+  .market-status {
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .summary-container {
+
+    grid-template-columns: 1fr;
+  }
+
+  .value {
+
+    font-size: 20px;
+  }
+
+  .countdown {
+
+    font-size: 16px;
+  }
 }

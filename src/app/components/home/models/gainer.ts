@@ -1,34 +1,82 @@
 export interface Gainer {
-    symbol: string;
-    companyName: string;
-    exchange: string;
-    token: string;
 
-    currentPrice: number;
-    previousClose: number;
+  // ---------- Instrument ----------
 
-    open: number;
-    high: number;
-    low: number;
+  symbol: string;
 
-    volume: number;
+  companyName?: string;
 
-    change: number;
-    changePercent: number;
+  exchange?: string;
 
-    vwap: number;
-    emA9: number;
-    emA21: number;
-    rsi: number;
+  token?: string;
 
-    stopLoss: number;
-    targetPrice: number;
 
-    signal: 'BUY' | 'SELL' | 'HOLD';
+  // ---------- Price ----------
 
-    risk: 'LOW' | 'MEDIUM' | 'HIGH';
+  currentPrice: number;
 
-    reason: string;
+  previousClose: number;
 
-    updatedAt: string;
+  open?: number;
+
+  high?: number;
+
+  low?: number;
+
+  volume?: number;
+
+
+  // ---------- Performance ----------
+
+  change?: number;
+
+  changePercent: number;
+
+
+  // ---------- Indicators ----------
+
+  vwap: number;
+
+  emA9: number;
+
+  emA21: number;
+
+  rsi: number;
+
+  volumeMultiplier: number;
+
+  pullbackDistance: number;
+
+
+  // ---------- Trading ----------
+
+  signal: 'BUY'
+        | 'SELL'
+        | 'HOLD'
+        | 'SETUP';
+
+  risk: 'LOW'
+      | 'MEDIUM'
+      | 'HIGH';
+
+  score: number;
+
+  isOwned: boolean;
+
+
+  // ---------- Trade Levels ----------
+
+  stopLoss: number;
+
+  targetPrice: number;
+
+
+  // ---------- Explanation ----------
+
+  reason: string;
+
+
+  // ---------- Metadata ----------
+
+  updatedAt?: string;
 }
