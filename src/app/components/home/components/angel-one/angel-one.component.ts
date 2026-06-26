@@ -19,6 +19,7 @@ import { MarketService } from '../../services/market.service';
 
 import { Gainer } from '../../models/gainer';
 import { TradingConfiguration } from '../../models/trading-configruation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-angel-one',
@@ -46,6 +47,8 @@ export class AngelOneComponent
 
   readonly #toast =
     inject(ToastService);
+
+    readonly #router = inject(Router);
 
   // ======================================================
   // Dashboard State
@@ -769,5 +772,9 @@ export class AngelOneComponent
 
     return parts.join(' ');
 
+  }
+
+  openSettings(){
+    this.#router.navigate(["/home/trading-settings"])
   }
 }
