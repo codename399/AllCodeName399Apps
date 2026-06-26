@@ -20,6 +20,8 @@ import { ToastService } from '../../../../services/toast.service';
 
 import { Gainer } from '../../models/gainer';
 import { TradingConfiguration } from '../../models/trading-configruation';
+import { MatDialog } from '@angular/material/dialog';
+import { TradingSettingsDialogComponent } from './trading-settings-dialog/trading-settings-dialog.component';
 
 @Component({
   selector: 'app-angel-one',
@@ -48,6 +50,9 @@ export class AngelOneComponent
 
   readonly #toast =
     inject(ToastService);
+
+    readonly #dialog =
+    inject(MatDialog);
 
   // ======================================================
   // Dashboard State
@@ -772,4 +777,24 @@ export class AngelOneComponent
     return parts.join(' ');
 
   }
+
+  openSettings(): void {
+
+    this.#dialog.open(
+
+        TradingSettingsDialogComponent,
+
+        {
+
+            width: '1000px',
+
+            maxHeight: '90vh',
+
+            disableClose: true
+
+        }
+
+    );
+
+}
   }

@@ -23,12 +23,12 @@
         </button>
 
         <button
-            class="toggle-btn"
-            routerLink="/settings">
+    class="toggle-btn"
+    (click)="openSettings()">
 
-            ⚙ Trading Settings
+    ⚙ Settings
 
-        </button>
+</button>
 
         <button
             class="toggle-btn"
@@ -281,11 +281,89 @@
 
 }
 
-@if(showSettings()){
+@if(showMarket()){
 
-<div class="settings-panel">
+<div class="market-panel">
 
-...
+    <div class="market-left">
+
+        <div
+            class="market-pill"
+            [class.open]="marketStatus() === 'OPEN'"
+            [class.closed]="marketStatus() === 'CLOSED'">
+
+            {{ marketStatus() === 'OPEN'
+                ? '🟢 Market Open'
+                : '🔴 Market Closed'
+            }}
+
+        </div>
+
+        <div class="market-time">
+
+            {{ marketTimer() }}
+
+        </div>
+
+    </div>
+
+    <div class="market-right">
+
+        <div class="market-item">
+
+            <label>
+
+                Strategy
+
+            </label>
+
+            <strong>
+
+                {{ configuration()?.strategy }}
+
+            </strong>
+
+        </div>
+
+        <div class="market-item">
+
+            <label>
+
+                Auto Trading
+
+            </label>
+
+            <strong>
+
+                {{ configuration()?.enableAutoTrading
+                    ? 'Enabled'
+                    : 'Disabled'
+                }}
+
+            </strong>
+
+        </div>
+
+        <div class="market-item">
+
+            <label>
+
+                Paper Trading
+
+            </label>
+
+            <strong>
+
+                {{ configuration()?.paperTrading
+                    ? 'Enabled'
+                    : 'Disabled'
+                }}
+
+            </strong>
+
+        </div>
+
+    </div>
 
 </div>
 

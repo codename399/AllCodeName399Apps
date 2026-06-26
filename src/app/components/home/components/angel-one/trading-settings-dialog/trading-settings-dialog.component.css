@@ -1,0 +1,645 @@
+:host{
+
+    display:block;
+
+}
+
+.dialog-container{
+
+    width:1000px;
+
+    max-width:95vw;
+
+    max-height:90vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:#f8fafc;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+}
+
+.dialog-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:24px;
+
+    background:white;
+
+}
+
+.dialog-header h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+.dialog-header p{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+}
+
+.loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:60px;
+
+    font-size:18px;
+
+    color:#64748b;
+
+}
+
+.settings-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
+    overflow:hidden;
+
+}
+
+/* ======================================================
+   Settings Grid
+====================================================== */
+
+.settings-grid{
+
+    flex:1;
+
+    overflow:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, minmax(320px,1fr));
+
+    gap:20px;
+
+    padding:24px;
+
+}
+
+/* ======================================================
+   Cards
+====================================================== */
+
+.card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.06);
+
+    transition:.2s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(0,0,0,.08);
+
+}
+
+.card h3{
+
+    margin:0;
+
+    padding-bottom:12px;
+
+    border-bottom:1px solid #e5e7eb;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+/* ======================================================
+   Material Controls
+====================================================== */
+
+.card mat-form-field{
+
+    width:100%;
+
+}
+
+.card mat-slide-toggle{
+
+    margin-bottom:6px;
+
+}
+
+.mat-mdc-form-field{
+
+    width:100%;
+
+}
+
+/* ======================================================
+   Better spacing
+====================================================== */
+
+.card .mdc-switch{
+
+    margin-right:8px;
+
+}
+
+.card .mat-mdc-slide-toggle{
+
+    padding:4px 0;
+
+}
+
+/* ======================================================
+   Nice section colors
+====================================================== */
+
+.card:nth-child(1){
+
+    border-left:4px solid #2563eb;
+
+}
+
+.card:nth-child(2){
+
+    border-left:4px solid #16a34a;
+
+}
+
+.card:nth-child(3){
+
+    border-left:4px solid #f59e0b;
+
+}
+
+.card:nth-child(4){
+
+    border-left:4px solid #dc2626;
+
+}
+
+.card:nth-child(5){
+
+    border-left:4px solid #8b5cf6;
+
+}
+
+.card:nth-child(6){
+
+    border-left:4px solid #06b6d4;
+
+}
+
+/* ======================================================
+   Footer
+====================================================== */
+
+.dialog-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:20px 24px;
+
+    background:white;
+
+    border-top:1px solid #e5e7eb;
+
+}
+
+.footer-left{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.footer-right{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+}
+
+/* ======================================================
+   Dirty Indicator
+====================================================== */
+
+.dirty-indicator{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#d97706;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.dirty-indicator::before{
+
+    content:"";
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:#f59e0b;
+
+    animation:pulse 1.5s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(.9);
+
+        opacity:.8;
+
+    }
+
+    50%{
+
+        transform:scale(1.2);
+
+        opacity:1;
+
+    }
+
+    100%{
+
+        transform:scale(.9);
+
+        opacity:.8;
+
+    }
+
+}
+
+/* ======================================================
+   Material Buttons
+====================================================== */
+
+button[mat-flat-button]{
+
+    min-width:170px;
+
+    height:44px;
+
+    font-weight:600;
+
+}
+
+button[mat-stroked-button]{
+
+    min-width:120px;
+
+    height:44px;
+
+}
+
+button[mat-button]{
+
+    min-width:100px;
+
+    height:44px;
+
+}
+
+/* ======================================================
+   Disabled
+====================================================== */
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+/* ======================================================
+   Divider
+====================================================== */
+
+mat-divider{
+
+    margin:0;
+
+}
+
+/* ======================================================
+   Dialog Animation
+====================================================== */
+
+.dialog-container{
+
+    animation:dialogFade .18s ease-out;
+
+}
+
+@keyframes dialogFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-12px) scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+/* ======================================================
+   Better Material Fields
+====================================================== */
+
+.mat-mdc-form-field{
+
+    font-size:14px;
+
+}
+
+.mat-mdc-slide-toggle{
+
+    margin:4px 0;
+
+}
+
+.mat-mdc-form-field-subscript-wrapper{
+
+    display:none;
+
+}
+
+/* ======================================================
+   Number Inputs
+====================================================== */
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{
+
+    -webkit-appearance:none;
+
+    margin:0;
+
+}
+
+input[type=number]{
+
+    -moz-appearance:textfield;
+
+}
+
+/* ======================================================
+   Better Scrollbar
+====================================================== */
+
+.settings-grid::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+.settings-grid::-webkit-scrollbar-track{
+
+    background:#e2e8f0;
+
+    border-radius:20px;
+
+}
+
+.settings-grid::-webkit-scrollbar-thumb{
+
+    background:#94a3b8;
+
+    border-radius:20px;
+
+}
+
+.settings-grid::-webkit-scrollbar-thumb:hover{
+
+    background:#64748b;
+
+}
+
+/* ======================================================
+   Focus States
+====================================================== */
+
+.card:focus-within{
+
+    border-color:#2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,.12),
+        0 8px 24px rgba(0,0,0,.08);
+
+}
+
+/* ======================================================
+   Responsive
+====================================================== */
+
+@media (max-width:1000px){
+
+    .dialog-container{
+
+        width:96vw;
+
+        max-height:95vh;
+
+    }
+
+    .settings-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .dialog-header{
+
+        padding:18px;
+
+    }
+
+    .dialog-header h2{
+
+        font-size:22px;
+
+    }
+
+    .dialog-header p{
+
+        font-size:13px;
+
+    }
+
+    .settings-grid{
+
+        padding:16px;
+
+        gap:16px;
+
+    }
+
+    .card{
+
+        padding:18px;
+
+    }
+
+    .card h3{
+
+        font-size:18px;
+
+    }
+
+    .dialog-footer{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:16px;
+
+    }
+
+    .footer-left{
+
+        justify-content:center;
+
+    }
+
+    .footer-right{
+
+        width:100%;
+
+        display:grid;
+
+        grid-template-columns:repeat(3,1fr);
+
+        gap:10px;
+
+    }
+
+    .footer-right button{
+
+        width:100%;
+
+        min-width:auto;
+
+    }
+
+}
+
+@media (max-width:480px){
+
+    .dialog-container{
+
+        width:100vw;
+
+        height:100vh;
+
+        max-width:none;
+
+        max-height:none;
+
+        border-radius:0;
+
+    }
+
+    .dialog-header{
+
+        padding:16px;
+
+    }
+
+    .settings-grid{
+
+        padding:12px;
+
+    }
+
+    .footer-right{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
