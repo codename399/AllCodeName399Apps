@@ -1,10 +1,10 @@
 import {
   Component,
-  OnDestroy,
   OnInit,
-  computed,
+  OnDestroy,
   inject,
-  signal
+  signal,
+  computed
 } from '@angular/core';
 
 import {
@@ -12,111 +12,96 @@ import {
   DecimalPipe
 } from '@angular/common';
 
-import { AngelOneService }
-  from '../../services/angel-one.service';
-
-import { MarketService }
-  from '../../services/market.service';
-
-import { ToastService }
-  from '../../../../services/toast.service';
-
-import { Gainer }
-  from '../../models/gainer';
+import { AngelOneService } from '../../services/angel-one.service';
+import { MarketService } from '../../services/market.service';
+import { ToastService } from '../../../../services/toast.service';
+import { Gainer } from '../../models/gainer';
 
 @Component({
   selector: 'app-angel-one',
-
   standalone: true,
-
   imports: [
-    DecimalPipe,
-    CommonModule
+    CommonModule,
+    DecimalPipe
   ],
-
-  templateUrl:
-    './angel-one.component.html',
-
-  styleUrl:
-    './angel-one.component.css'
+  templateUrl: './angel-one.component.html',
+  styleUrl: './angel-one.component.css'
 })
+export class AngelOneComponent implements OnInit, OnDestroy {
 
-export class AngelOneComponent
-  implements OnInit, OnDestroy {
+  readonly #angel = inject(AngelOneService);
 
-  readonly #angel =
-    inject(AngelOneService);
+  readonly #market = inject(MarketService);
 
-  readonly #market =
-    inject(MarketService);
+  readonly #toast = inject(ToastService);
 
-  readonly #toast =
-    inject(ToastService);
+  // ======================================================
+  // Dashboard State
+  // ======================================================
 
-  // ---------------- Dashboard ----------------
+  gainers = signal<Gainer[]>([]);
 
-  gainers =
-    signal<Gainer[]>([]);
+  marketStatus = signal('');
 
-  marketStatus =
-    signal('');
+  marketTimer = signal('');
 
-  marketTimer =
-    signal('');
+  availableCash = signal(0);
 
-  availableCash =
-    signal(0);
+  strategy = signal('Pullback');
 
-  strategy =
-    signal('Pullback');
+  autoTradingEnabled = signal(false);
 
-  autoTradingEnabled =
-    signal(false);
+  dailyTrades = signal(0);
 
-  dailyTrades =
-    signal(0);
+  dailyLoss = signal(0);
 
-  dailyLoss =
-    signal(0);
+  killSwitch = signal(false);
 
-  killSwitch =
-    signal(false);
+  searchText = signal('');
 
-  searchText =
-    signal('');
+  // ======================================================
+  // UI State
+  // ======================================================
+
+  showSummary = signal(false);
+
+  showMarket = signal(false);
+
+  showSettings = signal(false);
+
+  // optional future panels
+
+  showPortfolio = signal(false);
+
+  showLogs = signal(false);
 
   private timerId: any;
 
-  // ---------------- Filter ----------------
+  // ======================================================
+  // Filtered Stocks
+  // ======================================================
 
-  filteredGainers =
-    computed(() => {
+  filteredGainers = computed(() => {
 
-      const search =
+    const search = this.searchText()
+      .trim()
+      .toLowerCase();
 
-        this.searchText()
+    if (!search) {
+      return this.gainers();
+    }
 
-        .trim()
+    return this.gainers().filter(x =>
+      x.symbol
+        .toLowerCase()
+        .includes(search)
+    );
 
-        .toLowerCase();
+  });
 
-      if (!search) {
-
-        return this.gainers();
-      }
-
-      return this.gainers()
-
-        .filter(x =>
-
-          x.symbol
-
-          .toLowerCase()
-
-          .includes(search));
-    });
-
-  // ---------------- Lifecycle ----------------
+    // ======================================================
+  // Lifecycle
+  // ======================================================
 
   ngOnInit(): void {
 
@@ -127,6 +112,7 @@ export class AngelOneComponent
       this.loginToAngel();
 
       return;
+
     }
 
     this.loadDashboard();
@@ -137,43 +123,69 @@ export class AngelOneComponent
 
     if (this.timerId) {
 
-      clearInterval(
-        this.timerId
-      );
+      clearInterval(this.timerId);
+
     }
+
   }
 
-  // ---------------- Login ----------------
+  // ======================================================
+  // Toolbar Actions
+  // ======================================================
 
-  loginToAngel(): void {
+  toggleSummary(): void {
+
+    this.showSummary.update(v => !v);
+
+  }
+
+  toggleMarket(): void {
+
+    this.showMarket.update(v => !v);
+
+  }
+
+  toggleSettings(): void {
+
+    this.showSettings.update(v => !v);
+
+  }
+
+  // ======================================================
+  // Login
+  // ======================================================
+
+  private loginToAngel(): void {
 
     this.#angel
-
       .loginToAngel()
-
       .subscribe({
 
         next: () => {
 
           this.#toast.success(
-
             'Angel One login successful'
           );
 
           this.loadDashboard();
+
         },
 
         error: () => {
 
           this.#toast.error(
-
             'Angel One login failed'
           );
+
         }
+
       });
+
   }
 
-  // ---------------- Dashboard ----------------
+  // ======================================================
+  // Dashboard
+  // ======================================================
 
   private loadDashboard(): void {
 
@@ -182,106 +194,114 @@ export class AngelOneComponent
     this.loadDashboardSummary();
 
     this.subscribeToGainers();
+
   }
 
   private loadDashboardSummary(): void {
 
     this.#angel
-
       .getDashboardSummary()
-
       .subscribe({
 
         next: summary => {
 
-          this.strategy.set(
-
-            summary.strategy
-          );
+          this.strategy.set(summary.strategy);
 
           this.autoTradingEnabled.set(
-
             summary.autoTradingEnabled
           );
 
           this.dailyTrades.set(
-
             summary.dailyTrades
           );
 
           this.dailyLoss.set(
-
             summary.dailyLoss
           );
 
           this.killSwitch.set(
-
             summary.killSwitch
           );
+
         },
 
-        error: () => {
+        error: err => {
 
           console.error(
-
-            'Dashboard summary failed'
+            'Unable to load dashboard summary',
+            err
           );
+
         }
+
       });
+
   }
 
   loadWalletBalance(): void {
 
     this.#angel
-
       .getAvailableCash()
-
       .subscribe({
 
         next: amount => {
 
-          this.availableCash.set(
-            amount
-          );
+          this.availableCash.set(amount);
+
         },
 
         error: () => {
 
           this.#toast.error(
-
             'Unable to fetch wallet balance'
           );
+
         }
+
       });
+
   }
+
+  // ======================================================
+  // Live Market Data
+  // ======================================================
 
   subscribeToGainers(): void {
 
-    this.#market
+    this.#market.startConnection(
 
-      .startConnection(
+      data => {
 
-        data => {
+        this.gainers.set(data);
 
-          this.gainers.set(
-            data
-          );
-        });
+      }
+
+    );
+
   }
 
-  // ---------------- Timer ----------------
+  refresh(): void {
+
+    this.loadWalletBalance();
+
+    this.loadDashboardSummary();
+
+  }
+
+    // ======================================================
+  // Market Timer
+  // ======================================================
 
   private startMarketTimer(): void {
 
     this.updateMarketTimer();
 
-    this.timerId =
+    this.timerId = setInterval(() => {
 
-      setInterval(() => {
+      this.updateMarketTimer();
 
-        this.updateMarketTimer();
+    }, 1000);
 
-      }, 1000);
   }
 
   private updateMarketTimer(): void {
@@ -290,208 +310,128 @@ export class AngelOneComponent
 
     const day = now.getDay();
 
-    const openTime =
+    const open = new Date(now);
+    open.setHours(9, 15, 0, 0);
 
-      new Date();
+    const close = new Date(now);
+    close.setHours(15, 30, 0, 0);
 
-    openTime.setHours(
+    // Saturday / Sunday
 
-      9,
+    if (day === 0 || day === 6) {
 
-      15,
-
-      0,
-
-      0);
-
-    const closeTime =
-
-      new Date();
-
-    closeTime.setHours(
-
-      15,
-
-      30,
-
-      0,
-
-      0);
-
-    // Weekend
-
-    if (day === 0
-      || day === 6)
-    {
-      this.marketStatus
-        .set('CLOSED');
-
-      const nextMonday =
-
-        new Date(now);
-
-      nextMonday.setDate(
-
-        now.getDate()
-
-        + (day === 0 ? 1 : 2)
-      );
-
-      nextMonday.setHours(
-
-        9,
-
-        15,
-
-        0,
-
-        0
-      );
+      this.marketStatus.set('CLOSED');
 
       this.marketTimer.set(
-
-        `Opens in ${
-
-          this.formatTime(
-
-            nextMonday.getTime()
-
-            - now.getTime()
-          )
-        }`
+        `Opens in ${this.formatTime(
+          this.getNextMarketOpen(now).getTime() - now.getTime()
+        )}`
       );
 
       return;
+
     }
 
     // Before market
 
-    if (now < openTime)
-    {
-      this.marketStatus
-        .set('CLOSED');
+    if (now < open) {
+
+      this.marketStatus.set('CLOSED');
 
       this.marketTimer.set(
-
-        `Opens in ${
-
-          this.formatTime(
-
-            openTime.getTime()
-
-            - now.getTime()
-          )
-        }`
+        `Opens in ${this.formatTime(
+          open.getTime() - now.getTime()
+        )}`
       );
 
       return;
+
     }
 
-    // Market open
+    // Market Open
 
-    if (
-      now >= openTime
+    if (now >= open && now < close) {
 
-      && now < closeTime
-    ) {
-
-      this.marketStatus
-        .set('OPEN');
+      this.marketStatus.set('OPEN');
 
       this.marketTimer.set(
-
-        `Closes in ${
-
-          this.formatTime(
-
-            closeTime.getTime()
-
-            - now.getTime()
-          )
-        }`
+        `Closes in ${this.formatTime(
+          close.getTime() - now.getTime()
+        )}`
       );
 
       return;
+
     }
 
-    // Market closed
+    // After Market
 
-    this.marketStatus
-      .set('CLOSED');
-
-    const nextOpen =
-
-      new Date(now);
-
-    nextOpen.setDate(
-
-      now.getDate()
-
-      + 1
-    );
-
-    nextOpen.setHours(
-
-      9,
-
-      15,
-
-      0,
-
-      0
-    );
-
-    if (day === 5)
-    {
-      nextOpen.setDate(
-
-        now.getDate()
-
-        + 3
-      );
-    }
+    this.marketStatus.set('CLOSED');
 
     this.marketTimer.set(
-
-      `Opens in ${
-
-        this.formatTime(
-
-          nextOpen.getTime()
-
-          - now.getTime()
-        )
-      }`
+      `Opens in ${this.formatTime(
+        this.getNextMarketOpen(now).getTime() - now.getTime()
+      )}`
     );
+
   }
 
-  private formatTime(
-    ms: number
-  ): string {
+  // ======================================================
+  // Next Trading Day
+  // ======================================================
 
-    const total =
+  private getNextMarketOpen(current: Date): Date {
 
-      Math.floor(
-        ms / 1000
-      );
+    const next = new Date(current);
 
-    const hours =
+    next.setHours(9, 15, 0, 0);
 
-      Math.floor(
-        total / 3600
-      );
+    next.setDate(next.getDate() + 1);
 
-    const minutes =
+    while (
+      next.getDay() === 0 ||
+      next.getDay() === 6
+    ) {
 
-      Math.floor(
-        (total % 3600)
-        / 60
-      );
+      next.setDate(next.getDate() + 1);
 
-    const seconds =
+    }
 
-      total % 60;
+    return next;
+
+  }
+
+  // ======================================================
+  // Format Countdown
+  // ======================================================
+
+  private formatTime(ms: number): string {
+
+    const total = Math.max(
+      0,
+      Math.floor(ms / 1000)
+    );
+
+    const days = Math.floor(total / 86400);
+
+    const hours = Math.floor(
+      (total % 86400) / 3600
+    );
+
+    const minutes = Math.floor(
+      (total % 3600) / 60
+    );
+
+    const seconds = total % 60;
+
+    if (days > 0) {
+
+      return `${days}d ${hours}h ${minutes}m`;
+
+    }
 
     return `${hours}h ${minutes}m ${seconds}s`;
+
   }
+
 }
