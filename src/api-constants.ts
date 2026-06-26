@@ -169,6 +169,14 @@ export class ApiConstants {
   readonly resetTradingState =
     '/reset-trading-state';
 
+  // ---------------- Trading Configuration ----------------
+
+  readonly getConfiguration =
+    '/get-configuration';
+
+  readonly setConfiguration =
+    '/set-configuration';
+
   // ---------------- Helpers ----------------
 
   getUrl(

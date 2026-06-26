@@ -1,104 +1,174 @@
 :host{
-    display:block;
-    height:100vh;
-    overflow:hidden;
-    background:#f4f6fa;
-    font-family:Inter,Arial,sans-serif;
-}
 
-/* =======================================================
-   Dashboard
-======================================================= */
+    display:block;
+
+    height:100vh;
+
+    overflow:hidden;
+
+    background:#eef2f7;
+
+    font-family:Inter,Arial,sans-serif;
+
+}
 
 .dashboard{
+
     height:100%;
+
     display:flex;
+
     flex-direction:column;
-    gap:14px;
+
+    gap:16px;
+
     padding:16px;
+
     box-sizing:border-box;
+
 }
 
-/* =======================================================
+/* ======================================================
    Toolbar
-======================================================= */
+====================================================== */
 
 .toolbar{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
-    gap:16px;
-    background:#fff;
-    padding:12px 18px;
-    border-radius:14px;
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
-    flex-wrap:wrap;
+
+    gap:20px;
+
+    background:#ffffff;
+
+    padding:16px 20px;
+
+    border-radius:16px;
+
+    box-shadow:
+
+        0 6px 20px rgba(0,0,0,.06);
+
 }
 
 .toolbar-left{
+
     display:flex;
-    gap:10px;
+
+    gap:12px;
+
     flex-wrap:wrap;
+
 }
 
 .toolbar-right{
-    flex:1;
+
     display:flex;
+
+    flex:1;
+
     justify-content:flex-end;
+
 }
 
 .toolbar-right input{
+
     width:320px;
-    max-width:100%;
+
     border:none;
+
     outline:none;
-    background:#f4f6fa;
-    border-radius:10px;
+
     padding:12px 18px;
-    font-size:15px;
+
+    border-radius:10px;
+
+    background:#f8fafc;
+
+    transition:.2s;
+
+}
+
+.toolbar-right input:focus{
+
+    box-shadow:0 0 0 3px #bfdbfe;
+
 }
 
 .toggle-btn{
+
     border:none;
-    cursor:pointer;
-    border-radius:8px;
+
     background:#2563eb;
-    color:#fff;
-    padding:10px 16px;
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
     font-weight:600;
+
     transition:.2s;
+
 }
 
 .toggle-btn:hover{
+
     background:#1d4ed8;
+
+    transform:translateY(-2px);
+
 }
 
-/* =======================================================
-   Market
-======================================================= */
+/* ======================================================
+   Market Status
+====================================================== */
 
 .market-panel{
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
-    background:#fff;
+    gap:20px;
 
-    padding:18px 24px;
+    background:#ffffff;
 
-    border-radius:14px;
+    padding:20px 24px;
 
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    border-radius:16px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.06);
+
 }
 
 .market-pill{
 
-    padding:10px 22px;
+    display:inline-flex;
 
-    border-radius:30px;
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:170px;
+
+    padding:12px 22px;
+
+    border-radius:999px;
+
+    font-size:15px;
 
     font-weight:700;
+
 }
 
 .market-pill.open{
@@ -106,6 +176,7 @@
     background:#dcfce7;
 
     color:#166534;
+
 }
 
 .market-pill.closed{
@@ -113,65 +184,79 @@
     background:#fee2e2;
 
     color:#991b1b;
+
 }
 
 .market-timer{
 
-    font-size:20px;
+    font-size:22px;
 
     font-weight:700;
 
-    color:#1e293b;
+    color:#0f172a;
+
+    letter-spacing:.3px;
+
 }
 
-/* =======================================================
+/* ======================================================
    Summary
-======================================================= */
+====================================================== */
 
 .summary-grid{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
 
     gap:18px;
+
 }
 
 .summary-card{
 
-    display:flex;
+    background:#ffffff;
 
-    gap:16px;
-
-    align-items:center;
-
-    background:#fff;
+    border-radius:16px;
 
     padding:20px;
 
-    border-radius:14px;
+    display:flex;
 
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    align-items:center;
+
+    gap:18px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.06);
 
     transition:.2s;
+
+    border:1px solid transparent;
+
 }
 
 .summary-card:hover{
 
-    transform:translateY(-3px);
+    transform:translateY(-4px);
 
-    box-shadow:0 8px 28px rgba(0,0,0,.12);
+    border-color:#bfdbfe;
+
+    box-shadow:
+        0 10px 28px rgba(0,0,0,.10);
+
 }
 
 .summary-icon{
 
-    width:58px;
+    width:64px;
 
-    height:58px;
+    height:64px;
 
     border-radius:50%;
 
-    background:#eff6ff;
+    background:#dbeafe;
 
     display:flex;
 
@@ -179,7 +264,10 @@
 
     align-items:center;
 
-    font-size:28px;
+    font-size:30px;
+
+    flex-shrink:0;
+
 }
 
 .summary-title{
@@ -188,40 +276,44 @@
 
     font-size:13px;
 
-    margin-bottom:4px;
+    margin-bottom:6px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
 }
 
 .summary-value{
+
+    color:#0f172a;
 
     font-size:24px;
 
     font-weight:700;
 
-    color:#0f172a;
+    line-height:1.2;
+
 }
 
-/* =======================================================
-   Settings
-======================================================= */
+/* ======================================================
+   Configuration Summary
+====================================================== */
 
 .settings-panel{
 
-    background:#fff;
+    background:#ffffff;
 
-    border-radius:14px;
+    border-radius:16px;
 
-    padding:18px 22px;
+    padding:22px;
 
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.06);
 
-    display:flex;
-
-    flex-direction:column;
-
-    gap:14px;
 }
 
-.setting-row{
+.settings-header{
 
     display:flex;
 
@@ -229,41 +321,137 @@
 
     align-items:center;
 
-    padding-bottom:12px;
+    margin-bottom:24px;
 
-    border-bottom:1px solid #e2e8f0;
 }
 
-.setting-row:last-child{
+.settings-header h3{
 
-    border-bottom:none;
+    margin:0;
+
+    font-size:22px;
+
+    color:#0f172a;
+
 }
 
-/* =======================================================
-   Table
-======================================================= */
+.settings-header p{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+}
+
+.settings-button{
+
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:12px 22px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.settings-button:hover{
+
+    background:#1d4ed8;
+
+}
+
+.settings-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+}
+
+.setting-card{
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    transition:.2s;
+
+}
+
+.setting-card:hover{
+
+    background:#eff6ff;
+
+}
+
+.setting-card span{
+
+    font-size:13px;
+
+    color:#64748b;
+
+}
+
+.setting-card strong{
+
+    font-size:20px;
+
+    color:#0f172a;
+
+}
+
+/* ======================================================
+   Trading Grid
+====================================================== */
 
 .table-container{
 
     flex:1;
 
-    background:#fff;
-
-    border-radius:14px;
-
     overflow:auto;
 
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    background:#ffffff;
+
+    border-radius:16px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.06);
+
 }
 
 table{
 
     width:100%;
 
-    min-width:1700px;
+    min-width:1750px;
 
     border-collapse:collapse;
+
 }
+
+/* ======================================================
+   Header
+====================================================== */
 
 thead{
 
@@ -272,57 +460,147 @@ thead{
     top:0;
 
     z-index:100;
+
 }
 
 th{
 
+    position:sticky;
+
+    top:0;
+
     background:#0f172a;
 
-    color:#fff;
+    color:white;
 
-    padding:14px;
+    padding:14px 16px;
 
     text-transform:uppercase;
 
+    letter-spacing:.4px;
+
     font-size:12px;
 
-    letter-spacing:.5px;
+    font-weight:700;
 
     white-space:nowrap;
+
+    border-bottom:2px solid #1e293b;
+
 }
+
+/* ======================================================
+   Body
+====================================================== */
 
 td{
 
-    padding:13px;
+    padding:14px;
 
-    text-align:center;
-
-    border-bottom:1px solid #edf2f7;
+    border-bottom:1px solid #e5e7eb;
 
     white-space:nowrap;
 
+    text-align:center;
+
     font-size:14px;
+
+    transition:.15s;
+
 }
 
 tbody tr{
 
     transition:.15s;
+
 }
 
 tbody tr:hover{
 
     background:#f8fafc;
+
 }
 
-/* =======================================================
-   Numbers
-======================================================= */
+/* ======================================================
+   Sticky Symbol Column
+====================================================== */
+
+th:nth-child(2){
+
+    position:sticky;
+
+    left:0;
+
+    z-index:110;
+
+}
+
+td.symbol{
+
+    position:sticky;
+
+    left:0;
+
+    background:white;
+
+    font-weight:700;
+
+    text-align:left;
+
+    z-index:10;
+
+}
+
+tbody tr:hover td.symbol{
+
+    background:#f8fafc;
+
+}
+
+/* ======================================================
+   Owned Stocks
+====================================================== */
+
+.owned-row{
+
+    background:#f0fdf4;
+
+}
+
+.owned-row td.symbol{
+
+    background:#f0fdf4;
+
+}
+
+.owned-row:hover{
+
+    background:#dcfce7;
+
+}
+
+.owned-row:hover td.symbol{
+
+    background:#dcfce7;
+
+}
+
+.owned{
+
+    font-size:18px;
+
+}
+
+/* ======================================================
+   Positive / Negative
+====================================================== */
 
 .positive{
 
     color:#16a34a;
 
     font-weight:700;
+
 }
 
 .negative{
@@ -330,19 +608,20 @@ tbody tr:hover{
     color:#dc2626;
 
     font-weight:700;
+
 }
 
-/* =======================================================
+/* ======================================================
    Score
-======================================================= */
+====================================================== */
 
 .score{
 
-    width:36px;
+    width:40px;
 
-    height:36px;
+    height:40px;
 
-    margin:auto;
+    border-radius:50%;
 
     display:flex;
 
@@ -350,9 +629,10 @@ tbody tr:hover{
 
     align-items:center;
 
-    border-radius:50%;
+    margin:auto;
 
     font-weight:700;
+
 }
 
 .excellent{
@@ -360,13 +640,15 @@ tbody tr:hover{
     background:#dcfce7;
 
     color:#166534;
+
 }
 
 .good{
 
-    background:#fef9c3;
+    background:#fef3c7;
 
-    color:#854d0e;
+    color:#92400e;
+
 }
 
 .average{
@@ -374,11 +656,12 @@ tbody tr:hover{
     background:#fee2e2;
 
     color:#991b1b;
+
 }
 
-/* =======================================================
-   Signal
-======================================================= */
+/* ======================================================
+   Signal Badges
+====================================================== */
 
 .signal{
 
@@ -388,62 +671,76 @@ tbody tr:hover{
 
     align-items:center;
 
-    min-width:74px;
+    min-width:84px;
 
-    padding:8px 14px;
+    padding:8px 16px;
 
-    border-radius:30px;
+    border-radius:999px;
 
-    color:#fff;
+    color:white;
 
     font-size:12px;
 
     font-weight:700;
+
 }
 
 .buy{
 
     background:#22c55e;
+
 }
 
 .sell{
 
     background:#ef4444;
-}
 
-.hold{
-
-    background:#64748b;
 }
 
 .setup{
 
     background:#f59e0b;
+
 }
 
-/* =======================================================
-   Owned
-======================================================= */
+.hold{
 
-.owned{
+    background:#64748b;
 
-    font-size:18px;
 }
 
-/* =======================================================
+/* ======================================================
+   Reason
+====================================================== */
+
+.reason{
+
+    text-align:left;
+
+    min-width:260px;
+
+    white-space:normal;
+
+    line-height:1.4;
+
+}
+
+/* ======================================================
    Scrollbars
-======================================================= */
+====================================================== */
 
 .table-container::-webkit-scrollbar{
 
     width:10px;
 
     height:10px;
+
 }
 
 .table-container::-webkit-scrollbar-track{
 
     background:#e2e8f0;
+
 }
 
 .table-container::-webkit-scrollbar-thumb{
@@ -451,16 +748,18 @@ tbody tr:hover{
     background:#94a3b8;
 
     border-radius:20px;
+
 }
 
 .table-container::-webkit-scrollbar-thumb:hover{
 
     background:#64748b;
+
 }
 
-/* =======================================================
+/* ======================================================
    Responsive
-======================================================= */
+====================================================== */
 
 @media(max-width:1200px){
 
@@ -469,24 +768,31 @@ tbody tr:hover{
         flex-direction:column;
 
         align-items:stretch;
+
     }
 
     .toolbar-right{
 
         justify-content:stretch;
+
     }
 
     .toolbar-right input{
 
         width:100%;
+
     }
 
     .market-panel{
 
         flex-direction:column;
 
+        align-items:flex-start;
+
         gap:16px;
+
     }
+
 }
 
 @media(max-width:768px){
@@ -496,35 +802,55 @@ tbody tr:hover{
         height:auto;
 
         overflow:auto;
+
     }
 
     .dashboard{
 
         padding:10px;
+
     }
 
     .summary-grid{
 
         grid-template-columns:1fr;
+
+    }
+
+    .settings-grid{
+
+        grid-template-columns:1fr;
+
     }
 
     .toolbar-left{
 
         width:100%;
+
     }
 
     .toggle-btn{
 
         flex:1;
+
     }
 
     .summary-value{
 
         font-size:20px;
+
     }
 
     .market-timer{
 
         font-size:16px;
+
     }
+
+    table{
+
+        min-width:1500px;
+
+    }
+
 }

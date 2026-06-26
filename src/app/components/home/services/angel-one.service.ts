@@ -16,9 +16,12 @@ import {
   AngelOneLoginData
 } from '../models/angel-one-login-response';
 
+import { DashboardSummary }
+  from '../models/dashboard-summary';
+
 import { Gainer }
   from '../models/gainer';
-import { DashboardSummary } from '../models/dashboard-summary';
+import { TradingConfiguration } from '../models/trading-configruation';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +34,9 @@ export class AngelOneService {
   readonly #api =
     inject(API_CONSTANTS);
 
-  // ---------- Signals ----------
+  // ======================================================
+  // Signals
+  // ======================================================
 
   gainers =
     signal<Gainer[]>([]);
@@ -39,88 +44,108 @@ export class AngelOneService {
   availableCash =
     signal(0);
 
-  strategy =
-    signal('');
+  configuration =
+    signal<TradingConfiguration | null>(null);
 
-  autoTrading =
-    signal(false);
-
-  dailyTrades =
-    signal(0);
-
-  dailyLoss =
-    signal(0);
-
-  killSwitch =
-    signal(false);
-
-  // ---------- Tokens ----------
+  // ======================================================
+  // Token Helpers
+  // ======================================================
 
   get token(): string | null {
 
     return localStorage.getItem(
-
       Constants.angelOneAccessToken
     );
+
   }
 
   set token(
     value: string | null
   ) {
 
-    localStorage.setItem(
+    if (value) {
 
-      Constants.angelOneAccessToken,
+      localStorage.setItem(
+        Constants.angelOneAccessToken,
+        value
+      );
 
-      value ?? ''
+      return;
+
+    }
+
+    localStorage.removeItem(
+      Constants.angelOneAccessToken
     );
+
   }
 
   get refreshToken(): string | null {
 
     return localStorage.getItem(
-
       Constants.angelOneRefreshToken
     );
+
   }
 
   set refreshToken(
     value: string | null
   ) {
 
-    localStorage.setItem(
+    if (value) {
 
-      Constants.angelOneRefreshToken,
+      localStorage.setItem(
+        Constants.angelOneRefreshToken,
+        value
+      );
 
-      value ?? ''
+      return;
+
+    }
+
+    localStorage.removeItem(
+      Constants.angelOneRefreshToken
     );
+
   }
 
   get feedToken(): string | null {
 
     return localStorage.getItem(
-
       Constants.angelOneFeedToken
     );
+
   }
 
   set feedToken(
     value: string | null
   ) {
 
-    localStorage.setItem(
+    if (value) {
 
-      Constants.angelOneFeedToken,
+      localStorage.setItem(
+        Constants.angelOneFeedToken,
+        value
+      );
 
-      value ?? ''
+      return;
+
+    }
+
+    localStorage.removeItem(
+      Constants.angelOneFeedToken
     );
+
   }
 
-  // ---------- Auth ----------
+  // ======================================================
+  // Authentication
+  // ======================================================
 
   isLoggedIn(): boolean {
 
     return !!this.token;
+
   }
 
   loginToAngel() {
@@ -130,11 +155,10 @@ export class AngelOneService {
       .get<AngelOneLoginData>(
 
         this.#api.getUrl(
-
           this.#api.loginToAngelOne,
-
           true
         )
+
       )
 
       .pipe(
@@ -142,7 +166,9 @@ export class AngelOneService {
         tap(response => {
 
           if (!response) {
+
             return;
+
           }
 
           this.token =
@@ -153,8 +179,11 @@ export class AngelOneService {
 
           this.feedToken =
             response.feedToken;
+
         })
+
       );
+
   }
 
   refreshJwtToken() {
@@ -166,31 +195,34 @@ export class AngelOneService {
         this.#api.refreshAngelToken,
 
         true
+
       ),
 
       {}
+
     );
+
   }
 
   logout() {
 
-    localStorage.removeItem(
+    this.token = null;
 
-      Constants.angelOneAccessToken
-    );
+    this.refreshToken = null;
 
-    localStorage.removeItem(
+    this.feedToken = null;
 
-      Constants.angelOneRefreshToken
-    );
+    this.configuration.set(null);
 
-    localStorage.removeItem(
+    this.availableCash.set(0);
 
-      Constants.angelOneFeedToken
-    );
+    this.gainers.set([]);
+
   }
 
-  // ---------- Dashboard ----------
+    // ======================================================
+  // Dashboard
+  // ======================================================
 
   getDashboardSummary() {
 
@@ -203,7 +235,9 @@ export class AngelOneService {
           this.#api.dashboardSummary,
 
           true
+
         )
+
       )
 
       .pipe(
@@ -211,39 +245,86 @@ export class AngelOneService {
         tap(summary => {
 
           this.availableCash.set(
-
             summary.availableCash
           );
 
-          this.strategy.set(
-
-            summary.strategy
-          );
-
-          this.autoTrading.set(
-
-            summary.autoTradingEnabled
-          );
-
-          this.dailyTrades.set(
-
-            summary.dailyTrades
-          );
-
-          this.dailyLoss.set(
-
-            summary.dailyLoss
-          );
-
-          this.killSwitch.set(
-
-            summary.killSwitch
-          );
         })
+
       );
+
   }
 
-  // ---------- Gainers ----------
+  // ======================================================
+  // Trading Configuration
+  // ======================================================
+
+  getTradingConfiguration() {
+
+    return this.#http
+
+      .get<TradingConfiguration>(
+
+        this.#api.getUrl(
+
+          this.#api.getConfiguration,
+
+          true
+
+        )
+
+      )
+
+      .pipe(
+
+        tap(configuration => {
+
+          this.configuration.set(
+            configuration
+          );
+
+        })
+
+      );
+
+  }
+
+  saveTradingConfiguration(
+    configuration: TradingConfiguration
+  ) {
+
+    return this.#http
+
+      .put<TradingConfiguration>(
+
+        this.#api.getUrl(
+
+          this.#api.setConfiguration,
+
+          true
+
+        ),
+
+        configuration
+
+      )
+
+      .pipe(
+
+        tap(configuration => {
+
+          this.configuration.set(
+            configuration
+          );
+
+        })
+
+      );
+
+  }
+
+  // ======================================================
+  // Market Scanner
+  // ======================================================
 
   getTopGainers() {
 
@@ -256,21 +337,28 @@ export class AngelOneService {
           this.#api.gainers,
 
           true
+
         )
+
       )
 
       .pipe(
 
-        tap(data => {
+        tap(gainers => {
 
           this.gainers.set(
-            data
+            gainers
           );
+
         })
+
       );
+
   }
 
-  // ---------- Wallet ----------
+  // ======================================================
+  // Wallet
+  // ======================================================
 
   getAvailableCash() {
 
@@ -281,11 +369,16 @@ export class AngelOneService {
         this.#api.getAvailableCash,
 
         true
+
       )
+
     );
+
   }
 
-  // ---------- Holdings ----------
+  // ======================================================
+  // Holdings
+  // ======================================================
 
   getOwnedHoldings() {
 
@@ -296,62 +389,61 @@ export class AngelOneService {
         this.#api.ownedHoldings,
 
         true
+
       )
+
     );
+
   }
 
-  // ---------- Auto Trading ----------
+  // ======================================================
+  // Helpers
+  // ======================================================
 
-  enableAutoTrading() {
+  reloadConfiguration() {
 
-    return this.#http.post(
+    return this.getTradingConfiguration();
 
-      this.#api.getUrl(
-
-        this.#api.enableAutoTrading,
-
-        true
-      ),
-
-      {}
-    );
   }
 
-  disableAutoTrading() {
+  reloadDashboard() {
 
-    return this.#http.post(
+    return this.getDashboardSummary();
 
-      this.#api.getUrl(
-
-        this.#api.disableAutoTrading,
-
-        true
-      ),
-
-      {}
-    );
   }
 
-  // ---------- Strategy ----------
+  get isAutoTradingEnabled(): boolean {
 
-  updateStrategy(
-    strategy:
-    'Momentum'
-    | 'Pullback'
-  ) {
+    return this.configuration()?.enableAutoTrading
+      ?? false;
 
-    return this.#http.post(
-
-      this.#api.getUrl(
-
-        this.#api.updateStrategy,
-
-        true
-      ),
-
-      {
-        strategy
-      }
-    );
   }
+
+  get selectedStrategy() {
+
+    return this.configuration()?.strategy;
+
+  }
+
+  get riskPercentage(): number {
+
+    return this.configuration()?.riskPercentage
+      ?? 0;
+
+  }
+
+  get maxDailyTrades(): number {
+
+    return this.configuration()?.maxDailyTrades
+      ?? 0;
+
+  }
+
+  get scanIntervalSeconds(): number {
+
+    return this.configuration()?.scanIntervalSeconds
+      ?? 0;
+
+  }
+
 }
