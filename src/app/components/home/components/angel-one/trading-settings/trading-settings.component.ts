@@ -14,9 +14,6 @@ import {
   Validators
 } from '@angular/forms';
 
-import {
-  MatDialogRef
-} from '@angular/material/dialog';
 
 import {
   MatButtonModule
@@ -46,18 +43,18 @@ import {
   MatIconModule
 } from '@angular/material/icon';
 
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
 
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { AngelOneService } from '../../../services/angel-one.service';
+import { ToastService } from '../../../../../services/toast.service';
 import { TradingConfiguration } from '../../../models/trading-configruation';
+import { AngelOneService } from '../../../services/angel-one.service';
 
 @Component({
 
   selector:
-    'app-trading-settings-dialog',
+    'app-trading-settings',
 
   standalone: true,
 
@@ -79,20 +76,21 @@ import { TradingConfiguration } from '../../../models/trading-configruation';
 
     MatDividerModule,
 
-    MatIconModule
+    MatIconModule,
+    MatCardModule
 
   ],
 
   templateUrl:
-    './trading-settings-dialog.component.html',
+    './trading-settings.component.html',
 
   styleUrl:
-    './trading-settings-dialog.component.css'
+    './trading-settings.component.css'
 
 })
 
-export class TradingSettingsDialogComponent
-implements OnInit {
+export class TradingSettingsComponent
+  implements OnInit {
 
   readonly #fb =
     inject(FormBuilder);
@@ -100,15 +98,10 @@ implements OnInit {
   readonly #angel =
     inject(AngelOneService);
 
-  readonly #snack =
-    inject(MatSnackBar);
+  readonly #toastService = inject(ToastService);
 
-  readonly dialogRef =
-    inject(
-      MatDialogRef<
-        TradingSettingsDialogComponent
-      >
-    );
+  readonly #router =
+    inject(Router);
 
   loading = false;
 
@@ -272,7 +265,7 @@ implements OnInit {
 
   });
 
-    // ======================================================
+  // ======================================================
   // Lifecycle
   // ======================================================
 
@@ -313,23 +306,8 @@ implements OnInit {
         },
 
         error: () => {
-
-          this.#snack.open(
-
-            'Unable to load trading configuration',
-
-            'Close',
-
-            {
-
-              duration: 3000
-
-            }
-
-          );
-
+          this.#toastService.error('Unable to load trading configuration');
         }
-
       });
 
   }
@@ -476,7 +454,7 @@ implements OnInit {
 
   }
 
-    // ======================================================
+  // ======================================================
   // Save
   // ======================================================
 
@@ -560,9 +538,9 @@ implements OnInit {
 
     this.#angel.saveTradingConfiguration(
 
-        configuration
+      configuration
 
-      )
+    )
 
       .pipe(
 
@@ -576,72 +554,48 @@ implements OnInit {
 
       .subscribe({
 
-        next: saved => {
+        next: () => {
 
-          this.#snack.open(
+          this.#toastService.success(
 
-            'Trading configuration saved successfully.',
-
-            'Close',
-
-            {
-
-              duration: 3000
-
-            }
+            'Trading configuration saved successfully.'
 
           );
 
-          this.dialogRef.close(saved);
+          this.form.markAsPristine();
 
         },
 
         error: () => {
-
-          this.#snack.open(
-
-            'Unable to save configuration.',
-
-            'Close',
-
-            {
-
-              duration: 3000
-
-            }
-
-          );
-
+          this.#toastService.error('Unable to save configuration.');
         }
-
       });
 
   }
 
-  // ======================================================
-  // Close
-  // ======================================================
-
-  close(): void {
+  cancel(): void {
 
     if (this.form.dirty) {
 
-      const discard = confirm(
+        const confirmed = confirm(
 
-        'Discard unsaved changes?'
+            'Discard unsaved changes?'
 
-      );
+        );
 
-      if (!discard) {
+        if (!confirmed) {
 
-        return;
+            return;
 
-      }
+        }
 
     }
 
-    this.dialogRef.close();
+    this.#router.navigate([
 
-  }
+        '/home/dashboard'
 
+    ]);
+
+}
 }

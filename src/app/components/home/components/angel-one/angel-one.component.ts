@@ -1,7 +1,7 @@
 import {
   Component,
-  OnInit,
   OnDestroy,
+  OnInit,
   computed,
   inject,
   signal
@@ -12,16 +12,13 @@ import {
   DecimalPipe
 } from '@angular/common';
 
-import { RouterLink } from '@angular/router';
 
+import { ToastService } from '../../../../services/toast.service';
 import { AngelOneService } from '../../services/angel-one.service';
 import { MarketService } from '../../services/market.service';
-import { ToastService } from '../../../../services/toast.service';
 
 import { Gainer } from '../../models/gainer';
 import { TradingConfiguration } from '../../models/trading-configruation';
-import { MatDialog } from '@angular/material/dialog';
-import { TradingSettingsDialogComponent } from './trading-settings-dialog/trading-settings-dialog.component';
 
 @Component({
   selector: 'app-angel-one',
@@ -30,8 +27,7 @@ import { TradingSettingsDialogComponent } from './trading-settings-dialog/tradin
 
   imports: [
     CommonModule,
-    DecimalPipe,
-    RouterLink
+    DecimalPipe
   ],
 
   templateUrl: './angel-one.component.html',
@@ -50,9 +46,6 @@ export class AngelOneComponent
 
   readonly #toast =
     inject(ToastService);
-
-    readonly #dialog =
-    inject(MatDialog);
 
   // ======================================================
   // Dashboard State
@@ -182,7 +175,7 @@ export class AngelOneComponent
 
     );
 
-      // ======================================================
+  // ======================================================
   // Lifecycle
   // ======================================================
 
@@ -494,7 +487,7 @@ export class AngelOneComponent
 
   }
 
-    // ======================================================
+  // ======================================================
   // Market Timer
   // ======================================================
 
@@ -777,24 +770,4 @@ export class AngelOneComponent
     return parts.join(' ');
 
   }
-
-  openSettings(): void {
-
-    this.#dialog.open(
-
-        TradingSettingsDialogComponent,
-
-        {
-
-            width: '1000px',
-
-            maxHeight: '90vh',
-
-            disableClose: true
-
-        }
-
-    );
-
 }
-  }

@@ -1,0 +1,613 @@
+<div class="settings-page">
+
+    <!-- ===================================================== -->
+    <!-- Header -->
+    <!-- ===================================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <button
+                mat-stroked-button
+                color="primary"
+                (click)="cancel()">
+
+                ← Dashboard
+
+            </button>
+
+            <h1>
+
+                Trading Configuration
+
+            </h1>
+
+            <p>
+
+                Configure your trading engine, risk management and scanner.
+
+            </p>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                mat-stroked-button
+                color="primary"
+                (click)="reset()"
+                [disabled]="loading">
+
+                Reset
+
+            </button>
+
+            <button
+                mat-flat-button
+                color="primary"
+                (click)="save()"
+                [disabled]="form.invalid || saving">
+
+                @if(saving){
+
+                    Saving...
+
+                }
+
+                @else{
+
+                    Save Configuration
+
+                }
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <mat-divider></mat-divider>
+
+    @if(loading){
+
+    <div class="loading">
+
+        Loading Trading Configuration...
+
+    </div>
+
+    }
+
+    @else{
+
+    <form
+        class="settings-form"
+        [formGroup]="form">
+
+        <div class="settings-grid">
+
+                        <!-- ===================================================== -->
+            <!-- Trading -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Trading
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Trading behaviour
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-slide-toggle
+                        formControlName="enableAutoTrading">
+
+                        Enable Auto Trading
+
+                    </mat-slide-toggle>
+
+                    <mat-slide-toggle
+                        formControlName="paperTrading">
+
+                        Paper Trading
+
+                    </mat-slide-toggle>
+
+                    <mat-slide-toggle
+                        formControlName="ignoreMarketHours">
+
+                        Ignore Market Hours
+
+                    </mat-slide-toggle>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Trading Strategy
+
+                        </mat-label>
+
+                        <mat-select
+                            formControlName="strategy">
+
+                            @for(strategy of strategies; track strategy.value){
+
+                            <mat-option
+                                [value]="strategy.value">
+
+                                {{ strategy.text }}
+
+                            </mat-option>
+
+                            }
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </mat-card-content>
+
+            </mat-card>
+
+            <!-- ===================================================== -->
+            <!-- Risk Management -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Risk Management
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Capital allocation
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Risk Percentage
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="riskPercentage">
+
+                        <span matTextSuffix>%</span>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Max Capital Per Trade
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="maxCapitalPerTrade">
+
+                        <span matTextPrefix>₹&nbsp;</span>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Max Daily Loss
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="maxDailyLoss">
+
+                        <span matTextPrefix>₹&nbsp;</span>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Max Daily Trades
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="maxDailyTrades">
+
+                    </mat-form-field>
+
+                </mat-card-content>
+
+            </mat-card>
+
+                        <!-- ===================================================== -->
+            <!-- Scanner -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Scanner
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Market scanning configuration
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Scan Interval (Seconds)
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="scanIntervalSeconds">
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Cooldown (Minutes)
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="cooldownMinutes">
+
+                    </mat-form-field>
+
+                </mat-card-content>
+
+            </mat-card>
+
+            <!-- ===================================================== -->
+            <!-- Stop Loss -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Stop Loss & Target
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Risk protection
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-slide-toggle
+                        formControlName="enableTrailingStop">
+
+                        Enable Trailing Stop
+
+                    </mat-slide-toggle>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Trailing Stop %
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="trailingStopPercentage">
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Stop Loss Multiplier
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="stopLossMultiplier">
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Target Multiplier
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="targetMultiplier">
+
+                    </mat-form-field>
+
+                </mat-card-content>
+
+            </mat-card>
+
+            <!-- ===================================================== -->
+            <!-- Market Hours -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Market Hours
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Trading schedule
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Market Open
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="time"
+                            formControlName="marketOpenTime">
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+
+                            Market Close
+
+                        </mat-label>
+
+                        <input
+                            matInput
+                            type="time"
+                            formControlName="marketCloseTime">
+
+                    </mat-form-field>
+
+                    <mat-slide-toggle
+                        formControlName="autoSquareOff">
+
+                        Auto Square Off
+
+                    </mat-slide-toggle>
+
+                </mat-card-content>
+
+            </mat-card>
+
+            <!-- ===================================================== -->
+            <!-- Notifications -->
+            <!-- ===================================================== -->
+
+            <mat-card class="settings-card">
+
+                <mat-card-header>
+
+                    <mat-card-title>
+
+                        Notifications
+
+                    </mat-card-title>
+
+                    <mat-card-subtitle>
+
+                        Alerts & updates
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <mat-slide-toggle
+                        formControlName="enableNotification">
+
+                        Enable Notifications
+
+                    </mat-slide-toggle>
+
+                </mat-card-content>
+
+            </mat-card>
+
+                    </div>
+
+        <!-- ===================================================== -->
+        <!-- Sticky Footer -->
+        <!-- ===================================================== -->
+
+        <div class="settings-footer">
+
+            <div class="footer-left">
+
+                @if(form.dirty){
+
+                    <div class="unsaved">
+
+                        <mat-icon color="warn">
+
+                            warning
+
+                        </mat-icon>
+
+                        <span>
+
+                            You have unsaved changes
+
+                        </span>
+
+                    </div>
+
+                }
+
+                @else{
+
+                    <div class="saved">
+
+                        <mat-icon color="primary">
+
+                            check_circle
+
+                        </mat-icon>
+
+                        <span>
+
+                            Configuration is up to date
+
+                        </span>
+
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="footer-right">
+
+                <button
+                    mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="reset()"
+                    [disabled]="loading || saving">
+
+                    Reset
+
+                </button>
+
+                <button
+                    mat-button
+                    type="button"
+                    (click)="cancel()"
+                    [disabled]="saving">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    mat-flat-button
+                    color="primary"
+                    type="button"
+                    (click)="save()"
+                    [disabled]="saving || form.invalid">
+
+                    @if(saving){
+
+                        <mat-icon>
+
+                            hourglass_top
+
+                        </mat-icon>
+
+                        Saving...
+
+                    }
+
+                    @else{
+
+                        <mat-icon>
+
+                            save
+
+                        </mat-icon>
+
+                        Save Configuration
+
+                    }
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    }
+
+</div>
