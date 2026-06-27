@@ -125,7 +125,7 @@ export class TradingSettingsComponent
 
     enableAutoTrading: [
 
-      { value: false, disabled: true }
+      { value: false, disabled: false }
 
     ],
 
@@ -265,11 +265,29 @@ export class TradingSettingsComponent
 
   });
 
+  enableAutoTradingFormControl = this.form?.controls?.enableAutoTrading;
+  enableAutoTradingPreviousValue = this.enableAutoTradingFormControl?.value;
+
   // ======================================================
   // Lifecycle
   // ======================================================
 
   ngOnInit(): void {
+
+    this.enableAutoTradingFormControl?.valueChanges?.subscribe(value => {
+      if (value == this.enableAutoTradingPreviousValue) {
+        return;
+      }
+
+      const confirmed = window.confirm("Are you sure, you want to toggle auto trading?");
+
+      if (confirmed) {
+        this.enableAutoTradingPreviousValue = value;
+      }
+      else {
+        this.enableAutoTradingFormControl?.setValue(this.enableAutoTradingPreviousValue, { emitEvent: false });
+      }
+    })
 
     this.loadConfiguration();
 
