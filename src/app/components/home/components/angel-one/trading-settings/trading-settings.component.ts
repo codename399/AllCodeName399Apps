@@ -581,6 +581,11 @@ export class TradingSettingsComponent
           );
 
           this.form.markAsPristine();
+          this.#router.navigate([
+
+      '/home/dashboard'
+
+    ]);
 
         },
 
