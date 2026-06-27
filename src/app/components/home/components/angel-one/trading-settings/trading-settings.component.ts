@@ -125,7 +125,7 @@ export class TradingSettingsComponent
 
     enableAutoTrading: [
 
-      false
+      { value: false, disabled: true }
 
     ],
 
@@ -577,25 +577,25 @@ export class TradingSettingsComponent
 
     if (this.form.dirty) {
 
-        const confirmed = confirm(
+      const confirmed = confirm(
 
-            'Discard unsaved changes?'
+        'Discard unsaved changes?'
 
-        );
+      );
 
-        if (!confirmed) {
+      if (!confirmed) {
 
-            return;
+        return;
 
-        }
+      }
 
     }
 
     this.#router.navigate([
 
-        '/home/dashboard'
+      '/home/dashboard'
 
     ]);
 
-}
+  }
 }
