@@ -214,8 +214,6 @@ export class AngelOneComponent
 
   private initializeDashboard(): void {
 
-    this.loadWalletBalance();
-
     this.loadDashboard();
 
     this.loadConfiguration();
@@ -419,42 +417,6 @@ export class AngelOneComponent
   }
 
   // ======================================================
-  // Wallet
-  // ======================================================
-
-  private loadWalletBalance(): void {
-
-    this.#angel
-
-      .getAvailableCash()
-
-      .subscribe({
-
-        next: amount => {
-
-          this.availableCash.set(
-
-            amount
-
-          );
-
-        },
-
-        error: () => {
-
-          this.#toast.error(
-
-            'Unable to fetch wallet balance'
-
-          );
-
-        }
-
-      });
-
-  }
-
-  // ======================================================
   // SignalR
   // ======================================================
 
@@ -481,9 +443,6 @@ export class AngelOneComponent
   // ======================================================
 
   refresh(): void {
-
-    this.loadWalletBalance();
-
     this.loadDashboard();
 
     this.loadConfiguration();
