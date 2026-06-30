@@ -261,8 +261,14 @@ export class TradingSettingsComponent
 
       Validators.required
 
-    ]
+    ],
+    watchListRefreshMinutes: [
 
+      2,
+
+      Validators.required
+
+    ]
   });
 
   enableAutoTradingFormControl = this.form?.controls?.enableAutoTrading;
@@ -398,8 +404,10 @@ export class TradingSettingsComponent
       marketCloseTime:
         this.toTimeInput(
           configuration.marketCloseTime
-        )
+        ),
 
+      watchListRefreshMinutes:
+        configuration.watchListRefreshMinutes
     });
 
   }
@@ -550,8 +558,9 @@ export class TradingSettingsComponent
       marketCloseTime:
         this.toTimeSpan(
           value.marketCloseTime
-        )
+        ),
 
+        watchListRefreshMinutes:Number(value.watchListRefreshMinutes)
     };
 
     this.#angel.saveTradingConfiguration(
@@ -583,9 +592,9 @@ export class TradingSettingsComponent
           this.form.markAsPristine();
           this.#router.navigate([
 
-      '/home/dashboard'
+            '/home/dashboard'
 
-    ]);
+          ]);
 
         },
 

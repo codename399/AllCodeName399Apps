@@ -186,14 +186,6 @@ export class AngelOneComponent
 
     this.startMarketTimer();
 
-    if (!this.#angel.isLoggedIn()) {
-
-      this.loginToAngel();
-
-      return;
-
-    }
-
     this.initializeDashboard();
 
   }
@@ -253,44 +245,6 @@ export class AngelOneComponent
   toggleLogs(): void {
 
     this.showLogs.update(v => !v);
-
-  }
-
-  // ======================================================
-  // Login
-  // ======================================================
-
-  private loginToAngel(): void {
-
-    this.#angel
-
-      .loginToAngel()
-
-      .subscribe({
-
-        next: () => {
-
-          this.#toast.success(
-
-            'Angel One login successful'
-
-          );
-
-          this.initializeDashboard();
-
-        },
-
-        error: () => {
-
-          this.#toast.error(
-
-            'Angel One login failed'
-
-          );
-
-        }
-
-      });
 
   }
 

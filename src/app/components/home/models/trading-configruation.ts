@@ -40,4 +40,5 @@ export interface TradingConfiguration {
 
     marketCloseTime: string;
 
+    watchListRefreshMinutes: number
 }
