@@ -408,7 +408,10 @@ export class TradingSettingsComponent
 
       watchListRefreshMinutes:
         configuration.watchListRefreshMinutes
-    });
+    },
+  {
+    emitEvent:false
+  });
 
   }
 
