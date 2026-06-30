@@ -1,47 +1,22 @@
-import {
-  Component,
-  OnInit,
-  inject
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
-import {
-  CommonModule
-} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { MatButtonModule } from '@angular/material/button';
 
-import {
-  MatButtonModule
-} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
-import {
-  MatInputModule
-} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
-import {
-  MatFormFieldModule
-} from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import {
-  MatSlideToggleModule
-} from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
 
-import {
-  MatSelectModule
-} from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
 
-import {
-  MatDividerModule
-} from '@angular/material/divider';
-
-import {
-  MatIconModule
-} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 import { MatCardModule } from '@angular/material/card';
 
@@ -52,14 +27,11 @@ import { TradingConfiguration } from '../../../models/trading-configruation';
 import { AngelOneService } from '../../../services/angel-one.service';
 
 @Component({
-
-  selector:
-    'app-trading-settings',
+  selector: 'app-trading-settings',
 
   standalone: true,
 
   imports: [
-
     CommonModule,
 
     ReactiveFormsModule,
@@ -77,198 +49,79 @@ import { AngelOneService } from '../../../services/angel-one.service';
     MatDividerModule,
 
     MatIconModule,
-    MatCardModule
-
+    MatCardModule,
   ],
 
-  templateUrl:
-    './trading-settings.component.html',
+  templateUrl: './trading-settings.component.html',
 
-  styleUrl:
-    './trading-settings.component.css'
-
+  styleUrl: './trading-settings.component.css',
 })
+export class TradingSettingsComponent implements OnInit {
+  readonly #fb = inject(FormBuilder);
 
-export class TradingSettingsComponent
-  implements OnInit {
-
-  readonly #fb =
-    inject(FormBuilder);
-
-  readonly #angel =
-    inject(AngelOneService);
+  readonly #angel = inject(AngelOneService);
 
   readonly #toastService = inject(ToastService);
 
-  readonly #router =
-    inject(Router);
+  readonly #router = inject(Router);
 
   loading = false;
 
   saving = false;
 
   readonly strategies = [
-
     {
       value: 0,
-      text: 'Momentum'
+      text: 'Momentum',
     },
 
     {
       value: 1,
-      text: 'Pullback'
-    }
-
+      text: 'Pullback',
+    },
   ];
 
   form = this.#fb.group({
+    enableAutoTrading: [{ value: false, disabled: false }],
 
-    enableAutoTrading: [
+    paperTrading: [true],
 
-      { value: false, disabled: false }
+    enableNotification: [true],
 
-    ],
-
-    paperTrading: [
-
-      true
-
-    ],
-
-    enableNotification: [
-
-      true
-
-    ],
-
-    strategy: [
-
-      1,
-
-      Validators.required
-
-    ],
+    strategy: [1, Validators.required],
 
     riskPercentage: [
-
       2,
 
-      [
-
-        Validators.required,
-
-        Validators.min(0.1),
-
-        Validators.max(100)
-
-      ]
-
+      [Validators.required, Validators.min(0.1), Validators.max(100)],
     ],
 
-    maxCapitalPerTrade: [
+    maxCapitalPerTrade: [10000, Validators.required],
 
-      10000,
+    maxDailyLoss: [3000, Validators.required],
 
-      Validators.required
+    maxDailyTrades: [5, Validators.required],
 
-    ],
+    cooldownMinutes: [10, Validators.required],
 
-    maxDailyLoss: [
+    scanIntervalSeconds: [5, Validators.required],
 
-      3000,
+    ignoreMarketHours: [false],
 
-      Validators.required
+    enableTrailingStop: [true],
 
-    ],
+    trailingStopPercentage: [1, Validators.required],
 
-    maxDailyTrades: [
+    stopLossMultiplier: [1, Validators.required],
 
-      5,
+    targetMultiplier: [2, Validators.required],
 
-      Validators.required
+    autoSquareOff: [true],
 
-    ],
+    marketOpenTime: ['09:15', Validators.required],
 
-    cooldownMinutes: [
-
-      10,
-
-      Validators.required
-
-    ],
-
-    scanIntervalSeconds: [
-
-      5,
-
-      Validators.required
-
-    ],
-
-    ignoreMarketHours: [
-
-      false
-
-    ],
-
-    enableTrailingStop: [
-
-      true
-
-    ],
-
-    trailingStopPercentage: [
-
-      1,
-
-      Validators.required
-
-    ],
-
-    stopLossMultiplier: [
-
-      1,
-
-      Validators.required
-
-    ],
-
-    targetMultiplier: [
-
-      2,
-
-      Validators.required
-
-    ],
-
-    autoSquareOff: [
-
-      true
-
-    ],
-
-    marketOpenTime: [
-
-      '09:15',
-
-      Validators.required
-
-    ],
-
-    marketCloseTime: [
-
-      '15:30',
-
-      Validators.required
-
-    ],
-    watchListRefreshMinutes: [
-
-      2,
-
-      Validators.required
-
-    ]
+    marketCloseTime: ['15:30', Validators.required],
+    watchListRefreshMinutes: [2, Validators.required],
   });
 
   enableAutoTradingFormControl = this.form?.controls?.enableAutoTrading;
@@ -279,24 +132,26 @@ export class TradingSettingsComponent
   // ======================================================
 
   ngOnInit(): void {
-
-    this.enableAutoTradingFormControl?.valueChanges?.subscribe(value => {
+    this.enableAutoTradingFormControl?.valueChanges?.subscribe((value) => {
       if (value == this.enableAutoTradingPreviousValue) {
         return;
       }
 
-      const confirmed = window.confirm("Are you sure, you want to toggle auto trading?");
+      const confirmed = window.confirm(
+        'Are you sure, you want to toggle auto trading?',
+      );
 
       if (confirmed) {
         this.enableAutoTradingPreviousValue = value;
+      } else {
+        this.enableAutoTradingFormControl?.setValue(
+          this.enableAutoTradingPreviousValue,
+          { emitEvent: false },
+        );
       }
-      else {
-        this.enableAutoTradingFormControl?.setValue(this.enableAutoTradingPreviousValue, { emitEvent: false });
-      }
-    })
+    });
 
     this.loadConfiguration();
-
   }
 
   // ======================================================
@@ -304,7 +159,6 @@ export class TradingSettingsComponent
   // ======================================================
 
   private loadConfiguration(): void {
-
     this.loading = true;
 
     this.#angel
@@ -312,143 +166,91 @@ export class TradingSettingsComponent
       .getTradingConfiguration()
 
       .pipe(
-
         finalize(() => {
-
           this.loading = false;
-
-        })
-
+        }),
       )
 
       .subscribe({
-
-        next: configuration => {
-
+        next: (configuration) => {
           this.patchForm(configuration);
-
         },
 
         error: () => {
           this.#toastService.error('Unable to load trading configuration');
-        }
+        },
       });
-
   }
 
   // ======================================================
   // Patch Form
   // ======================================================
 
-  private patchForm(
+  private patchForm(configuration: TradingConfiguration): void {
+    this.form.patchValue(
+      {
+        enableAutoTrading: configuration.enableAutoTrading,
 
-    configuration: TradingConfiguration
+        paperTrading: configuration.paperTrading,
 
-  ): void {
+        enableNotification: configuration.enableNotification,
 
-    this.form.patchValue({
+        strategy: configuration.strategy,
 
-      enableAutoTrading:
-        configuration.enableAutoTrading,
+        riskPercentage: configuration.riskPercentage,
 
-      paperTrading:
-        configuration.paperTrading,
+        maxCapitalPerTrade: configuration.maxCapitalPerTrade,
 
-      enableNotification:
-        configuration.enableNotification,
+        maxDailyLoss: configuration.maxDailyLoss,
 
-      strategy:
-        configuration.strategy,
+        maxDailyTrades: configuration.maxDailyTrades,
 
-      riskPercentage:
-        configuration.riskPercentage,
+        cooldownMinutes: configuration.cooldownMinutes,
 
-      maxCapitalPerTrade:
-        configuration.maxCapitalPerTrade,
+        scanIntervalSeconds: configuration.scanIntervalSeconds,
 
-      maxDailyLoss:
-        configuration.maxDailyLoss,
+        ignoreMarketHours: configuration.ignoreMarketHours,
 
-      maxDailyTrades:
-        configuration.maxDailyTrades,
+        enableTrailingStop: configuration.enableTrailingStop,
 
-      cooldownMinutes:
-        configuration.cooldownMinutes,
+        trailingStopPercentage: configuration.trailingStopPercentage,
 
-      scanIntervalSeconds:
-        configuration.scanIntervalSeconds,
+        stopLossMultiplier: configuration.stopLossMultiplier,
 
-      ignoreMarketHours:
-        configuration.ignoreMarketHours,
+        targetMultiplier: configuration.targetMultiplier,
 
-      enableTrailingStop:
-        configuration.enableTrailingStop,
+        autoSquareOff: configuration.autoSquareOff,
 
-      trailingStopPercentage:
-        configuration.trailingStopPercentage,
+        marketOpenTime: this.toTimeInput(configuration.marketOpenTime),
 
-      stopLossMultiplier:
-        configuration.stopLossMultiplier,
+        marketCloseTime: this.toTimeInput(configuration.marketCloseTime),
 
-      targetMultiplier:
-        configuration.targetMultiplier,
-
-      autoSquareOff:
-        configuration.autoSquareOff,
-
-      marketOpenTime:
-        this.toTimeInput(
-          configuration.marketOpenTime
-        ),
-
-      marketCloseTime:
-        this.toTimeInput(
-          configuration.marketCloseTime
-        ),
-
-      watchListRefreshMinutes:
-        configuration.watchListRefreshMinutes
-    },
-  {
-    emitEvent:false
-  });
-
+        watchListRefreshMinutes: configuration.watchListRefreshMinutes,
+      },
+      {
+        emitEvent: false,
+      },
+    );
   }
 
   // ======================================================
   // Helpers
   // ======================================================
 
-  private toTimeInput(
-
-    value: string | null | undefined
-
-  ): string {
-
+  private toTimeInput(value: string | null | undefined): string {
     if (!value) {
-
       return '';
-
     }
 
     return value.substring(0, 5);
-
   }
 
-  private toTimeSpan(
-
-    value: string | null
-
-  ): string {
-
+  private toTimeSpan(value: string | null): string {
     if (!value) {
-
       return '00:00:00';
-
     }
 
     return `${value}:00`;
-
   }
 
   // ======================================================
@@ -456,21 +258,15 @@ export class TradingSettingsComponent
   // ======================================================
 
   get isDirty(): boolean {
-
     return this.form.dirty;
-
   }
 
   get isValid(): boolean {
-
     return this.form.valid;
-
   }
 
   get controls() {
-
     return this.form.controls;
-
   }
 
   // ======================================================
@@ -478,9 +274,7 @@ export class TradingSettingsComponent
   // ======================================================
 
   reset(): void {
-
     this.loadConfiguration();
-
   }
 
   // ======================================================
@@ -488,13 +282,10 @@ export class TradingSettingsComponent
   // ======================================================
 
   save(): void {
-
     if (this.form.invalid) {
-
       this.form.markAllAsTouched();
 
       return;
-
     }
 
     this.saving = true;
@@ -502,135 +293,81 @@ export class TradingSettingsComponent
     const value = this.form.getRawValue();
 
     const configuration: TradingConfiguration = {
-
       id: 'DEFAULT',
 
-      enableAutoTrading:
-        value.enableAutoTrading ?? false,
+      enableAutoTrading: value.enableAutoTrading ?? false,
 
-      paperTrading:
-        value.paperTrading ?? false,
+      paperTrading: value.paperTrading ?? false,
 
-      enableNotification:
-        value.enableNotification ?? false,
+      enableNotification: value.enableNotification ?? false,
 
-      strategy:
-        value.strategy!,
+      strategy: value.strategy!,
 
-      riskPercentage:
-        Number(value.riskPercentage),
+      riskPercentage: Number(value.riskPercentage),
 
-      maxCapitalPerTrade:
-        Number(value.maxCapitalPerTrade),
+      maxCapitalPerTrade: Number(value.maxCapitalPerTrade),
 
-      maxDailyLoss:
-        Number(value.maxDailyLoss),
+      maxDailyLoss: Number(value.maxDailyLoss),
 
-      maxDailyTrades:
-        Number(value.maxDailyTrades),
+      maxDailyTrades: Number(value.maxDailyTrades),
 
-      cooldownMinutes:
-        Number(value.cooldownMinutes),
+      cooldownMinutes: Number(value.cooldownMinutes),
 
-      scanIntervalSeconds:
-        Number(value.scanIntervalSeconds),
+      scanIntervalSeconds: Number(value.scanIntervalSeconds),
 
-      ignoreMarketHours:
-        value.ignoreMarketHours ?? false,
+      ignoreMarketHours: value.ignoreMarketHours ?? false,
 
-      enableTrailingStop:
-        value.enableTrailingStop ?? false,
+      enableTrailingStop: value.enableTrailingStop ?? false,
 
-      trailingStopPercentage:
-        Number(value.trailingStopPercentage),
+      trailingStopPercentage: Number(value.trailingStopPercentage),
 
-      stopLossMultiplier:
-        Number(value.stopLossMultiplier),
+      stopLossMultiplier: Number(value.stopLossMultiplier),
 
-      targetMultiplier:
-        Number(value.targetMultiplier),
+      targetMultiplier: Number(value.targetMultiplier),
 
-      autoSquareOff:
-        value.autoSquareOff ?? false,
+      autoSquareOff: value.autoSquareOff ?? false,
 
-      marketOpenTime:
-        this.toTimeSpan(
-          value.marketOpenTime
-        ),
+      marketOpenTime: this.toTimeSpan(value.marketOpenTime),
 
-      marketCloseTime:
-        this.toTimeSpan(
-          value.marketCloseTime
-        ),
+      marketCloseTime: this.toTimeSpan(value.marketCloseTime),
 
-        watchListRefreshMinutes:Number(value.watchListRefreshMinutes)
+      watchListRefreshMinutes: Number(value.watchListRefreshMinutes),
     };
 
-    this.#angel.saveTradingConfiguration(
-
-      configuration
-
-    )
+    this.#angel
+      .saveTradingConfiguration(configuration)
 
       .pipe(
-
         finalize(() => {
-
           this.saving = false;
-
-        })
-
+        }),
       )
 
       .subscribe({
-
         next: () => {
-
           this.#toastService.success(
-
-            'Trading configuration saved successfully.'
-
+            'Trading configuration saved successfully.',
           );
 
           this.form.markAsPristine();
-          this.#router.navigate([
-
-            '/home/dashboard'
-
-          ]);
-
+          this.#router.navigate(['/home/dashboard']);
         },
 
         error: () => {
           this.#toastService.error('Unable to save configuration.');
-        }
+        },
       });
-
   }
 
   cancel(): void {
-
     if (this.form.dirty) {
-
-      const confirmed = confirm(
-
-        'Discard unsaved changes?'
-
-      );
+      const confirmed = confirm('Discard unsaved changes?');
 
       if (!confirmed) {
-
         return;
-
       }
-
     }
 
-    this.#router.navigate([
-
-      '/home/dashboard'
-
-    ]);
-
+    this.#router.navigate(['/home/dashboard']);
   }
 }

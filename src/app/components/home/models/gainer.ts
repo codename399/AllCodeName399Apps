@@ -1,5 +1,4 @@
 export interface Gainer {
-
   // ---------- Instrument ----------
 
   symbol: string;
@@ -9,7 +8,6 @@ export interface Gainer {
   exchange?: string;
 
   token?: string;
-
 
   // ---------- Price ----------
 
@@ -25,13 +23,11 @@ export interface Gainer {
 
   volume?: number;
 
-
   // ---------- Performance ----------
 
   change?: number;
 
   changePercent: number;
-
 
   // ---------- Indicators ----------
 
@@ -47,22 +43,15 @@ export interface Gainer {
 
   pullbackDistance: number;
 
-
   // ---------- Trading ----------
 
-  signal: 'BUY'
-        | 'SELL'
-        | 'HOLD'
-        | 'SETUP';
+  signal: 'BUY' | 'SELL' | 'HOLD' | 'SETUP';
 
-  risk: 'LOW'
-      | 'MEDIUM'
-      | 'HIGH';
+  risk: 'LOW' | 'MEDIUM' | 'HIGH';
 
   score: number;
 
   isOwned: boolean;
-
 
   // ---------- Trade Levels ----------
 
@@ -70,11 +59,9 @@ export interface Gainer {
 
   targetPrice: number;
 
-
   // ---------- Explanation ----------
 
   reason: string;
-
 
   // ---------- Metadata ----------
 

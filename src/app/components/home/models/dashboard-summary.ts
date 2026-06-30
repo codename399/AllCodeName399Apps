@@ -1,5 +1,4 @@
 export interface DashboardSummary {
-
   availableCash: number;
 
   strategy: string;

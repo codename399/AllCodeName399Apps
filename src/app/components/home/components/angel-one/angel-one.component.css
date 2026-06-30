@@ -1,1022 +1,833 @@
-:host{
+:host {
+  display: block;
 
-    display:block;
+  height: 100vh;
 
-    height:100vh;
+  overflow: hidden;
 
-    overflow:hidden;
+  background: #eef2f7;
 
-    background:#eef2f7;
-
-    font-family:Inter,Arial,sans-serif;
-
+  font-family: Inter, Arial, sans-serif;
 }
 
-.dashboard{
+.dashboard {
+  height: 100%;
 
-    height:100%;
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  gap: 16px;
 
-    gap:16px;
+  padding: 16px;
 
-    padding:16px;
-
-    box-sizing:border-box;
-
+  box-sizing: border-box;
 }
 
 /* ======================================================
    Toolbar
 ====================================================== */
 
-.toolbar{
+.toolbar {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
+  gap: 20px;
 
-    gap:20px;
+  background: #ffffff;
 
-    background:#ffffff;
+  padding: 16px 20px;
 
-    padding:16px 20px;
+  border-radius: 16px;
 
-    border-radius:16px;
-
-    box-shadow:
-
-        0 6px 20px rgba(0,0,0,.06);
-
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.toolbar-left{
+.toolbar-left {
+  display: flex;
 
-    display:flex;
+  gap: 12px;
 
-    gap:12px;
-
-    flex-wrap:wrap;
-
+  flex-wrap: wrap;
 }
 
-.toolbar-right{
+.toolbar-right {
+  display: flex;
 
-    display:flex;
+  flex: 1;
 
-    flex:1;
-
-    justify-content:flex-end;
-
+  justify-content: flex-end;
 }
 
-.toolbar-right input{
+.toolbar-right input {
+  width: 320px;
 
-    width:320px;
+  border: none;
 
-    border:none;
+  outline: none;
 
-    outline:none;
+  padding: 12px 18px;
 
-    padding:12px 18px;
+  border-radius: 10px;
 
-    border-radius:10px;
+  background: #f8fafc;
 
-    background:#f8fafc;
-
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.toolbar-right input:focus{
-
-    box-shadow:0 0 0 3px #bfdbfe;
-
+.toolbar-right input:focus {
+  box-shadow: 0 0 0 3px #bfdbfe;
 }
 
-.toggle-btn{
+.toggle-btn {
+  border: none;
 
-    border:none;
+  background: #2563eb;
 
-    background:#2563eb;
+  color: white;
 
-    color:white;
+  padding: 10px 18px;
 
-    padding:10px 18px;
+  border-radius: 8px;
 
-    border-radius:8px;
+  cursor: pointer;
 
-    cursor:pointer;
+  font-weight: 600;
 
-    font-weight:600;
-
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.toggle-btn:hover{
+.toggle-btn:hover {
+  background: #1d4ed8;
 
-    background:#1d4ed8;
-
-    transform:translateY(-2px);
-
+  transform: translateY(-2px);
 }
 
 /* ======================================================
    Market Status
 ====================================================== */
 
-.market-panel{
+.market-panel {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
+  gap: 20px;
 
-    gap:20px;
+  background: #ffffff;
 
-    background:#ffffff;
+  padding: 20px 24px;
 
-    padding:20px 24px;
+  border-radius: 16px;
 
-    border-radius:16px;
-
-    box-shadow:
-        0 6px 20px rgba(0,0,0,.06);
-
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.market-pill{
+.market-pill {
+  display: inline-flex;
 
-    display:inline-flex;
+  align-items: center;
 
-    align-items:center;
+  justify-content: center;
 
-    justify-content:center;
+  min-width: 170px;
 
-    min-width:170px;
+  padding: 12px 22px;
 
-    padding:12px 22px;
+  border-radius: 999px;
 
-    border-radius:999px;
+  font-size: 15px;
 
-    font-size:15px;
-
-    font-weight:700;
-
+  font-weight: 700;
 }
 
-.market-pill.open{
+.market-pill.open {
+  background: #dcfce7;
 
-    background:#dcfce7;
-
-    color:#166534;
-
+  color: #166534;
 }
 
-.market-pill.closed{
+.market-pill.closed {
+  background: #fee2e2;
 
-    background:#fee2e2;
-
-    color:#991b1b;
-
+  color: #991b1b;
 }
 
-.market-timer{
+.market-timer {
+  font-size: 22px;
 
-    font-size:22px;
+  font-weight: 700;
 
-    font-weight:700;
+  color: #0f172a;
 
-    color:#0f172a;
-
-    letter-spacing:.3px;
-
+  letter-spacing: 0.3px;
 }
 
-.market-panel{
+.market-panel {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
+  gap: 24px;
 
-    gap:24px;
+  background: #fff;
 
-    background:#fff;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 20px;
 
-    padding:20px;
-
-    box-shadow:0 6px 20px rgba(0,0,0,.06);
-
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.market-left{
+.market-left {
+  display: flex;
 
-    display:flex;
+  align-items: center;
 
-    align-items:center;
-
-    gap:20px;
-
+  gap: 20px;
 }
 
-.market-right{
+.market-right {
+  display: flex;
 
-    display:flex;
-
-    gap:24px;
-
+  gap: 24px;
 }
 
-.market-item{
+.market-item {
+  display: flex;
 
-    display:flex;
-
-    flex-direction:column;
-
+  flex-direction: column;
 }
 
-.market-item label{
+.market-item label {
+  font-size: 12px;
 
-    font-size:12px;
+  color: #64748b;
 
-    color:#64748b;
-
-    margin-bottom:4px;
-
+  margin-bottom: 4px;
 }
 
-.market-item strong{
-
-    font-size:16px;
-
+.market-item strong {
+  font-size: 16px;
 }
 
 /* ======================================================
    Summary
 ====================================================== */
 
-.summary-grid{
+.summary-grid {
+  display: grid;
 
-    display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 
-    grid-template-columns:
-        repeat(auto-fit,minmax(240px,1fr));
-
-    gap:18px;
-
+  gap: 18px;
 }
 
-.summary-card{
+.summary-card {
+  background: #ffffff;
 
-    background:#ffffff;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 20px;
 
-    padding:20px;
+  display: flex;
 
-    display:flex;
+  align-items: center;
 
-    align-items:center;
+  gap: 18px;
 
-    gap:18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 
-    box-shadow:
-        0 6px 20px rgba(0,0,0,.06);
+  transition: 0.2s;
 
-    transition:.2s;
-
-    border:1px solid transparent;
-
+  border: 1px solid transparent;
 }
 
-.summary-card:hover{
+.summary-card:hover {
+  transform: translateY(-4px);
 
-    transform:translateY(-4px);
+  border-color: #bfdbfe;
 
-    border-color:#bfdbfe;
-
-    box-shadow:
-        0 10px 28px rgba(0,0,0,.10);
-
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
 }
 
-.summary-icon{
+.summary-icon {
+  width: 64px;
 
-    width:64px;
+  height: 64px;
 
-    height:64px;
+  border-radius: 50%;
 
-    border-radius:50%;
+  background: #dbeafe;
 
-    background:#dbeafe;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  font-size: 30px;
 
-    font-size:30px;
-
-    flex-shrink:0;
-
+  flex-shrink: 0;
 }
 
-.summary-title{
+.summary-title {
+  color: #64748b;
 
-    color:#64748b;
+  font-size: 13px;
 
-    font-size:13px;
+  margin-bottom: 6px;
 
-    margin-bottom:6px;
+  text-transform: uppercase;
 
-    text-transform:uppercase;
-
-    letter-spacing:.5px;
-
+  letter-spacing: 0.5px;
 }
 
-.summary-value{
+.summary-value {
+  color: #0f172a;
 
-    color:#0f172a;
+  font-size: 24px;
 
-    font-size:24px;
+  font-weight: 700;
 
-    font-weight:700;
-
-    line-height:1.2;
-
+  line-height: 1.2;
 }
 
 /* ======================================================
    Configuration Summary
 ====================================================== */
 
-.settings-panel{
+.settings-panel {
+  background: #ffffff;
 
-    background:#ffffff;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 22px;
 
-    padding:22px;
-
-    box-shadow:
-        0 6px 20px rgba(0,0,0,.06);
-
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.settings-header{
+.settings-header {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
-
-    margin-bottom:24px;
-
+  margin-bottom: 24px;
 }
 
-.settings-header h3{
+.settings-header h3 {
+  margin: 0;
 
-    margin:0;
+  font-size: 22px;
 
-    font-size:22px;
-
-    color:#0f172a;
-
+  color: #0f172a;
 }
 
-.settings-header p{
+.settings-header p {
+  margin-top: 6px;
 
-    margin-top:6px;
-
-    color:#64748b;
-
+  color: #64748b;
 }
 
-.settings-button{
+.settings-button {
+  border: none;
 
-    border:none;
+  background: #2563eb;
 
-    background:#2563eb;
+  color: white;
 
-    color:white;
+  padding: 12px 22px;
 
-    padding:12px 22px;
+  border-radius: 10px;
 
-    border-radius:10px;
+  cursor: pointer;
 
-    cursor:pointer;
+  font-weight: 600;
 
-    font-weight:600;
-
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.settings-button:hover{
-
-    background:#1d4ed8;
-
+.settings-button:hover {
+  background: #1d4ed8;
 }
 
-.settings-grid{
+.settings-grid {
+  display: grid;
 
-    display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
-    grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
-
-    gap:18px;
-
+  gap: 18px;
 }
 
-.setting-card{
+.setting-card {
+  background: #f8fafc;
 
-    background:#f8fafc;
+  border-radius: 12px;
 
-    border-radius:12px;
+  padding: 18px;
 
-    padding:18px;
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  gap: 10px;
 
-    gap:10px;
-
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.setting-card:hover{
-
-    background:#eff6ff;
-
+.setting-card:hover {
+  background: #eff6ff;
 }
 
-.setting-card span{
+.setting-card span {
+  font-size: 13px;
 
-    font-size:13px;
-
-    color:#64748b;
-
+  color: #64748b;
 }
 
-.setting-card strong{
+.setting-card strong {
+  font-size: 20px;
 
-    font-size:20px;
-
-    color:#0f172a;
-
+  color: #0f172a;
 }
 
-.dialog-backdrop{
+.dialog-backdrop {
+  position: fixed;
 
-    position:fixed;
+  inset: 0;
 
-    inset:0;
+  background: rgba(15, 23, 42, 0.45);
 
-    background:rgba(15,23,42,.45);
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
-
-    z-index:1000;
-
+  z-index: 1000;
 }
 
-.settings-dialog{
+.settings-dialog {
+  width: 900px;
 
-    width:900px;
+  max-width: 95vw;
 
-    max-width:95vw;
+  max-height: 90vh;
 
-    max-height:90vh;
+  overflow: auto;
 
-    overflow:auto;
+  background: white;
 
-    background:white;
+  border-radius: 16px;
 
-    border-radius:16px;
+  padding: 24px;
 
-    padding:24px;
-
-    box-shadow:0 30px 60px rgba(0,0,0,.25);
-
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
 }
 
-.dialog-header{
+.dialog-header {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
-
-    margin-bottom:24px;
-
+  margin-bottom: 24px;
 }
 
-.close-btn{
+.close-btn {
+  border: none;
 
-    border:none;
+  background: none;
 
-    background:none;
+  font-size: 24px;
 
-    font-size:24px;
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
-.dialog-footer{
+.dialog-footer {
+  display: flex;
 
-    display:flex;
+  justify-content: flex-end;
 
-    justify-content:flex-end;
+  gap: 12px;
 
-    gap:12px;
-
-    margin-top:24px;
-
+  margin-top: 24px;
 }
 
-.primary-btn{
+.primary-btn {
+  background: #2563eb;
 
-    background:#2563eb;
+  color: white;
 
-    color:white;
+  border: none;
 
-    border:none;
+  padding: 10px 22px;
 
-    padding:10px 22px;
+  border-radius: 8px;
 
-    border-radius:8px;
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
-.secondary-btn{
+.secondary-btn {
+  background: #e2e8f0;
 
-    background:#e2e8f0;
+  border: none;
 
-    border:none;
+  padding: 10px 22px;
 
-    padding:10px 22px;
+  border-radius: 8px;
 
-    border-radius:8px;
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
 /* ======================================================
    Trading Grid
 ====================================================== */
 
-.table-container{
+.table-container {
+  flex: 1;
 
-    flex:1;
+  overflow: auto;
 
-    overflow:auto;
+  background: #ffffff;
 
-    background:#ffffff;
+  border-radius: 16px;
 
-    border-radius:16px;
-
-    box-shadow:
-        0 6px 20px rgba(0,0,0,.06);
-
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-table{
+table {
+  width: 100%;
 
-    width:100%;
+  min-width: 1750px;
 
-    min-width:1750px;
-
-    border-collapse:collapse;
-
+  border-collapse: collapse;
 }
 
 /* ======================================================
    Header
 ====================================================== */
 
-thead{
+thead {
+  position: sticky;
 
-    position:sticky;
+  top: 0;
 
-    top:0;
-
-    z-index:100;
-
+  z-index: 100;
 }
 
-th{
+th {
+  position: sticky;
 
-    position:sticky;
+  top: 0;
 
-    top:0;
+  background: #0f172a;
 
-    background:#0f172a;
+  color: white;
 
-    color:white;
+  padding: 14px 16px;
 
-    padding:14px 16px;
+  text-transform: uppercase;
 
-    text-transform:uppercase;
+  letter-spacing: 0.4px;
 
-    letter-spacing:.4px;
+  font-size: 12px;
 
-    font-size:12px;
+  font-weight: 700;
 
-    font-weight:700;
+  white-space: nowrap;
 
-    white-space:nowrap;
-
-    border-bottom:2px solid #1e293b;
-
+  border-bottom: 2px solid #1e293b;
 }
 
 /* ======================================================
    Body
 ====================================================== */
 
-td{
+td {
+  padding: 14px;
 
-    padding:14px;
+  border-bottom: 1px solid #e5e7eb;
 
-    border-bottom:1px solid #e5e7eb;
+  white-space: nowrap;
 
-    white-space:nowrap;
+  text-align: center;
 
-    text-align:center;
+  font-size: 14px;
 
-    font-size:14px;
-
-    transition:.15s;
-
+  transition: 0.15s;
 }
 
-tbody tr{
-
-    transition:.15s;
-
+tbody tr {
+  transition: 0.15s;
 }
 
-tbody tr:hover{
-
-    background:#f8fafc;
-
+tbody tr:hover {
+  background: #f8fafc;
 }
 
 /* ======================================================
    Sticky Symbol Column
 ====================================================== */
 
-th:nth-child(2){
+th:nth-child(2) {
+  position: sticky;
 
-    position:sticky;
+  left: 0;
 
-    left:0;
-
-    z-index:110;
-
+  z-index: 110;
 }
 
-td.symbol{
+td.symbol {
+  position: sticky;
 
-    position:sticky;
+  left: 0;
 
-    left:0;
+  background: white;
 
-    background:white;
+  font-weight: 700;
 
-    font-weight:700;
+  text-align: left;
 
-    text-align:left;
-
-    z-index:10;
-
+  z-index: 10;
 }
 
-tbody tr:hover td.symbol{
-
-    background:#f8fafc;
-
+tbody tr:hover td.symbol {
+  background: #f8fafc;
 }
 
 /* ======================================================
    Owned Stocks
 ====================================================== */
 
-.owned-row{
-
-    background:#f0fdf4;
-
+.owned-row {
+  background: #f0fdf4;
 }
 
-.owned-row td.symbol{
-
-    background:#f0fdf4;
-
+.owned-row td.symbol {
+  background: #f0fdf4;
 }
 
-.owned-row:hover{
-
-    background:#dcfce7;
-
+.owned-row:hover {
+  background: #dcfce7;
 }
 
-.owned-row:hover td.symbol{
-
-    background:#dcfce7;
-
+.owned-row:hover td.symbol {
+  background: #dcfce7;
 }
 
-.owned{
-
-    font-size:18px;
-
+.owned {
+  font-size: 18px;
 }
 
 /* ======================================================
    Positive / Negative
 ====================================================== */
 
-.positive{
+.positive {
+  color: #16a34a;
 
-    color:#16a34a;
-
-    font-weight:700;
-
+  font-weight: 700;
 }
 
-.negative{
+.negative {
+  color: #dc2626;
 
-    color:#dc2626;
-
-    font-weight:700;
-
+  font-weight: 700;
 }
 
 /* ======================================================
    Score
 ====================================================== */
 
-.score{
+.score {
+  width: 40px;
 
-    width:40px;
+  height: 40px;
 
-    height:40px;
+  border-radius: 50%;
 
-    border-radius:50%;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  margin: auto;
 
-    margin:auto;
-
-    font-weight:700;
-
+  font-weight: 700;
 }
 
-.excellent{
+.excellent {
+  background: #dcfce7;
 
-    background:#dcfce7;
-
-    color:#166534;
-
+  color: #166534;
 }
 
-.good{
+.good {
+  background: #fef3c7;
 
-    background:#fef3c7;
-
-    color:#92400e;
-
+  color: #92400e;
 }
 
-.average{
+.average {
+  background: #fee2e2;
 
-    background:#fee2e2;
-
-    color:#991b1b;
-
+  color: #991b1b;
 }
 
 /* ======================================================
    Signal Badges
 ====================================================== */
 
-.signal{
+.signal {
+  display: inline-flex;
 
-    display:inline-flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  min-width: 84px;
 
-    min-width:84px;
+  padding: 8px 16px;
 
-    padding:8px 16px;
+  border-radius: 999px;
 
-    border-radius:999px;
+  color: white;
 
-    color:white;
+  font-size: 12px;
 
-    font-size:12px;
-
-    font-weight:700;
-
+  font-weight: 700;
 }
 
-.buy{
-
-    background:#22c55e;
-
+.buy {
+  background: #22c55e;
 }
 
-.sell{
-
-    background:#ef4444;
-
+.sell {
+  background: #ef4444;
 }
 
-.setup{
-
-    background:#f59e0b;
-
+.setup {
+  background: #f59e0b;
 }
 
-.hold{
-
-    background:#64748b;
-
+.hold {
+  background: #64748b;
 }
 
 /* ======================================================
    Reason
 ====================================================== */
 
-.reason{
+.reason {
+  text-align: left;
 
-    text-align:left;
+  min-width: 260px;
 
-    min-width:260px;
+  white-space: normal;
 
-    white-space:normal;
-
-    line-height:1.4;
-
+  line-height: 1.4;
 }
 
 /* ======================================================
    Scrollbars
 ====================================================== */
 
-.table-container::-webkit-scrollbar{
+.table-container::-webkit-scrollbar {
+  width: 10px;
 
-    width:10px;
-
-    height:10px;
-
+  height: 10px;
 }
 
-.table-container::-webkit-scrollbar-track{
-
-    background:#e2e8f0;
-
+.table-container::-webkit-scrollbar-track {
+  background: #e2e8f0;
 }
 
-.table-container::-webkit-scrollbar-thumb{
+.table-container::-webkit-scrollbar-thumb {
+  background: #94a3b8;
 
-    background:#94a3b8;
-
-    border-radius:20px;
-
+  border-radius: 20px;
 }
 
-.table-container::-webkit-scrollbar-thumb:hover{
-
-    background:#64748b;
-
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
 /* ======================================================
    Responsive
 ====================================================== */
 
-@media(max-width:1200px){
+@media (max-width: 1200px) {
+  .toolbar {
+    flex-direction: column;
 
-    .toolbar{
+    align-items: stretch;
+  }
 
-        flex-direction:column;
+  .toolbar-right {
+    justify-content: stretch;
+  }
 
-        align-items:stretch;
+  .toolbar-right input {
+    width: 100%;
+  }
 
-    }
+  .market-panel {
+    flex-direction: column;
 
-    .toolbar-right{
+    align-items: flex-start;
 
-        justify-content:stretch;
-
-    }
-
-    .toolbar-right input{
-
-        width:100%;
-
-    }
-
-    .market-panel{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:16px;
-
-    }
-
+    gap: 16px;
+  }
 }
 
-@media(max-width:768px){
+@media (max-width: 768px) {
+  :host {
+    height: auto;
 
-    :host{
+    overflow: auto;
+  }
 
-        height:auto;
+  .dashboard {
+    padding: 10px;
+  }
 
-        overflow:auto;
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 
-    }
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .dashboard{
+  .toolbar-left {
+    width: 100%;
+  }
 
-        padding:10px;
+  .toggle-btn {
+    flex: 1;
+  }
 
-    }
+  .summary-value {
+    font-size: 20px;
+  }
 
-    .summary-grid{
+  .market-timer {
+    font-size: 16px;
+  }
 
-        grid-template-columns:1fr;
-
-    }
-
-    .settings-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .toolbar-left{
-
-        width:100%;
-
-    }
-
-    .toggle-btn{
-
-        flex:1;
-
-    }
-
-    .summary-value{
-
-        font-size:20px;
-
-    }
-
-    .market-timer{
-
-        font-size:16px;
-
-    }
-
-    table{
-
-        min-width:1500px;
-
-    }
-
+  table {
+    min-width: 1500px;
+  }
 }

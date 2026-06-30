@@ -1,829 +1,644 @@
-:host{
+:host {
+  display: block;
 
-    display:block;
+  height: 100%;
 
-    height:100%;
-
-    background:#f4f7fb;
-
+  background: #f4f7fb;
 }
 
-.settings-page{
+.settings-page {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  height: 100%;
 
-    height:100%;
+  padding: 28px;
 
-    padding:28px;
+  gap: 24px;
 
-    gap:24px;
-
-    box-sizing:border-box;
-
+  box-sizing: border-box;
 }
 
 /* ===========================================
    Header
 =========================================== */
 
-.page-header{
+.page-header {
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: flex-start;
 
-    align-items:flex-start;
+  gap: 24px;
 
-    gap:24px;
-
-    flex-wrap:wrap;
-
+  flex-wrap: wrap;
 }
 
-.page-header h1{
+.page-header h1 {
+  margin: 20px 0 6px;
 
-    margin:20px 0 6px;
+  font-size: 34px;
 
-    font-size:34px;
+  font-weight: 700;
 
-    font-weight:700;
-
-    color:#0f172a;
-
+  color: #0f172a;
 }
 
-.page-header p{
+.page-header p {
+  margin: 0;
 
-    margin:0;
+  color: #64748b;
 
-    color:#64748b;
-
-    font-size:15px;
-
+  font-size: 15px;
 }
 
-.header-actions{
+.header-actions {
+  display: flex;
 
-    display:flex;
+  gap: 12px;
 
-    gap:12px;
-
-    align-items:center;
-
+  align-items: center;
 }
 
 /* ===========================================
    Loading
 =========================================== */
 
-.loading{
+.loading {
+  flex: 1;
 
-    flex:1;
+  display: flex;
 
-    display:flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  font-size: 20px;
 
-    font-size:20px;
-
-    color:#64748b;
-
+  color: #64748b;
 }
 
 /* ===========================================
    Form
 =========================================== */
 
-.settings-form{
+.settings-form {
+  flex: 1;
 
-    flex:1;
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
-
-    overflow:hidden;
-
+  overflow: hidden;
 }
 
 /* ==========================================================
    Settings Grid
 ========================================================== */
 
-.settings-grid{
+.settings-grid {
+  flex: 1;
 
-    flex:1;
+  overflow-y: auto;
 
-    overflow-y:auto;
+  display: grid;
 
-    display:grid;
+  grid-template-columns: repeat(2, minmax(420px, 1fr));
 
-    grid-template-columns:
-        repeat(2,minmax(420px,1fr));
+  gap: 24px;
 
-    gap:24px;
-
-    padding:24px 4px 12px;
-
+  padding: 24px 4px 12px;
 }
 
 /* ==========================================================
    Cards
 ========================================================== */
 
-.settings-card{
+.settings-card {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  border-radius: 18px !important;
 
-    border-radius:18px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
 
-    box-shadow:
-        0 8px 24px rgba(15,23,42,.08) !important;
+  transition: 0.25s ease;
 
-    transition:.25s ease;
+  border: 1px solid #e2e8f0;
 
-    border:1px solid #e2e8f0;
-
-    overflow:hidden;
-
+  overflow: hidden;
 }
 
-.settings-card:hover{
+.settings-card:hover {
+  transform: translateY(-3px);
 
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 16px 40px rgba(15,23,42,.12) !important;
-
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12) !important;
 }
 
 /* ==========================================================
    Card Header
 ========================================================== */
 
-.settings-card mat-card-header{
+.settings-card mat-card-header {
+  background: #f8fafc;
 
-    background:#f8fafc;
+  padding: 22px;
 
-    padding:22px;
-
-    border-bottom:1px solid #e2e8f0;
-
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.settings-card mat-card-title{
+.settings-card mat-card-title {
+  margin-bottom: 6px !important;
 
-    margin-bottom:6px !important;
+  font-size: 20px;
 
-    font-size:20px;
+  font-weight: 700;
 
-    font-weight:700;
-
-    color:#0f172a;
-
+  color: #0f172a;
 }
 
-.settings-card mat-card-subtitle{
+.settings-card mat-card-subtitle {
+  color: #64748b;
 
-    color:#64748b;
-
-    font-size:13px;
-
+  font-size: 13px;
 }
 
 /* ==========================================================
    Card Body
 ========================================================== */
 
-.settings-card mat-card-content{
+.settings-card mat-card-content {
+  display: flex;
 
-    display:flex;
+  flex-direction: column;
 
-    flex-direction:column;
+  gap: 18px;
 
-    gap:18px;
-
-    padding:22px !important;
-
+  padding: 22px !important;
 }
 
 /* ==========================================================
    Material Form Fields
 ========================================================== */
 
-.settings-card .mat-mdc-form-field{
-
-    width:100%;
-
+.settings-card .mat-mdc-form-field {
+  width: 100%;
 }
 
-.settings-card .mat-mdc-text-field-wrapper{
-
-    background:white;
-
+.settings-card .mat-mdc-text-field-wrapper {
+  background: white;
 }
 
-.settings-card .mat-mdc-form-field-subscript-wrapper{
-
-    display:none;
-
+.settings-card .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
 
 /* ==========================================================
    Slide Toggle
 ========================================================== */
 
-.settings-card mat-slide-toggle{
-
-    margin-bottom:6px;
-
+.settings-card mat-slide-toggle {
+  margin-bottom: 6px;
 }
 
-.settings-card .mdc-switch{
-
-    transform:scale(1.05);
-
+.settings-card .mdc-switch {
+  transform: scale(1.05);
 }
 
 /* ==========================================================
    Footer
 ========================================================== */
 
-.settings-footer{
+.settings-footer {
+  position: sticky;
 
-    position:sticky;
+  bottom: 0;
 
-    bottom:0;
+  display: flex;
 
-    display:flex;
+  justify-content: space-between;
 
-    justify-content:space-between;
+  align-items: center;
 
-    align-items:center;
+  gap: 24px;
 
-    gap:24px;
+  padding: 18px 24px;
 
-    padding:18px 24px;
+  background: white;
 
-    background:white;
+  border-top: 1px solid #e2e8f0;
 
-    border-top:1px solid #e2e8f0;
+  box-shadow: 0 -6px 18px rgba(15, 23, 42, 0.08);
 
-    box-shadow:
-        0 -6px 18px rgba(15,23,42,.08);
-
-    z-index:100;
-
+  z-index: 100;
 }
 
 /* ==========================================================
    Footer Left
 ========================================================== */
 
-.footer-left{
+.footer-left {
+  display: flex;
 
-    display:flex;
-
-    align-items:center;
-
+  align-items: center;
 }
 
 .unsaved,
-.saved{
+.saved {
+  display: flex;
 
-    display:flex;
+  align-items: center;
 
-    align-items:center;
+  gap: 10px;
 
-    gap:10px;
+  font-size: 14px;
 
-    font-size:14px;
-
-    font-weight:600;
-
+  font-weight: 600;
 }
 
-.unsaved{
-
-    color:#d97706;
-
+.unsaved {
+  color: #d97706;
 }
 
-.saved{
-
-    color:#15803d;
-
+.saved {
+  color: #15803d;
 }
 
 /* ==========================================================
    Footer Right
 ========================================================== */
 
-.footer-right{
+.footer-right {
+  display: flex;
 
-    display:flex;
+  align-items: center;
 
-    align-items:center;
-
-    gap:14px;
-
+  gap: 14px;
 }
 
 /* ==========================================================
    Material Buttons
 ========================================================== */
 
-.footer-right button{
+.footer-right button {
+  min-width: 140px;
 
-    min-width:140px;
+  height: 44px;
 
-    height:44px;
+  font-weight: 600;
 
-    font-weight:600;
-
-    border-radius:10px;
-
+  border-radius: 10px;
 }
 
-.footer-right button mat-icon{
-
-    margin-right:8px;
-
+.footer-right button mat-icon {
+  margin-right: 8px;
 }
 
 /* ==========================================================
    Save Button
 ========================================================== */
 
-button[mat-flat-button]{
-
-    box-shadow:
-        0 6px 18px rgba(37,99,235,.25);
-
+button[mat-flat-button] {
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
 }
 
-button[mat-flat-button]:hover{
-
-    transform:translateY(-1px);
-
+button[mat-flat-button]:hover {
+  transform: translateY(-1px);
 }
 
 /* ==========================================================
    Disabled Buttons
 ========================================================== */
 
-button:disabled{
+button:disabled {
+  opacity: 0.55;
 
-    opacity:.55;
-
-    cursor:not-allowed;
-
+  cursor: not-allowed;
 }
 
 /* ==========================================================
    Material Form Fields
 ========================================================== */
 
-.mat-mdc-form-field{
-
-    width:100%;
-
+.mat-mdc-form-field {
+  width: 100%;
 }
 
-.mat-mdc-text-field-wrapper{
+.mat-mdc-text-field-wrapper {
+  border-radius: 12px !important;
 
-    border-radius:12px !important;
-
-    transition:.2s ease;
-
+  transition: 0.2s ease;
 }
 
-.mat-mdc-form-field:hover .mat-mdc-text-field-wrapper{
-
-    box-shadow:
-        0 0 0 3px rgba(37,99,235,.08);
-
+.mat-mdc-form-field:hover .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
-.mat-mdc-form-field.mat-focused
-.mat-mdc-text-field-wrapper{
-
-    box-shadow:
-        0 0 0 4px rgba(37,99,235,.15);
-
+.mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
 /* ==========================================================
    Labels
 ========================================================== */
 
-.mat-mdc-form-field label{
-
-    font-weight:500;
-
+.mat-mdc-form-field label {
+  font-weight: 500;
 }
 
 /* ==========================================================
    Number Inputs
 ========================================================== */
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button{
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 
-    -webkit-appearance:none;
-
-    margin:0;
-
+  margin: 0;
 }
 
-input[type=number]{
-
-    -moz-appearance:textfield;
-
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /* ==========================================================
    Time Inputs
 ========================================================== */
 
-input[type=time]{
-
-    cursor:pointer;
-
+input[type="time"] {
+  cursor: pointer;
 }
 
 /* ==========================================================
    Select
 ========================================================== */
 
-.mat-mdc-select{
-
-    font-size:15px;
-
+.mat-mdc-select {
+  font-size: 15px;
 }
 
 /* ==========================================================
    Toggle
 ========================================================== */
 
-mat-slide-toggle{
-
-    margin-bottom:6px;
-
+mat-slide-toggle {
+  margin-bottom: 6px;
 }
 
-.mat-mdc-slide-toggle{
-
-    padding:4px 0;
-
+.mat-mdc-slide-toggle {
+  padding: 4px 0;
 }
 
 /* ==========================================================
    Icons
 ========================================================== */
 
-mat-icon{
-
-    vertical-align:middle;
-
+mat-icon {
+  vertical-align: middle;
 }
 
 /* ==========================================================
    Card Animation
 ========================================================== */
 
-.settings-card{
-
-    animation:fadeUp .25s ease;
-
+.settings-card {
+  animation: fadeUp 0.25s ease;
 }
 
-@keyframes fadeUp{
+@keyframes fadeUp {
+  from {
+    opacity: 0;
 
-    from{
+    transform: translateY(12px);
+  }
 
-        opacity:0;
+  to {
+    opacity: 1;
 
-        transform:translateY(12px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================
    Divider
 ========================================================== */
 
-mat-divider{
-
-    margin:0;
-
+mat-divider {
+  margin: 0;
 }
 
 /* ==========================================================
    Scrollbar
 ========================================================== */
 
-.settings-grid::-webkit-scrollbar{
-
-    width:10px;
-
+.settings-grid::-webkit-scrollbar {
+  width: 10px;
 }
 
-.settings-grid::-webkit-scrollbar-track{
+.settings-grid::-webkit-scrollbar-track {
+  background: #e2e8f0;
 
-    background:#e2e8f0;
-
-    border-radius:20px;
-
+  border-radius: 20px;
 }
 
-.settings-grid::-webkit-scrollbar-thumb{
+.settings-grid::-webkit-scrollbar-thumb {
+  background: #94a3b8;
 
-    background:#94a3b8;
-
-    border-radius:20px;
-
+  border-radius: 20px;
 }
 
-.settings-grid::-webkit-scrollbar-thumb:hover{
-
-    background:#64748b;
-
+.settings-grid::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
 /* ==========================================================
    Responsive - Large Tablets
 ========================================================== */
 
-@media (max-width:1200px){
+@media (max-width: 1200px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .settings-grid{
+  .page-header {
+    flex-direction: column;
 
-        grid-template-columns:1fr;
+    align-items: flex-start;
+  }
 
-    }
+  .header-actions {
+    width: 100%;
 
-    .page-header{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-    }
-
-    .header-actions{
-
-        width:100%;
-
-        justify-content:flex-end;
-
-    }
-
+    justify-content: flex-end;
+  }
 }
 
 /* ==========================================================
    Responsive - Tablets
 ========================================================== */
 
-@media (max-width:768px){
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 16px;
 
-    .settings-page{
+    gap: 16px;
+  }
 
-        padding:16px;
+  .page-header {
+    gap: 16px;
+  }
 
-        gap:16px;
+  .page-header h1 {
+    font-size: 28px;
 
-    }
+    margin-top: 12px;
+  }
 
-    .page-header{
+  .page-header p {
+    font-size: 14px;
+  }
 
-        gap:16px;
+  .header-actions {
+    width: 100%;
 
-    }
+    display: grid;
 
-    .page-header h1{
+    grid-template-columns: repeat(2, 1fr);
 
-        font-size:28px;
+    gap: 12px;
+  }
 
-        margin-top:12px;
+  .header-actions button {
+    width: 100%;
+  }
 
-    }
+  .settings-grid {
+    padding: 16px 0;
 
-    .page-header p{
+    gap: 16px;
+  }
 
-        font-size:14px;
+  .settings-card {
+    border-radius: 14px !important;
+  }
 
-    }
+  .settings-card mat-card-header {
+    padding: 18px;
+  }
 
-    .header-actions{
+  .settings-card mat-card-content {
+    padding: 18px !important;
+  }
 
-        width:100%;
+  .settings-footer {
+    flex-direction: column;
 
-        display:grid;
+    align-items: stretch;
 
-        grid-template-columns:repeat(2,1fr);
+    gap: 16px;
 
-        gap:12px;
+    padding: 16px;
+  }
 
-    }
+  .footer-left {
+    justify-content: center;
+  }
 
-    .header-actions button{
+  .footer-right {
+    width: 100%;
 
-        width:100%;
+    display: grid;
 
-    }
+    grid-template-columns: repeat(3, 1fr);
 
-    .settings-grid{
+    gap: 10px;
+  }
 
-        padding:16px 0;
+  .footer-right button {
+    width: 100%;
 
-        gap:16px;
-
-    }
-
-    .settings-card{
-
-        border-radius:14px !important;
-
-    }
-
-    .settings-card mat-card-header{
-
-        padding:18px;
-
-    }
-
-    .settings-card mat-card-content{
-
-        padding:18px !important;
-
-    }
-
-    .settings-footer{
-
-        flex-direction:column;
-
-        align-items:stretch;
-
-        gap:16px;
-
-        padding:16px;
-
-    }
-
-    .footer-left{
-
-        justify-content:center;
-
-    }
-
-    .footer-right{
-
-        width:100%;
-
-        display:grid;
-
-        grid-template-columns:repeat(3,1fr);
-
-        gap:10px;
-
-    }
-
-    .footer-right button{
-
-        width:100%;
-
-        min-width:auto;
-
-    }
-
+    min-width: auto;
+  }
 }
 
 /* ==========================================================
    Responsive - Mobile
 ========================================================== */
 
-@media (max-width:480px){
+@media (max-width: 480px) {
+  .settings-page {
+    padding: 12px;
+  }
 
-    .settings-page{
+  .page-header h1 {
+    font-size: 24px;
+  }
 
-        padding:12px;
+  .page-header p {
+    font-size: 13px;
+  }
 
-    }
+  .header-actions {
+    grid-template-columns: 1fr;
+  }
 
-    .page-header h1{
+  .settings-card mat-card-title {
+    font-size: 18px;
+  }
 
-        font-size:24px;
+  .settings-card mat-card-subtitle {
+    font-size: 12px;
+  }
 
-    }
+  .settings-card mat-card-content {
+    gap: 14px;
+  }
 
-    .page-header p{
+  .footer-right {
+    grid-template-columns: 1fr;
+  }
 
-        font-size:13px;
-
-    }
-
-    .header-actions{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .settings-card mat-card-title{
-
-        font-size:18px;
-
-    }
-
-    .settings-card mat-card-subtitle{
-
-        font-size:12px;
-
-    }
-
-    .settings-card mat-card-content{
-
-        gap:14px;
-
-    }
-
-    .footer-right{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .footer-right button{
-
-        height:46px;
-
-    }
-
+  .footer-right button {
+    height: 46px;
+  }
 }
 
 /* ==========================================================
    Darker Elevation on Hover
 ========================================================== */
 
-.settings-card:hover{
-
-    box-shadow:
-
-        0 20px 40px rgba(15,23,42,.15) !important;
-
+.settings-card:hover {
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15) !important;
 }
 
 /* ==========================================================
    Button Animation
 ========================================================== */
 
-button{
-
-    transition:
-
-        background .2s,
-
-        transform .2s,
-
-        box-shadow .2s;
-
+button {
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
-button:hover:not(:disabled){
-
-    transform:translateY(-2px);
-
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
 }
 
-button:active:not(:disabled){
-
-    transform:translateY(0);
-
+button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 /* ==========================================================
    Nice Selection
 ========================================================== */
 
-::selection{
+::selection {
+  background: #bfdbfe;
 
-    background:#bfdbfe;
-
-    color:#0f172a;
-
+  color: #0f172a;
 }

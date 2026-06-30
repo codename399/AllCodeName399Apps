@@ -1,11 +1,11 @@
 export interface AngelOneLoginResponse {
-    status: string;
-    messge: string;
-    data: AngelOneLoginData;
+  status: string;
+  messge: string;
+  data: AngelOneLoginData;
 }
 
 export interface AngelOneLoginData {
-    jwtToken: string;
-    refreshToken: string;
-    feedToken: string;
+  jwtToken: string;
+  refreshToken: string;
+  feedToken: string;
 }

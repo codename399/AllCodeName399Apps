@@ -4,14 +4,10 @@ import {
   OnInit,
   computed,
   inject,
-  signal
+  signal,
 } from '@angular/core';
 
-import {
-  CommonModule,
-  DecimalPipe
-} from '@angular/common';
-
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { ToastService } from '../../../../services/toast.service';
 import { AngelOneService } from '../../services/angel-one.service';
@@ -26,76 +22,56 @@ import { Router } from '@angular/router';
 
   standalone: true,
 
-  imports: [
-    CommonModule,
-    DecimalPipe
-  ],
+  imports: [CommonModule, DecimalPipe],
 
   templateUrl: './angel-one.component.html',
 
-  styleUrl: './angel-one.component.css'
+  styleUrl: './angel-one.component.css',
 })
+export class AngelOneComponent implements OnInit, OnDestroy {
+  readonly #angel = inject(AngelOneService);
 
-export class AngelOneComponent
-  implements OnInit, OnDestroy {
+  readonly #market = inject(MarketService);
 
-  readonly #angel =
-    inject(AngelOneService);
+  readonly #toast = inject(ToastService);
 
-  readonly #market =
-    inject(MarketService);
-
-  readonly #toast =
-    inject(ToastService);
-
-    readonly #router = inject(Router);
+  readonly #router = inject(Router);
 
   // ======================================================
   // Dashboard State
   // ======================================================
 
-  gainers =
-    signal<Gainer[]>([]);
+  gainers = signal<Gainer[]>([]);
 
-  availableCash =
-    signal(0);
+  availableCash = signal(0);
 
-  marketStatus =
-    signal('');
+  marketStatus = signal('');
 
-  marketTimer =
-    signal('');
+  marketTimer = signal('');
 
-  searchText =
-    signal('');
+  searchText = signal('');
 
   // ======================================================
   // Configuration
   // ======================================================
 
-  configuration =
-    computed<TradingConfiguration | null>(
-      () => this.#angel.configuration()
-    );
+  configuration = computed<TradingConfiguration | null>(() =>
+    this.#angel.configuration(),
+  );
 
   // ======================================================
   // UI
   // ======================================================
 
-  showSummary =
-    signal(false);
+  showSummary = signal(false);
 
-  showMarket =
-    signal(false);
+  showMarket = signal(false);
 
-  showSettings =
-    signal(false);
+  showSettings = signal(false);
 
-  showPortfolio =
-    signal(false);
+  showPortfolio = signal(false);
 
-  showLogs =
-    signal(false);
+  showLogs = signal(false);
 
   private timerId: any;
 
@@ -103,101 +79,56 @@ export class AngelOneComponent
   // Computed
   // ======================================================
 
-  filteredGainers =
-    computed(() => {
+  filteredGainers = computed(() => {
+    const search = this.searchText().trim().toLowerCase();
 
-      const search =
-        this.searchText()
-          .trim()
-          .toLowerCase();
+    if (!search) {
+      return this.gainers();
+    }
 
-      if (!search) {
+    return this.gainers()
 
-        return this.gainers();
+      .filter((stock) =>
+        stock.symbol
 
-      }
+          .toLowerCase()
 
-      return this.gainers()
-
-        .filter(stock =>
-
-          stock.symbol
-
-            .toLowerCase()
-
-            .includes(search)
-
-        );
-
-    });
+          .includes(search),
+      );
+  });
 
   // ======================================================
   // Computed Dashboard
   // ======================================================
 
-  strategy =
-    computed(() =>
+  strategy = computed(() => this.configuration()?.strategy);
 
-      this.configuration()?.strategy
+  autoTradingEnabled = computed(
+    () => this.configuration()?.enableAutoTrading ?? false,
+  );
 
-    );
+  notificationsEnabled = computed(
+    () => this.configuration()?.enableNotification ?? false,
+  );
 
-  autoTradingEnabled =
-    computed(() =>
+  riskPercentage = computed(() => this.configuration()?.riskPercentage ?? 0);
 
-      this.configuration()?.enableAutoTrading
-
-      ?? false
-
-    );
-
-  notificationsEnabled =
-    computed(() =>
-
-      this.configuration()?.enableNotification
-
-      ?? false
-
-    );
-
-  riskPercentage =
-    computed(() =>
-
-      this.configuration()?.riskPercentage
-
-      ?? 0
-
-    );
-
-  maxDailyTrades =
-    computed(() =>
-
-      this.configuration()?.maxDailyTrades
-
-      ?? 0
-
-    );
+  maxDailyTrades = computed(() => this.configuration()?.maxDailyTrades ?? 0);
 
   // ======================================================
   // Lifecycle
   // ======================================================
 
   ngOnInit(): void {
-
     this.startMarketTimer();
 
     this.initializeDashboard();
-
   }
 
   ngOnDestroy(): void {
-
     if (this.timerId) {
-
       clearInterval(this.timerId);
-
     }
-
   }
 
   // ======================================================
@@ -205,13 +136,11 @@ export class AngelOneComponent
   // ======================================================
 
   private initializeDashboard(): void {
-
     this.loadDashboard();
 
     this.loadConfiguration();
 
     this.subscribeToGainers();
-
   }
 
   // ======================================================
@@ -219,33 +148,23 @@ export class AngelOneComponent
   // ======================================================
 
   toggleSummary(): void {
-
-    this.showSummary.update(v => !v);
-
+    this.showSummary.update((v) => !v);
   }
 
   toggleMarket(): void {
-
-    this.showMarket.update(v => !v);
-
+    this.showMarket.update((v) => !v);
   }
 
   toggleSettings(): void {
-
-    this.showSettings.update(v => !v);
-
+    this.showSettings.update((v) => !v);
   }
 
   togglePortfolio(): void {
-
-    this.showPortfolio.update(v => !v);
-
+    this.showPortfolio.update((v) => !v);
   }
 
   toggleLogs(): void {
-
-    this.showLogs.update(v => !v);
-
+    this.showLogs.update((v) => !v);
   }
 
   // ======================================================
@@ -253,37 +172,23 @@ export class AngelOneComponent
   // ======================================================
 
   private loadDashboard(): void {
-
     this.#angel
 
       .getDashboardSummary()
 
       .subscribe({
-
-        next: summary => {
-
-          this.availableCash.set(
-
-            summary.availableCash
-
-          );
-
+        next: (summary) => {
+          this.availableCash.set(summary.availableCash);
         },
 
-        error: error => {
-
+        error: (error) => {
           console.error(
-
             'Unable to load dashboard',
 
-            error
-
+            error,
           );
-
-        }
-
+        },
       });
-
   }
 
   // ======================================================
@@ -291,83 +196,47 @@ export class AngelOneComponent
   // ======================================================
 
   private loadConfiguration(): void {
-
     this.#angel
 
       .getTradingConfiguration()
 
       .subscribe({
-
         next: () => {
-
           // Signal updated inside service.
-
         },
 
-        error: error => {
-
+        error: (error) => {
           console.error(
-
             'Unable to load configuration',
 
-            error
-
+            error,
           );
 
-          this.#toast.error(
-
-            'Unable to load trading configuration'
-
-          );
-
-        }
-
+          this.#toast.error('Unable to load trading configuration');
+        },
       });
-
   }
 
   saveConfiguration(): void {
-
     const configuration = this.configuration();
 
     if (!configuration) {
-
       return;
-
     }
 
     this.#angel
 
-      .saveTradingConfiguration(
-
-        configuration
-
-      )
+      .saveTradingConfiguration(configuration)
 
       .subscribe({
-
         next: () => {
-
-          this.#toast.success(
-
-            'Configuration saved'
-
-          );
-
+          this.#toast.success('Configuration saved');
         },
 
         error: () => {
-
-          this.#toast.error(
-
-            'Unable to save configuration'
-
-          );
-
-        }
-
+          this.#toast.error('Unable to save configuration');
+        },
       });
-
   }
 
   // ======================================================
@@ -375,21 +244,9 @@ export class AngelOneComponent
   // ======================================================
 
   private subscribeToGainers(): void {
-
-    this.#market.startConnection(
-
-      gainers => {
-
-        this.gainers.set(
-
-          gainers
-
-        );
-
-      }
-
-    );
-
+    this.#market.startConnection((gainers) => {
+      this.gainers.set(gainers);
+    });
   }
 
   // ======================================================
@@ -400,7 +257,6 @@ export class AngelOneComponent
     this.loadDashboard();
 
     this.loadConfiguration();
-
   }
 
   // ======================================================
@@ -408,19 +264,14 @@ export class AngelOneComponent
   // ======================================================
 
   private startMarketTimer(): void {
-
     this.updateMarketTimer();
 
     this.timerId = setInterval(() => {
-
       this.updateMarketTimer();
-
     }, 1000);
-
   }
 
   private updateMarketTimer(): void {
-
     const now = new Date();
 
     const marketOpen = this.getTodayOpen();
@@ -428,67 +279,39 @@ export class AngelOneComponent
     const marketClose = this.getTodayClose();
 
     if (this.isWeekend(now)) {
-
       this.marketStatus.set('CLOSED');
 
       this.marketTimer.set(
-
         `Opens in ${this.formatTime(
-
-          this.getNextMarketOpen(now).getTime()
-
-          - now.getTime()
-
-        )}`
-
+          this.getNextMarketOpen(now).getTime() - now.getTime(),
+        )}`,
       );
 
       return;
-
     }
 
     // Before market
 
     if (now < marketOpen) {
-
       this.marketStatus.set('CLOSED');
 
       this.marketTimer.set(
-
-        `Opens in ${this.formatTime(
-
-          marketOpen.getTime()
-
-          - now.getTime()
-
-        )}`
-
+        `Opens in ${this.formatTime(marketOpen.getTime() - now.getTime())}`,
       );
 
       return;
-
     }
 
     // During market
 
     if (now >= marketOpen && now < marketClose) {
-
       this.marketStatus.set('OPEN');
 
       this.marketTimer.set(
-
-        `Closes in ${this.formatTime(
-
-          marketClose.getTime()
-
-          - now.getTime()
-
-        )}`
-
+        `Closes in ${this.formatTime(marketClose.getTime() - now.getTime())}`,
       );
 
       return;
-
     }
 
     // After market
@@ -496,17 +319,10 @@ export class AngelOneComponent
     this.marketStatus.set('CLOSED');
 
     this.marketTimer.set(
-
       `Opens in ${this.formatTime(
-
-        this.getNextMarketOpen(now).getTime()
-
-        - now.getTime()
-
-      )}`
-
+        this.getNextMarketOpen(now).getTime() - now.getTime(),
+      )}`,
     );
-
   }
 
   // ======================================================
@@ -514,169 +330,92 @@ export class AngelOneComponent
   // ======================================================
 
   private getTodayOpen(): Date {
-
     const date = new Date();
 
     date.setHours(
-
       9,
 
       15,
 
       0,
 
-      0
-
+      0,
     );
 
     return date;
-
   }
 
   private getTodayClose(): Date {
-
     const date = new Date();
 
     date.setHours(
-
       15,
 
       30,
 
       0,
 
-      0
-
+      0,
     );
 
     return date;
-
   }
 
-  private isWeekend(
-
-    date: Date
-
-  ): boolean {
-
-    return date.getDay() === 0
-
-      || date.getDay() === 6;
-
+  private isWeekend(date: Date): boolean {
+    return date.getDay() === 0 || date.getDay() === 6;
   }
 
-  private getNextMarketOpen(
-
-    current: Date
-
-  ): Date {
-
+  private getNextMarketOpen(current: Date): Date {
     const next = new Date(current);
 
     next.setHours(
-
       9,
 
       15,
 
       0,
 
-      0
-
+      0,
     );
 
     do {
-
-      next.setDate(
-
-        next.getDate() + 1
-
-      );
-
-    }
-
-    while (
-
-      this.isWeekend(next)
-
-    );
+      next.setDate(next.getDate() + 1);
+    } while (this.isWeekend(next));
 
     return next;
-
   }
 
   // ======================================================
   // Countdown
   // ======================================================
 
-  private formatTime(
+  private formatTime(milliseconds: number): string {
+    let seconds = Math.max(
+      0,
 
-    milliseconds: number
+      Math.floor(milliseconds / 1000),
+    );
 
-  ): string {
-
-    let seconds =
-
-      Math.max(
-
-        0,
-
-        Math.floor(
-
-          milliseconds / 1000
-
-        )
-
-      );
-
-    const days =
-
-      Math.floor(
-
-        seconds / 86400
-
-      );
+    const days = Math.floor(seconds / 86400);
 
     seconds %= 86400;
 
-    const hours =
-
-      Math.floor(
-
-        seconds / 3600
-
-      );
+    const hours = Math.floor(seconds / 3600);
 
     seconds %= 3600;
 
-    const minutes =
-
-      Math.floor(
-
-        seconds / 60
-
-      );
+    const minutes = Math.floor(seconds / 60);
 
     seconds %= 60;
 
     const parts: string[] = [];
 
     if (days > 0) {
-
       parts.push(`${days}d`);
-
     }
 
-    if (
-
-      hours > 0 ||
-
-      days > 0
-
-    ) {
-
+    if (hours > 0 || days > 0) {
       parts.push(`${hours}h`);
-
     }
 
     parts.push(`${minutes}m`);
@@ -684,10 +423,9 @@ export class AngelOneComponent
     parts.push(`${seconds}s`);
 
     return parts.join(' ');
-
   }
 
-  openSettings(){
-    this.#router.navigate(["/home/trading-settings"])
+  openSettings() {
+    this.#router.navigate(['/home/trading-settings']);
   }
 }

@@ -1,44 +1,43 @@
-import { TradingStrategy } from "./enum/trading-strategy";
+import { TradingStrategy } from './enum/trading-strategy';
 
 export interface TradingConfiguration {
+  id: string;
 
-    id: string;
+  enableAutoTrading: boolean;
 
-    enableAutoTrading: boolean;
+  paperTrading: boolean;
 
-    paperTrading: boolean;
+  enableNotification: boolean;
 
-    enableNotification: boolean;
+  strategy: TradingStrategy;
 
-    strategy: TradingStrategy;
+  riskPercentage: number;
 
-    riskPercentage: number;
+  maxCapitalPerTrade: number;
 
-    maxCapitalPerTrade: number;
+  maxDailyLoss: number;
 
-    maxDailyLoss: number;
+  maxDailyTrades: number;
 
-    maxDailyTrades: number;
+  cooldownMinutes: number;
 
-    cooldownMinutes: number;
+  scanIntervalSeconds: number;
 
-    scanIntervalSeconds: number;
+  ignoreMarketHours: boolean;
 
-    ignoreMarketHours: boolean;
+  enableTrailingStop: boolean;
 
-    enableTrailingStop: boolean;
+  trailingStopPercentage: number;
 
-    trailingStopPercentage: number;
+  stopLossMultiplier: number;
 
-    stopLossMultiplier: number;
+  targetMultiplier: number;
 
-    targetMultiplier: number;
+  autoSquareOff: boolean;
 
-    autoSquareOff: boolean;
+  marketOpenTime: string;
 
-    marketOpenTime: string;
+  marketCloseTime: string;
 
-    marketCloseTime: string;
-
-    watchListRefreshMinutes: number
+  watchListRefreshMinutes: number;
 }
